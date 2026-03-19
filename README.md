@@ -6,34 +6,20 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
-### Migrated from Claude_Authorized
+### SolverAI Trainer — March 18 Inference (2026-03-19 13:30 KST)
 
-![comparison_plot](comparison_plot.png)
-![comparison_plot2](comparison_plot2.png)
-![comparison_plot3](comparison_plot3.png)
-![comparison_plot4](comparison_plot4.png)
-![cell_8_output](cell_8_output.png)
-![autoresearch_progress](autoresearch_progress.png)
+**Model**: GNN Baseline (GATv2, 124K params) — Epoch 405, Step 103,275
+**Dataset**: HD Mobis Laplacian (processed_260318)
+**Validation**: 60 samples (C_L_SPFH590, 16T/23T/26T)
 
-### Moldflow FEM Filling Solver — Test Results
+**Error Distribution** — Per-sample Rel MSE/MAE + node-level error histogram
+![error_dist](inference_mar18_error_dist.png)
 
-**Cell 3: Mesh Generation** — 75 nodes, 160 tet elements, volume verified
-![cell3_mesh_nodes](cell3_mesh_nodes.png)
+**Predicted vs GT** — Sample C_L_SPFH590_16T_v1_1 (reconstructed via line integral)
+![compare](inference_mar18_C_L_SPFH590_16T_v1_1.png)
 
-**Cell 4: Boundary Classification** — Inlet (red), Wall (blue), Interior (gray)
-![cell4_boundary](cell4_boundary.png)
+**Predicted Field Magnitude**
+![pred_field](inference_mar18_pred_field.png)
 
-**Cell 7: Stokes Solve** — Velocity magnitude & pressure (isothermal, constant viscosity)
-![cell7_stokes_solve](cell7_stokes_solve.png)
-
-**Cell 8: Isothermal Filling Pipeline** — 10 timesteps
-![cell8_filling_isothermal](cell8_filling_isothermal.png)
-
-**Cell 9: Cross-WLF Viscosity** — log10(viscosity) and log10(shear rate) distributions
-![cell9_cross_wlf](cell9_cross_wlf.png)
-
-**Cell 10: Thermal Coupling** — Temperature at final vs initial time
-![cell10_thermal](cell10_thermal.png)
-
-**Cell 11: VOF Fill Front** — Fill fraction advancing from inlet over 20 timesteps
-![cell11_vof](cell11_vof.png)
+**GT Field Magnitude**
+![gt_field](inference_mar18_gt_field.png)
