@@ -6,18 +6,20 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
-### PyG Trainer — March 19 Inference (2026-03-19 18:46 KST)
+### PyG Trainer — Result Images (2026-03-19 22:18 KST)
 
-**Model**: GNN Baseline (GATv2, 122K params) — Epoch 89, Step 22,695
-**Dataset**: HD Mobis Laplacian (processed_260318) — Auto-normalized x & bc, raw y
-**Loss**: MSE only | **Checkpoint**: best_valid_loss.pt
+#### Validation Samples
 
----
+![valid_16T_v1_1](valid_C_L_SPFH590_16T_v1_1.png)
+![valid_16T_v1_19](valid_C_L_SPFH590_16T_v1_19.png)
+![valid_23T_v1_11](valid_C_L_SPFH590_23T_v1_11.png)
+![valid_23T_v1_20](valid_C_L_SPFH590_23T_v1_20.png)
+![valid_26T_v1_13](valid_C_L_SPFH590_26T_v1_13.png)
 
-#### Validation Samples (60 C_L_SPFH590 samples)
+#### Inference
 
-**Error Distribution** — Per-sample Rel MSE/MAE + node-level error histogram
+![inference_16T_v1_1](inference_C_L_SPFH590_16T_v1_1.png)
+
+#### Error Distribution
+
 ![error_dist](inference_error_dist.png)
-
-**Predicted vs GT** — Sample C_L_SPFH590_16T_v1_1 (reconstructed via line integral)
-![compare](inference_C_L_SPFH590_16T_v1_1.png)
