@@ -6,20 +6,31 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
-### PyG Trainer — Result Images (2026-03-19 22:18 KST)
+### Moldflow Solver — Gmsh Test Cases (2026-03-19 23:26 KST)
 
-#### Validation Samples
+#### Cell 4: Boundary Classification (All 4 Geometries)
+![cell4_boundary_classification](cell4_boundary_classification.png)
 
-![valid_16T_v1_1](valid_C_L_SPFH590_16T_v1_1.png)
-![valid_16T_v1_19](valid_C_L_SPFH590_16T_v1_19.png)
-![valid_23T_v1_11](valid_C_L_SPFH590_23T_v1_11.png)
-![valid_23T_v1_20](valid_C_L_SPFH590_23T_v1_20.png)
-![valid_26T_v1_13](valid_C_L_SPFH590_26T_v1_13.png)
+#### Cell 5: Plate with Rib — Isothermal, Constant Viscosity
+![cell5_plate_rib](cell5_plate_rib.png)
 
-#### Inference
+#### Cell 6: Center-Gated Disc — Isothermal, Constant Viscosity
+![cell6_disc](cell6_disc.png)
 
-![inference_16T_v1_1](inference_C_L_SPFH590_16T_v1_1.png)
+#### Cell 7: L-Bracket — Isothermal, Constant Viscosity
+![cell7_l_bracket](cell7_l_bracket.png)
 
-#### Error Distribution
+#### Cell 8: Stepped Plate — Isothermal, Constant Viscosity
+![cell8_stepped_plate](cell8_stepped_plate.png)
 
-![error_dist](inference_error_dist.png)
+#### Cell 9: Cross-WLF on Plate with Rib
+![cell9_cross_wlf](cell9_cross_wlf.png)
+
+#### Cell 10: Thermal Test on Stepped Plate
+![cell10_thermal_stepped](cell10_thermal_stepped.png)
+
+---
+
+### PyG Trainer — Loss Plot (2026-03-19 23:26 KST)
+
+![loss_plot](loss_plot.png)
