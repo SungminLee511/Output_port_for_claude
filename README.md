@@ -6,7 +6,7 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
-### Moldflow Solver — Gmsh Test Cases (2026-03-19 23:26 KST)
+### Moldflow Solver — Gmsh Test Cases (Element-based Viz) (2026-03-19 23:34 KST)
 
 #### Cell 4: Boundary Classification (All 4 Geometries)
 ![cell4_boundary_classification](cell4_boundary_classification.png)
@@ -25,12 +25,3 @@ This repo is used to share result images from Claude Code.
 
 #### Cell 9: Cross-WLF on Plate with Rib
 ![cell9_cross_wlf](cell9_cross_wlf.png)
-
-#### Cell 10: Thermal Test on Stepped Plate
-![cell10_thermal_stepped](cell10_thermal_stepped.png)
-
----
-
-### PyG Trainer — Loss Plot (2026-03-19 23:26 KST)
-
-![loss_plot](loss_plot.png)
