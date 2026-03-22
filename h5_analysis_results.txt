@@ -1,0 +1,602 @@
+H5 File Analysis Results - contact_test_jsp/processed
+======================================================
+Generated: 2026-03-22 KST
+Total files: 16
+
+================================================================================
+FILE: shape_1-1MN_STEP-1.h5  (N=52878 nodes, 34042 elements)
+================================================================================
+  Blob_sum: shape=(52878,), dtype=int32
+  Fixed_(1, 0, 1, 0, 1, 0): shape=(52878,), dtype=int32
+  Fixed_(1, 0, 1, 0, 1, 0)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(52878,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_one_hot: shape=(52878, 6), dtype=int32
+  Rigid_Blob: shape=(52878,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(34042, 10), dtype=int64
+  Tetra10_E: shape=(34042,), dtype=float32
+  Tetra10_alpha: shape=(34042,), dtype=float32
+  Tetra10_k: shape=(34042,), dtype=float32
+  Tetra10_nu: shape=(34042,), dtype=float32
+  Tetra10_rho: shape=(34042,), dtype=float32
+  Tetra10_thickness: shape=(34042,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 55096), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(8229, 2), dtype=float32
+  contact_edge_index: shape=(2, 8229), dtype=int64
+  contact_master: shape=(52878,), dtype=float32
+  contact_one_hot: shape=(52878,), dtype=float32
+  contact_slave: shape=(52878,), dtype=float32
+  coords: shape=(52878, 3), dtype=float32
+  dof_boundary_value: shape=(52878, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 45303), dtype=int64
+  material_e: shape=(52878,), dtype=float64
+  material_nu: shape=(52878,), dtype=float64
+  non_isolated_nodes: shape=(10744,), dtype=int64
+  original_node_ids: shape=(52878,), dtype=int64
+  raw_dof_idx: shape=(52878, 6), dtype=float64
+
+================================================================================
+FILE: shape_1_STEP-1.h5  (N=52878 nodes, 34042 elements)
+================================================================================
+  Blob_sum: shape=(52878,), dtype=int32
+  Fixed_(1, 0, 1, 0, 1, 0): shape=(52878,), dtype=int32
+  Fixed_(1, 0, 1, 0, 1, 0)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(52878,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_one_hot: shape=(52878, 6), dtype=int32
+  Rigid_Blob: shape=(52878,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(34042, 10), dtype=int64
+  Tetra10_E: shape=(34042,), dtype=float32
+  Tetra10_alpha: shape=(34042,), dtype=float32
+  Tetra10_k: shape=(34042,), dtype=float32
+  Tetra10_nu: shape=(34042,), dtype=float32
+  Tetra10_rho: shape=(34042,), dtype=float32
+  Tetra10_thickness: shape=(34042,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 55096), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(8229, 2), dtype=float32
+  contact_edge_index: shape=(2, 8229), dtype=int64
+  contact_master: shape=(52878,), dtype=float32
+  contact_one_hot: shape=(52878,), dtype=float32
+  contact_slave: shape=(52878,), dtype=float32
+  coords: shape=(52878, 3), dtype=float32
+  dof_boundary_value: shape=(52878, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 45303), dtype=int64
+  material_e: shape=(52878,), dtype=float64
+  material_nu: shape=(52878,), dtype=float64
+  non_isolated_nodes: shape=(10744,), dtype=int64
+  original_node_ids: shape=(52878,), dtype=int64
+  raw_dof_idx: shape=(52878, 6), dtype=float64
+
+================================================================================
+FILE: shape_2-1MN_STEP-1.h5  (N=64620 nodes, 41690 elements)
+================================================================================
+  Blob_sum: shape=(64620,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1): shape=(64620,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(64620,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_one_hot: shape=(64620, 6), dtype=int32
+  Rigid_Blob: shape=(64620,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(41690, 10), dtype=int64
+  Tetra10_E: shape=(41690,), dtype=float32
+  Tetra10_alpha: shape=(41690,), dtype=float32
+  Tetra10_k: shape=(41690,), dtype=float32
+  Tetra10_nu: shape=(41690,), dtype=float32
+  Tetra10_rho: shape=(41690,), dtype=float32
+  Tetra10_thickness: shape=(41690,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 68439), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(11481, 2), dtype=float32
+  contact_edge_index: shape=(2, 11481), dtype=int64
+  contact_master: shape=(64620,), dtype=float32
+  contact_one_hot: shape=(64620,), dtype=float32
+  contact_slave: shape=(64620,), dtype=float32
+  coords: shape=(64620, 3), dtype=float32
+  dof_boundary_value: shape=(64620, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 55378), dtype=int64
+  material_e: shape=(64620,), dtype=float64
+  material_nu: shape=(64620,), dtype=float64
+  non_isolated_nodes: shape=(13089,), dtype=int64
+  original_node_ids: shape=(64620,), dtype=int64
+  raw_dof_idx: shape=(64620, 6), dtype=float64
+
+================================================================================
+FILE: shape_2_STEP-1.h5  (N=64620 nodes, 41690 elements)
+================================================================================
+  Blob_sum: shape=(64620,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1): shape=(64620,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(64620,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_one_hot: shape=(64620, 6), dtype=int32
+  Rigid_Blob: shape=(64620,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(41690, 10), dtype=int64
+  Tetra10_E: shape=(41690,), dtype=float32
+  Tetra10_alpha: shape=(41690,), dtype=float32
+  Tetra10_k: shape=(41690,), dtype=float32
+  Tetra10_nu: shape=(41690,), dtype=float32
+  Tetra10_rho: shape=(41690,), dtype=float32
+  Tetra10_thickness: shape=(41690,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 68439), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(11481, 2), dtype=float32
+  contact_edge_index: shape=(2, 11481), dtype=int64
+  contact_master: shape=(64620,), dtype=float32
+  contact_one_hot: shape=(64620,), dtype=float32
+  contact_slave: shape=(64620,), dtype=float32
+  coords: shape=(64620, 3), dtype=float32
+  dof_boundary_value: shape=(64620, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 55378), dtype=int64
+  material_e: shape=(64620,), dtype=float64
+  material_nu: shape=(64620,), dtype=float64
+  non_isolated_nodes: shape=(13089,), dtype=int64
+  original_node_ids: shape=(64620,), dtype=int64
+  raw_dof_idx: shape=(64620, 6), dtype=float64
+
+================================================================================
+FILE: shape_3-1MN_STEP-1.h5  (N=125137 nodes, 85691 elements)
+================================================================================
+  Blob_sum: shape=(125137,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1): shape=(125137,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(125137,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_one_hot: shape=(125137, 6), dtype=int32
+  Rigid_Blob: shape=(125137,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(85691, 10), dtype=int64
+  Tetra10_E: shape=(85691,), dtype=float32
+  Tetra10_alpha: shape=(85691,), dtype=float32
+  Tetra10_k: shape=(85691,), dtype=float32
+  Tetra10_nu: shape=(85691,), dtype=float32
+  Tetra10_rho: shape=(85691,), dtype=float32
+  Tetra10_thickness: shape=(85691,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 117191), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(7485, 2), dtype=float32
+  contact_edge_index: shape=(2, 7485), dtype=int64
+  contact_master: shape=(125137,), dtype=float32
+  contact_one_hot: shape=(125137,), dtype=float32
+  contact_slave: shape=(125137,), dtype=float32
+  coords: shape=(125137, 3), dtype=float32
+  dof_boundary_value: shape=(125137, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 108126), dtype=int64
+  material_e: shape=(125137,), dtype=float64
+  material_nu: shape=(125137,), dtype=float64
+  non_isolated_nodes: shape=(19749,), dtype=int64
+  original_node_ids: shape=(125137,), dtype=int64
+  raw_dof_idx: shape=(125137, 6), dtype=float64
+
+================================================================================
+FILE: shape_3_STEP-1.h5  (N=125137 nodes, 85691 elements)
+================================================================================
+  Blob_sum: shape=(125137,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1): shape=(125137,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(125137,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_one_hot: shape=(125137, 6), dtype=int32
+  Rigid_Blob: shape=(125137,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(85691, 10), dtype=int64
+  Tetra10_E: shape=(85691,), dtype=float32
+  Tetra10_alpha: shape=(85691,), dtype=float32
+  Tetra10_k: shape=(85691,), dtype=float32
+  Tetra10_nu: shape=(85691,), dtype=float32
+  Tetra10_rho: shape=(85691,), dtype=float32
+  Tetra10_thickness: shape=(85691,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 117191), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(7485, 2), dtype=float32
+  contact_edge_index: shape=(2, 7485), dtype=int64
+  contact_master: shape=(125137,), dtype=float32
+  contact_one_hot: shape=(125137,), dtype=float32
+  contact_slave: shape=(125137,), dtype=float32
+  coords: shape=(125137, 3), dtype=float32
+  dof_boundary_value: shape=(125137, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 108126), dtype=int64
+  material_e: shape=(125137,), dtype=float64
+  material_nu: shape=(125137,), dtype=float64
+  non_isolated_nodes: shape=(19749,), dtype=int64
+  original_node_ids: shape=(125137,), dtype=int64
+  raw_dof_idx: shape=(125137, 6), dtype=float64
+
+================================================================================
+FILE: shape_4-1MN_STEP-1.h5  (N=91698 nodes, 62222 elements)
+================================================================================
+  Blob_sum: shape=(91698,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1): shape=(91698,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(91698,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_one_hot: shape=(91698, 6), dtype=int32
+  Rigid_Blob: shape=(91698,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(62222, 10), dtype=int64
+  Tetra10_E: shape=(62222,), dtype=float32
+  Tetra10_alpha: shape=(62222,), dtype=float32
+  Tetra10_k: shape=(62222,), dtype=float32
+  Tetra10_nu: shape=(62222,), dtype=float32
+  Tetra10_rho: shape=(62222,), dtype=float32
+  Tetra10_thickness: shape=(62222,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 88162), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(7437, 2), dtype=float32
+  contact_edge_index: shape=(2, 7437), dtype=int64
+  contact_master: shape=(91698,), dtype=float32
+  contact_one_hot: shape=(91698,), dtype=float32
+  contact_slave: shape=(91698,), dtype=float32
+  coords: shape=(91698, 3), dtype=float32
+  dof_boundary_value: shape=(91698, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 79129), dtype=int64
+  material_e: shape=(91698,), dtype=float64
+  material_nu: shape=(91698,), dtype=float64
+  non_isolated_nodes: shape=(15306,), dtype=int64
+  original_node_ids: shape=(91698,), dtype=int64
+  raw_dof_idx: shape=(91698, 6), dtype=float64
+
+================================================================================
+FILE: shape_4_STEP-1.h5  (N=91698 nodes, 62222 elements)
+================================================================================
+  Blob_sum: shape=(91698,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1): shape=(91698,), dtype=int32
+  Fixed_(1, 0, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(91698,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 798), dtype=int64
+  Fixed_one_hot: shape=(91698, 6), dtype=int32
+  Rigid_Blob: shape=(91698,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(62222, 10), dtype=int64
+  Tetra10_E: shape=(62222,), dtype=float32
+  Tetra10_alpha: shape=(62222,), dtype=float32
+  Tetra10_k: shape=(62222,), dtype=float32
+  Tetra10_nu: shape=(62222,), dtype=float32
+  Tetra10_rho: shape=(62222,), dtype=float32
+  Tetra10_thickness: shape=(62222,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 88162), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(7437, 2), dtype=float32
+  contact_edge_index: shape=(2, 7437), dtype=int64
+  contact_master: shape=(91698,), dtype=float32
+  contact_one_hot: shape=(91698,), dtype=float32
+  contact_slave: shape=(91698,), dtype=float32
+  coords: shape=(91698, 3), dtype=float32
+  dof_boundary_value: shape=(91698, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 79129), dtype=int64
+  material_e: shape=(91698,), dtype=float64
+  material_nu: shape=(91698,), dtype=float64
+  non_isolated_nodes: shape=(15306,), dtype=int64
+  original_node_ids: shape=(91698,), dtype=int64
+  raw_dof_idx: shape=(91698, 6), dtype=float64
+
+================================================================================
+FILE: shape_5_STEP-1.h5  (N=42476 nodes, 26821 elements)
+================================================================================
+  Blob_sum: shape=(42476,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(42476,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 3927), dtype=int64
+  Fixed_one_hot: shape=(42476, 6), dtype=int32
+  Rigid_Blob: shape=(42476,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(26821, 10), dtype=int64
+  Tetra10_E: shape=(26821,), dtype=float32
+  Tetra10_alpha: shape=(26821,), dtype=float32
+  Tetra10_k: shape=(26821,), dtype=float32
+  Tetra10_nu: shape=(26821,), dtype=float32
+  Tetra10_rho: shape=(26821,), dtype=float32
+  Tetra10_thickness: shape=(26821,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 40198), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(0, 2), dtype=float32
+  contact_edge_index: shape=(2, 0), dtype=int64
+  contact_master: shape=(42476,), dtype=float32
+  contact_one_hot: shape=(42476,), dtype=float32
+  contact_slave: shape=(42476,), dtype=float32
+  coords: shape=(42476, 3), dtype=float32
+  dof_boundary_value: shape=(42476, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 36271), dtype=int64
+  material_e: shape=(42476,), dtype=float64
+  material_nu: shape=(42476,), dtype=float64
+  non_isolated_nodes: shape=(7163,), dtype=int64
+  original_node_ids: shape=(42476,), dtype=int64
+  raw_dof_idx: shape=(42476, 6), dtype=float64
+
+================================================================================
+FILE: shape_6_STEP-1.h5  (N=55567 nodes, 35932 elements)
+================================================================================
+  Blob_sum: shape=(55567,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(55567,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 6363), dtype=int64
+  Fixed_one_hot: shape=(55567, 6), dtype=int32
+  Rigid_Blob: shape=(55567,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(35932, 10), dtype=int64
+  Tetra10_E: shape=(35932,), dtype=float32
+  Tetra10_alpha: shape=(35932,), dtype=float32
+  Tetra10_k: shape=(35932,), dtype=float32
+  Tetra10_nu: shape=(35932,), dtype=float32
+  Tetra10_rho: shape=(35932,), dtype=float32
+  Tetra10_thickness: shape=(35932,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 96750), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(42774, 2), dtype=float32
+  contact_edge_index: shape=(2, 42774), dtype=int64
+  contact_master: shape=(55567,), dtype=float32
+  contact_one_hot: shape=(55567,), dtype=float32
+  contact_slave: shape=(55567,), dtype=float32
+  coords: shape=(55567, 3), dtype=float32
+  dof_boundary_value: shape=(55567, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 47613), dtype=int64
+  material_e: shape=(55567,), dtype=float64
+  material_nu: shape=(55567,), dtype=float64
+  non_isolated_nodes: shape=(21150,), dtype=int64
+  original_node_ids: shape=(55567,), dtype=int64
+  raw_dof_idx: shape=(55567, 6), dtype=float64
+
+================================================================================
+FILE: shape_7_STEP-1.h5  (N=71404 nodes, 44642 elements)
+================================================================================
+  Blob_sum: shape=(71404,), dtype=int32
+  Fixed_(1, 1, 0, 1, 1, 1): shape=(71404,), dtype=int32
+  Fixed_(1, 1, 0, 1, 1, 1)_edge_index: shape=(2, 12423), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(71404,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 12423), dtype=int64
+  Fixed_one_hot: shape=(71404, 6), dtype=int32
+  Rigid_Blob: shape=(71404,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(44642, 10), dtype=int64
+  Tetra10_E: shape=(44642,), dtype=float32
+  Tetra10_alpha: shape=(44642,), dtype=float32
+  Tetra10_k: shape=(44642,), dtype=float32
+  Tetra10_nu: shape=(44642,), dtype=float32
+  Tetra10_rho: shape=(44642,), dtype=float32
+  Tetra10_thickness: shape=(44642,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 115748), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(29985, 2), dtype=float32
+  contact_edge_index: shape=(2, 29985), dtype=int64
+  contact_master: shape=(71404,), dtype=float32
+  contact_one_hot: shape=(71404,), dtype=float32
+  contact_slave: shape=(71404,), dtype=float32
+  coords: shape=(71404, 3), dtype=float32
+  dof_boundary_value: shape=(71404, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 60917), dtype=int64
+  material_e: shape=(71404,), dtype=float64
+  material_nu: shape=(71404,), dtype=float64
+  non_isolated_nodes: shape=(25535,), dtype=int64
+  original_node_ids: shape=(71404,), dtype=int64
+  raw_dof_idx: shape=(71404, 6), dtype=float64
+
+================================================================================
+FILE: shape_8_STEP-1.h5  (N=76736 nodes, 50264 elements)
+================================================================================
+  Blob_sum: shape=(76736,), dtype=int32
+  Fixed_(1, 1, 0, 1, 1, 1): shape=(76736,), dtype=int32
+  Fixed_(1, 1, 0, 1, 1, 1)_edge_index: shape=(2, 2511), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(76736,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 12423), dtype=int64
+  Fixed_one_hot: shape=(76736, 6), dtype=int32
+  Rigid_Blob: shape=(76736,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(50264, 10), dtype=int64
+  Tetra10_E: shape=(50264,), dtype=float32
+  Tetra10_alpha: shape=(50264,), dtype=float32
+  Tetra10_k: shape=(50264,), dtype=float32
+  Tetra10_nu: shape=(50264,), dtype=float32
+  Tetra10_rho: shape=(50264,), dtype=float32
+  Tetra10_thickness: shape=(50264,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 108152), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(27321, 2), dtype=float32
+  contact_edge_index: shape=(2, 27321), dtype=int64
+  contact_master: shape=(76736,), dtype=float32
+  contact_one_hot: shape=(76736,), dtype=float32
+  contact_slave: shape=(76736,), dtype=float32
+  coords: shape=(76736, 3), dtype=float32
+  dof_boundary_value: shape=(76736, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 65897), dtype=int64
+  material_e: shape=(76736,), dtype=float64
+  material_nu: shape=(76736,), dtype=float64
+  non_isolated_nodes: shape=(22954,), dtype=int64
+  original_node_ids: shape=(76736,), dtype=int64
+  raw_dof_idx: shape=(76736, 6), dtype=float64
+
+================================================================================
+FILE: shape_9_STEP-1.h5  (N=130278 nodes, 86780 elements)
+================================================================================
+  Blob_sum: shape=(130278,), dtype=int32
+  Fixed_(1, 1, 0, 1, 1, 1): shape=(130278,), dtype=int32
+  Fixed_(1, 1, 0, 1, 1, 1)_edge_index: shape=(2, 10701), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(130278,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 17343), dtype=int64
+  Fixed_one_hot: shape=(130278, 6), dtype=int32
+  Rigid_Blob: shape=(130278,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(86780, 10), dtype=int64
+  Tetra10_E: shape=(86780,), dtype=float32
+  Tetra10_alpha: shape=(86780,), dtype=float32
+  Tetra10_k: shape=(86780,), dtype=float32
+  Tetra10_nu: shape=(86780,), dtype=float32
+  Tetra10_rho: shape=(86780,), dtype=float32
+  Tetra10_thickness: shape=(86780,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 178438), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(38265, 2), dtype=float32
+  contact_edge_index: shape=(2, 38265), dtype=int64
+  contact_master: shape=(130278,), dtype=float32
+  contact_one_hot: shape=(130278,), dtype=float32
+  contact_slave: shape=(130278,), dtype=float32
+  coords: shape=(130278, 3), dtype=float32
+  dof_boundary_value: shape=(130278, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 112129), dtype=int64
+  material_e: shape=(130278,), dtype=float64
+  material_nu: shape=(130278,), dtype=float64
+  non_isolated_nodes: shape=(36947,), dtype=int64
+  original_node_ids: shape=(130278,), dtype=int64
+  raw_dof_idx: shape=(130278, 6), dtype=float64
+
+================================================================================
+FILE: shape_10_STEP-1.h5  (N=137802 nodes, 92615 elements)
+================================================================================
+  Blob_sum: shape=(137802,), dtype=int32
+  Fixed_(1, 1, 0, 1, 1, 1): shape=(137802,), dtype=int32
+  Fixed_(1, 1, 0, 1, 1, 1)_edge_index: shape=(2, 10701), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(137802,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 17343), dtype=int64
+  Fixed_one_hot: shape=(137802, 6), dtype=int32
+  Rigid_Blob: shape=(137802,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(92615, 10), dtype=int64
+  Tetra10_E: shape=(92615,), dtype=float32
+  Tetra10_alpha: shape=(92615,), dtype=float32
+  Tetra10_k: shape=(92615,), dtype=float32
+  Tetra10_nu: shape=(92615,), dtype=float32
+  Tetra10_rho: shape=(92615,), dtype=float32
+  Tetra10_thickness: shape=(92615,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 185060), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(38265, 2), dtype=float32
+  contact_edge_index: shape=(2, 38265), dtype=int64
+  contact_master: shape=(137802,), dtype=float32
+  contact_one_hot: shape=(137802,), dtype=float32
+  contact_slave: shape=(137802,), dtype=float32
+  coords: shape=(137802, 3), dtype=float32
+  dof_boundary_value: shape=(137802, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 118751), dtype=int64
+  material_e: shape=(137802,), dtype=float64
+  material_nu: shape=(137802,), dtype=float64
+  non_isolated_nodes: shape=(38935,), dtype=int64
+  original_node_ids: shape=(137802,), dtype=int64
+  raw_dof_idx: shape=(137802, 6), dtype=float64
+
+================================================================================
+FILE: shape_11_STEP-1.h5  (N=152850 nodes, 94240 elements)
+================================================================================
+  Blob_sum: shape=(152850,), dtype=int32
+  Fixed_(1, 0, 1, 0, 1, 0): shape=(152850,), dtype=int32
+  Fixed_(1, 0, 1, 0, 1, 0)_edge_index: shape=(2, 444480), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(152850,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 14070), dtype=int64
+  Fixed_one_hot: shape=(152850, 6), dtype=int32
+  Rigid_Blob: shape=(152850,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(94240, 10), dtype=int64
+  Tetra10_E: shape=(94240,), dtype=float32
+  Tetra10_alpha: shape=(94240,), dtype=float32
+  Tetra10_k: shape=(94240,), dtype=float32
+  Tetra10_nu: shape=(94240,), dtype=float32
+  Tetra10_rho: shape=(94240,), dtype=float32
+  Tetra10_thickness: shape=(94240,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 588518), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(0, 2), dtype=float32
+  contact_edge_index: shape=(2, 0), dtype=int64
+  contact_master: shape=(152850,), dtype=float32
+  contact_one_hot: shape=(152850,), dtype=float32
+  contact_slave: shape=(152850,), dtype=float32
+  coords: shape=(152850, 3), dtype=float32
+  dof_boundary_value: shape=(152850, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 129971), dtype=int64
+  material_e: shape=(152850,), dtype=float64
+  material_nu: shape=(152850,), dtype=float64
+  non_isolated_nodes: shape=(152850,), dtype=int64
+  original_node_ids: shape=(152850,), dtype=int64
+  raw_dof_idx: shape=(152850, 6), dtype=float64
+
+================================================================================
+FILE: shape_16_STEP-1.h5  (N=116692 nodes, 79751 elements)
+================================================================================
+  Blob_sum: shape=(116692,), dtype=int32
+  Fixed_(0, 1, 1, 1, 1, 1): shape=(116692,), dtype=int32
+  Fixed_(0, 1, 1, 1, 1, 1)_edge_index: shape=(2, 1323), dtype=int64
+  Fixed_(1, 1, 1, 1, 1, 1): shape=(116692,), dtype=int32
+  Fixed_(1, 1, 1, 1, 1, 1)_edge_index: shape=(2, 1071), dtype=int64
+  Fixed_one_hot: shape=(116692, 6), dtype=int32
+  Rigid_Blob: shape=(116692,), dtype=int32
+  Rigid_edge_index: shape=(2, 0), dtype=int64
+  Tetra10: shape=(79751, 10), dtype=int64
+  Tetra10_E: shape=(79751,), dtype=float32
+  Tetra10_alpha: shape=(79751,), dtype=float32
+  Tetra10_k: shape=(79751,), dtype=float32
+  Tetra10_nu: shape=(79751,), dtype=float32
+  Tetra10_rho: shape=(79751,), dtype=float32
+  Tetra10_thickness: shape=(79751,), dtype=float32
+  _step_name: shape=(), dtype=object
+  _step_total: shape=(1,), dtype=int64
+  all_edge_index: shape=(2, 116183), dtype=int64
+  blob_cyclic_edge_index: shape=(2, 0), dtype=int64
+  contact_edge_attr: shape=(12981, 2), dtype=float32
+  contact_edge_index: shape=(2, 12981), dtype=int64
+  contact_master: shape=(116692,), dtype=float32
+  contact_one_hot: shape=(116692,), dtype=float32
+  contact_slave: shape=(116692,), dtype=float32
+  coords: shape=(116692, 3), dtype=float32
+  dof_boundary_value: shape=(116692, 6), dtype=float64
+  dof_label: shape=(6,), dtype=int64
+  edge_index: shape=(2, 100808), dtype=int64
+  material_e: shape=(116692,), dtype=float64
+  material_nu: shape=(116692,), dtype=float64
+  non_isolated_nodes: shape=(21270,), dtype=int64
+  original_node_ids: shape=(116692,), dtype=int64
+  raw_dof_idx: shape=(116692, 6), dtype=float64
+
+======================================================
+SUMMARY
+======================================================
+- All 16 files use Tet10 (10-node tetrahedral) elements
+- Node counts range from 42,476 (shape_5) to 152,850 (shape_11)
+- shape_5 and shape_11 have ZERO contact edges
+- Rigid/blob cyclic edges are empty across all files
+- Fixed BC types vary per shape (e.g. (1,0,1,0,1,0), (1,0,1,1,1,1), (1,1,0,1,1,1), (0,1,1,1,1,1))
+- All shapes have (1,1,1,1,1,1) fully-fixed BC

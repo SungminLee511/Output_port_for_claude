@@ -25,3 +25,11 @@ This repo is used to share result images from Claude Code.
 
 #### Cell 9: Cross-WLF on Plate with Rib
 ![cell9_cross_wlf](cell9_cross_wlf.png)
+
+---
+
+### H5 Analysis Results — contact_test_jsp (2026-03-22 20:01 KST)
+
+Full output of all 16 processed H5 files (attributes, shapes, dtypes):
+
+[h5_analysis_results.txt](h5_analysis_results.txt)
