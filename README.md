@@ -33,3 +33,57 @@ This repo is used to share result images from Claude Code.
 Full output of all 16 processed H5 files (attributes, shapes, dtypes):
 
 [h5_analysis_results.txt](h5_analysis_results.txt)
+
+---
+
+### Shape Visualizations — Fixed BC & Contact (2026-03-22 20:09 KST)
+
+Each figure shows 6 panels: Fixed BC category, Fixed DOF 1 (ux), Fixed DOF 2 (uy), Contact Master, Contact Slave, Contact One-Hot.
+
+#### shape_1
+![viz_shape_1](viz_shape_1.png)
+
+#### shape_1-1MN
+![viz_shape_1-1MN](viz_shape_1-1MN.png)
+
+#### shape_2
+![viz_shape_2](viz_shape_2.png)
+
+#### shape_2-1MN
+![viz_shape_2-1MN](viz_shape_2-1MN.png)
+
+#### shape_3
+![viz_shape_3](viz_shape_3.png)
+
+#### shape_3-1MN
+![viz_shape_3-1MN](viz_shape_3-1MN.png)
+
+#### shape_4
+![viz_shape_4](viz_shape_4.png)
+
+#### shape_4-1MN
+![viz_shape_4-1MN](viz_shape_4-1MN.png)
+
+#### shape_5
+![viz_shape_5](viz_shape_5.png)
+
+#### shape_6
+![viz_shape_6](viz_shape_6.png)
+
+#### shape_7
+![viz_shape_7](viz_shape_7.png)
+
+#### shape_8
+![viz_shape_8](viz_shape_8.png)
+
+#### shape_9
+![viz_shape_9](viz_shape_9.png)
+
+#### shape_10
+![viz_shape_10](viz_shape_10.png)
+
+#### shape_11
+![viz_shape_11](viz_shape_11.png)
+
+#### shape_16
+![viz_shape_16](viz_shape_16.png)
