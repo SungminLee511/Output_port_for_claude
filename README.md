@@ -87,3 +87,18 @@ Each figure shows 6 panels: Fixed BC category, Fixed DOF 1 (ux), Fixed DOF 2 (uy
 
 #### shape_16
 ![viz_shape_16](viz_shape_16.png)
+
+---
+
+### Stein_ASBS — Grid25 NeurIPS Evaluation (2026-04-07 14:50 KST)
+
+ASBS vs SDR-ASBS on 25-mode GMM. Both cover all 25 modes; SDR-ASBS is ~2× better on W₂ and Sinkhorn.
+
+#### Terminal Distribution (Ground Truth / ASBS / SDR-ASBS)
+![grid25_terminal](grid25_terminal_neurips.png)
+
+#### Marginal Evolution: ASBS
+![grid25_marginal_asbs](grid25_marginal_asbs_neurips.png)
+
+#### Marginal Evolution: SDR-ASBS
+![grid25_marginal_sdr](grid25_marginal_sdr_neurips.png)
