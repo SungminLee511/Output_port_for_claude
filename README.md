@@ -102,3 +102,12 @@ ASBS vs SDR-ASBS on 25-mode GMM. Both cover all 25 modes; SDR-ASBS is ~2× bette
 
 #### Marginal Evolution: SDR-ASBS
 ![grid25_marginal_sdr](grid25_marginal_sdr_neurips.png)
+
+---
+
+### Stein_ASBS — Grid25 ASBS Seed 5 (Diverged) (2026-04-08 23:14 KST)
+
+Seed 5 diverged at ~epoch 867 (loss exploded to 1e15 then NaN). This is the marginal evolution from **checkpoint_800.pt** — the last valid checkpoint before divergence.
+
+#### Marginal Evolution: ASBS Seed 5 (ckpt 800)
+![grid25_seed5_marginal](grid25_seed5_marginal_ckpt800.png)
