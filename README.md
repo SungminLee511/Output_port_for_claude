@@ -111,3 +111,11 @@ Seed 5 diverged at ~epoch 867 (loss exploded to 1e15 then NaN). This is the marg
 
 #### Marginal Evolution: ASBS Seed 5 (ckpt 800)
 ![grid25_seed5_marginal](grid25_seed5_marginal_ckpt800.png)
+
+---
+
+### HD-MOBIS H5 Key/Shape Summary (2026-04-20 22:52 KST)
+
+All keys and tensor shapes for 40 SOL103 h5 files:
+
+[hd_mobis_h5_keys.txt](hd_mobis_h5_keys.txt)
