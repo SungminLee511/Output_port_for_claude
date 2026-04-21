@@ -6,7 +6,7 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
-### Flat vs Bend Bumps (2026-04-21 20:26 KST)
+### Flat vs Bend Bumps L2 (2026-04-21 20:30 KST)
 
 ![flat_bend_bumps](flat_bend_bumps.png)
 
