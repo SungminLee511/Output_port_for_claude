@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Blob-level Flatten (2026-04-21 20:34 KST)
+
+![blob_flatten](blob_flatten.png)
+
 ### Flat vs Bend Bumps L2 (2026-04-21 20:30 KST)
 
 ![flat_bend_bumps](flat_bend_bumps.png)
