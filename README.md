@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Fillet Bend — fillet region R fit (2026-04-21 23:08 KST)
+
+![fillet_bend](fillet_bend.png)
+
 ### Bend Blob Boundaries Debug (2026-04-21 22:45 KST)
 
 ![bend_boundary_debug](bend_boundary_debug.png)
