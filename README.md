@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Pipeline Point Cloud (2026-04-21 15:44 KST)
+
+![pointcloud](pointcloud.png)
+
 ### HD-MOBIS H5 3D Coord Plots (2026-04-20 23:17 KST)
 
 ![sol103_01_410_08](sol103_01_410_08.png)
