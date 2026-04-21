@@ -4,7 +4,7 @@ This repo is used to share result images from Claude Code.
 
 **Timezone: KST (UTC+9)** — Server time is 9 hours behind KST.
 
-## MOBIS_GEN to_2d.ipynb + remesh + equal aspect (2026-04-22 01:57 KST)
+## MOBIS_GEN to_2d.ipynb — sol103_01 + remesh + equal aspect (2026-04-22 02:02 KST)
 
 ### 1. Point Cloud
 ![pointcloud](pointcloud.png)
@@ -18,7 +18,7 @@ This repo is used to share result images from Claude Code.
 ### 4. Flatten Result (Original / Flat / Bend)
 ![flatten_result](flatten_result.png)
 
-### 5. Cylinder Detected (BFS: all nodes classified)
+### 5. Cylinder Detected (BFS all-node classification)
 ![cylinder_detected](cylinder_detected.png)
 
 ### 6. Unroll Before/After
