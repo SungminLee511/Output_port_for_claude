@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Bump Blobs (2026-04-21 20:04 KST)
+
+![bump_blobs](bump_blobs.png)
+
 ### Main vs Bump Regions (2026-04-21 19:57 KST)
 
 ![main_bump](main_bump.png)
