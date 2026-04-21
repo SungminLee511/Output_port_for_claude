@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Main vs Bump Regions (2026-04-21 19:57 KST)
+
+![main_bump](main_bump.png)
+
 ### Bump Flattening Mesh (2026-04-21 19:43 KST)
 
 ![bump_flatten_mesh](bump_flatten_mesh.png)
