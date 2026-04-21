@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Outer Loop Visualization (2026-04-21 15:58 KST)
+
+![outer_loop](outer_loop.png)
+
 ### Pipeline Point Cloud (2026-04-21 15:44 KST)
 
 ![pointcloud](pointcloud.png)
