@@ -6,9 +6,9 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
-### Cylinder Bend Projection (2026-04-21 21:55 KST)
+### Fillet Bend Projection (2026-04-21 22:02 KST)
 
-![cylinder_bend](cylinder_bend.png)
+![fillet_bend](fillet_bend.png)
 
 ### Laplacian Bend Smoothing (2026-04-21 20:45 KST)
 
