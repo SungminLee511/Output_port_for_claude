@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Region Growing 64 regions 30° (2026-04-21 16:40 KST)
+
+![regions](regions.png)
+
 ### Outer Loop Visualization (2026-04-21 15:58 KST)
 
 ![outer_loop](outer_loop.png)
