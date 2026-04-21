@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Bend Blob Boundaries Debug (2026-04-21 22:45 KST)
+
+![bend_boundary_debug](bend_boundary_debug.png)
+
 ### Fillet Bend Projection (2026-04-21 22:02 KST)
 
 ![fillet_bend](fillet_bend.png)
