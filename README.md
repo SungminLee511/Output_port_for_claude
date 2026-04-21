@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Laplacian Bend Smoothing (2026-04-21 20:45 KST)
+
+![laplacian_bend](laplacian_bend.png)
+
 ### Blob Flatten adj-only (2026-04-21 20:37 KST)
 
 ![blob_flatten](blob_flatten.png)
