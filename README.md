@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Bump Flattening Mesh (2026-04-21 19:43 KST)
+
+![bump_flatten_mesh](bump_flatten_mesh.png)
+
 ### Bump Flattening (2026-04-21 19:38 KST)
 
 ![bump_flatten](bump_flatten.png)
