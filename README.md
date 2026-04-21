@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Region Growing fixed normals (2026-04-21 17:20 KST)
+
+![regions_fixed](regions_fixed.png)
+
 ### Region Growing holes filled 86 regions 30° (2026-04-21 17:06 KST)
 
 ![regions_filled](regions_filled.png)
