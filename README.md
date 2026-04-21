@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Bump Flattening (2026-04-21 19:38 KST)
+
+![bump_flatten](bump_flatten.png)
+
 ### Region Growing fixed normals (2026-04-21 17:20 KST)
 
 ![regions_fixed](regions_fixed.png)
