@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Peel Flatten (2026-04-21 20:17 KST)
+
+![peel_flatten](peel_flatten.png)
+
 ### Bump Blobs (2026-04-21 20:04 KST)
 
 ![bump_blobs](bump_blobs.png)
