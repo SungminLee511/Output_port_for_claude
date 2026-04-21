@@ -6,6 +6,10 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
+### Flat vs Bend Bumps (2026-04-21 20:26 KST)
+
+![flat_bend_bumps](flat_bend_bumps.png)
+
 ### Peel Flatten (2026-04-21 20:17 KST)
 
 ![peel_flatten](peel_flatten.png)
