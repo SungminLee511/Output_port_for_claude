@@ -6,7 +6,7 @@ This repo is used to share result images from Claude Code.
 
 ## Results
 
-### Blob-level Flatten (2026-04-21 20:34 KST)
+### Blob Flatten adj-only (2026-04-21 20:37 KST)
 
 ![blob_flatten](blob_flatten.png)
 
