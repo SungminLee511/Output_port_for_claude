@@ -48,10 +48,12 @@ Per-element binary mask via inverse 4x4 transform → 2D pixel lookup. Gold = ye
 ### Cross: 2D Yellow Input → 3D Labels
 ![phase5_5_cross](phase5_5_cross.png)
 
-## Phase 6: Bump & Cut (2026-04-22 23:04 KST)
+## Phase 6: Bump & Cut (2026-04-22 23:15 KST)
 Yellow = +z bump, Green = -z bump (literal z-axis, pre-fold direction).
 Purple = hole cut (just delete overlapping elements, nothing else).
 Smoothstep ramp, bump_height = ramp_distance = 2×mean_edge_length.
+
+**Fix**: panel_id now propagated from mesher→stitcher→labeler. No more nearest-panel guessing — each element knows its source panel exactly. Eliminates ghost color regions from cross-panel mismatches.
 
 **Separate input images:** `_bump.png` (yellow+green) and `_hole.png` (purple).
 
