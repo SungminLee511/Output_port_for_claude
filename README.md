@@ -4,8 +4,8 @@ This repo is used to share result images from Claude Code.
 
 **Timezone: KST (UTC+9)** — Server time is 9 hours behind KST.
 
-## Origami-Gemini-Gen Phase 3: 3D Folder (2026-04-22 19:00 KST)
+## Origami-Gemini-Gen Phase 4: Mesh Generator (2026-04-22 19:10 KST)
 
-### Folded Panel Wireframes (all 11 PASS)
-![phase3_results](phase3_results.png)
+### 3D Meshes with Fillets (all 11 PASS)
+![phase4_results](phase4_results.png)
 
