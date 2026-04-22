@@ -4,8 +4,8 @@ This repo is used to share result images from Claude Code.
 
 **Timezone: KST (UTC+9)** — Server time is 9 hours behind KST.
 
-## Origami-Gemini-Gen Phase 0: Test Image Generator (2026-04-22 18:29 KST)
+## Origami-Gemini-Gen Phase 1: Image Parser (2026-04-22 18:45 KST)
 
-### All 11 Test Cases (Main + Yellow Overlay)
-![phase0_overview](phase0_overview.png)
+### Ground Truth vs Parsed (all 11 PASS)
+![phase1_results](phase1_results.png)
 
