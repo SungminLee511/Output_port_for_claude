@@ -48,9 +48,16 @@ Per-element binary mask via inverse 4x4 transform → 2D pixel lookup. Gold = ye
 ### Cross: 2D Yellow Input → 3D Labels
 ![phase5_5_cross](phase5_5_cross.png)
 
-## Phase 6: Bump & Cut (2026-04-22 22:48 KST)
+## Phase 6: Bump & Cut (2026-04-22 22:54 KST)
 Yellow = +z bump, Green = -z bump (literal z-axis, pre-fold direction). Purple = hole cut.
 Smoothstep ramp, bump_height = ramp_distance = 2×mean_edge_length.
+
+**Now uses separate input images:** `_bump.png` (yellow+green) and `_hole.png` (purple).
+
+### L-Shape Input: Bump Image vs Hole Image
+| Bump (yellow+green) | Hole (purple) |
+|---|---|
+| ![l_shape_bump](l_shape_bump.png) | ![l_shape_hole](l_shape_hole.png) |
 
 ### Overview: Before vs After (8 cases)
 ![phase6_results](phase6_results.png)
