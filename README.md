@@ -48,14 +48,13 @@ Per-element binary mask via inverse 4x4 transform → 2D pixel lookup. Gold = ye
 ### Cross: 2D Yellow Input → 3D Labels
 ![phase5_5_cross](phase5_5_cross.png)
 
-## Phase 6: Sharp Fold + Bump & Cut (2026-04-22 23:41 KST)
+## Phase 6: Bump & Cut (2026-04-22 23:50 KST)
 
-**Major change**: Removed fillet cylinders and corner patches. Panels snap directly at fold edges with sharp 90° angles (`fillet_radius=0`). Stitcher welds shared fold-line vertices.
+Fillet cylinders + corner patches intact (`fillet_radius=5.0`). Full pipeline through bumper + export.
 
 - Yellow = +z bump, Green = -z bump (literal z-axis, pre-fold direction)
 - Purple = hole cut (just delete overlapping elements)
 - Smoothstep ramp, bump_height = ramp_distance = 2×mean_edge_length
-- Red lines = free edges (boundary edges used by only 1 element)
 
 **Separate input images:** `_bump.png` (yellow+green) and `_hole.png` (purple).
 
