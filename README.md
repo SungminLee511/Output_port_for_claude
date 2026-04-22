@@ -6,7 +6,7 @@ This repo is used to share result images from Claude Code.
 
 ---
 
-# Origami-Gemini-Gen — Full Pipeline Results (2026-04-22 22:00 KST)
+# Origami-Gemini-Gen — Full Pipeline Results (2026-04-22 23:58 KST)
 
 ## Phase 0: Test Image Generator
 11 diverse 전개도 (unfolding diagram) test cases generated programmatically.
@@ -25,11 +25,14 @@ Cascading 90° rotations around fold axes. Panels trimmed by fillet radius.
 ![phase3_results](phase3_results.png)
 
 ## Phase 4: Mesh Generator
-Structured quad grids + quarter-cylinder fillets + spherical corner patches.
+Structured quad grids + quarter-cylinder fillets + spherical corner patches. All 11 cases PASS.
 ![phase4_results](phase4_results.png)
 
 ### L-Shape Detail (3D + Side View)
 ![phase4_lshape](phase4_lshape.png)
+
+### Multi-Case Detail
+![phase4_multi](phase4_multi.png)
 
 ## Phase 5: Stitcher
 Proximity-based free-edge welding + global vertex dedup. Red = free edges.
@@ -38,6 +41,12 @@ Proximity-based free-edge welding + global vertex dedup. Red = free edges.
 ### L-Shape Before vs After
 ![phase5_l_shape](phase5_l_shape.png)
 
+### T-Shape Before vs After
+![phase5_t_shape](phase5_t_shape.png)
+
+### Cross Before vs After
+![phase5_cross](phase5_cross.png)
+
 ## Phase 5.5: Yellow Labeler
 Per-element binary mask via inverse 4x4 transform → 2D pixel lookup. Gold = yellow region.
 ![phase5_5_results](phase5_5_results.png)
@@ -45,25 +54,19 @@ Per-element binary mask via inverse 4x4 transform → 2D pixel lookup. Gold = ye
 ### L-Shape: 2D Yellow Input → 3D Labels
 ![phase5_5_l_shape](phase5_5_l_shape.png)
 
+### T-Shape: 2D Yellow Input → 3D Labels
+![phase5_5_t_shape](phase5_5_t_shape.png)
+
+### U-Shape: 2D Yellow Input → 3D Labels
+![phase5_5_u_shape](phase5_5_u_shape.png)
+
 ### Cross: 2D Yellow Input → 3D Labels
 ![phase5_5_cross](phase5_5_cross.png)
 
-## Phase 6: Bump & Cut (2026-04-22 23:50 KST)
+## Phase 6: Bump & Cut
+Yellow = +z bump, Green = -z bump, Purple = hole cut. Smoothstep ramp.
 
-Fillet cylinders + corner patches intact (`fillet_radius=5.0`). Full pipeline through bumper + export.
-
-- Yellow = +z bump, Green = -z bump (literal z-axis, pre-fold direction)
-- Purple = hole cut (just delete overlapping elements)
-- Smoothstep ramp, bump_height = ramp_distance = 2×mean_edge_length
-
-**Separate input images:** `_bump.png` (yellow+green) and `_hole.png` (purple).
-
-### L-Shape Input: Bump Image vs Hole Image
-| Bump (yellow+green) | Hole (purple) |
-|---|---|
-| ![l_shape_bump](l_shape_bump.png) | ![l_shape_hole](l_shape_hole.png) |
-
-### Overview: Before vs After (8 cases, red = free edges)
+### Overview: Before vs After (8 cases)
 ![phase6_results](phase6_results.png)
 
 ### L-Shape Detail
@@ -74,6 +77,3 @@ Fillet cylinders + corner patches intact (`fillet_radius=5.0`). Full pipeline th
 
 ### Cross Detail
 ![phase6_cross](phase6_cross.png)
-
-## Phase 7: Export
-Torch .pt + OBJ + VTK for all 8 test cases. Roundtrip verified.
