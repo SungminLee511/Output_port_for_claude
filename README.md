@@ -48,12 +48,14 @@ Per-element binary mask via inverse 4x4 transform → 2D pixel lookup. Gold = ye
 ### Cross: 2D Yellow Input → 3D Labels
 ![phase5_5_cross](phase5_5_cross.png)
 
-## Phase 6: Bump & Cut (2026-04-22 23:15 KST)
-Yellow = +z bump, Green = -z bump (literal z-axis, pre-fold direction).
-Purple = hole cut (just delete overlapping elements, nothing else).
-Smoothstep ramp, bump_height = ramp_distance = 2×mean_edge_length.
+## Phase 6: Sharp Fold + Bump & Cut (2026-04-22 23:34 KST)
 
-**Fix**: panel_id now propagated from mesher→stitcher→labeler. No more nearest-panel guessing — each element knows its source panel exactly. Eliminates ghost color regions from cross-panel mismatches.
+**Major change**: Removed fillet cylinders and corner patches. Panels now connect directly at sharp fold edges (`fillet_radius=0`). Stitcher bypassed — just passthrough with free edge reporting.
+
+- Yellow = +z bump, Green = -z bump (literal z-axis, pre-fold direction)
+- Purple = hole cut (just delete overlapping elements)
+- Smoothstep ramp, bump_height = ramp_distance = 2×mean_edge_length
+- Red lines = free edges (boundary edges used by only 1 element)
 
 **Separate input images:** `_bump.png` (yellow+green) and `_hole.png` (purple).
 
@@ -62,7 +64,7 @@ Smoothstep ramp, bump_height = ramp_distance = 2×mean_edge_length.
 |---|---|
 | ![l_shape_bump](l_shape_bump.png) | ![l_shape_hole](l_shape_hole.png) |
 
-### Overview: Before vs After (8 cases)
+### Overview: Before vs After (8 cases, red = free edges)
 ![phase6_results](phase6_results.png)
 
 ### L-Shape Detail
