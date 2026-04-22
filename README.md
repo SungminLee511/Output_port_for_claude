@@ -4,6 +4,22 @@ This repo is used to share result images from Claude Code.
 
 **Timezone: KST (UTC+9)** — Server time is 9 hours behind KST.
 
+## Origami-Gemini-Gen Phase 5: Stitcher (2026-04-22 19:23 KST)
+
+### Before vs After Stitching (red = free edges)
+![phase5_results](phase5_results.png)
+
+### L-Shape Detail
+![phase5_l_shape](phase5_l_shape.png)
+
+### T-Shape Detail
+![phase5_t_shape](phase5_t_shape.png)
+
+### Cross Detail
+![phase5_cross](phase5_cross.png)
+
+---
+
 ## Origami-Gemini-Gen Phase 4 v2: Mesh Generator (2026-04-22 19:20 KST)
 
 ### 3D Meshes — Panels + Fillets + Spherical Corners (all 11 PASS)
