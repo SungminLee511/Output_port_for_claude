@@ -4,26 +4,22 @@
 
 ---
 
-# Origami-Gemini-Gen — Clean Pipeline Run (2026-04-23 00:51 KST)
+# Origami-Gemini-Gen — Full Pipeline (2026-04-23 00:57 KST)
 
-Panel edges snapped to fold_line.position in Phase 1. Zero-gap folds. Connected mesh.
+Panel snap fix v2: float precision (no int rounding at .5 fold positions).
+All 11 cases: zero shared-vertex failures.
 
 ## Phase 0: Test Image Generator
-11 test 전개도 cases with bump/hole overlays.
-![phase0](phase0_20260423_0051.png)
+![phase0](phase0_20260423_0057.png)
 
 ## Phase 1: Image Parser
-Panels, fold lines (red=+z, blue=-z), color masks (Y/G/P).
-![phase1](phase1_20260423_0051.png)
+![phase1](phase1_20260423_0057.png)
 
 ## Phase 2: Topology Builder
-BFS fold tree. Panels snapped to fold lines — no pixel gap.
-![phase2](phase2_20260423_0051.png)
+![phase2](phase2_20260423_0057.png)
 
 ## Phase 3: 3D Folder
-Cascading 90° folds. Panels share edges at fold positions.
-![phase3](phase3_20260423_0051.png)
+![phase3](phase3_20260423_0057.png)
 
 ## Phase 4: Mesh Generator
-Finer mesh (res=2.0). Shared vertices at fold edges. Red = boundary only.
-![phase4](phase4_20260423_0051.png)
+![phase4](phase4_20260423_0057.png)
