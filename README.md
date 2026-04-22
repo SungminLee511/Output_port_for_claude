@@ -4,6 +4,19 @@ This repo is used to share result images from Claude Code.
 
 **Timezone: KST (UTC+9)** — Server time is 9 hours behind KST.
 
+## Origami-Gemini-Gen Phase 5.5+6: Yellow Labeler + Export (2026-04-22 19:29 KST)
+
+### All 8 Cases — Yellow Labels on 3D Mesh (gold = yellow region)
+![phase5_5_results](phase5_5_results.png)
+
+### L-Shape: 2D Yellow Input → 3D Labels
+![phase5_5_l_shape](phase5_5_l_shape.png)
+
+### Cross: 2D Yellow Input → 3D Labels
+![phase5_5_cross](phase5_5_cross.png)
+
+---
+
 ## Origami-Gemini-Gen Phase 5: Stitcher (2026-04-22 19:23 KST)
 
 ### Before vs After Stitching (red = free edges)
