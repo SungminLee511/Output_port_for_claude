@@ -47,22 +47,6 @@ Proximity-based free-edge welding + global vertex dedup. Red = free edges.
 ### Cross Before vs After
 ![phase5_cross](phase5_cross.png)
 
-## Phase 5.5: Yellow Labeler
-Per-element binary mask via inverse 4x4 transform → 2D pixel lookup. Gold = yellow region.
-![phase5_5_results](phase5_5_results.png)
-
-### L-Shape: 2D Yellow Input → 3D Labels
-![phase5_5_l_shape](phase5_5_l_shape.png)
-
-### T-Shape: 2D Yellow Input → 3D Labels
-![phase5_5_t_shape](phase5_5_t_shape.png)
-
-### U-Shape: 2D Yellow Input → 3D Labels
-![phase5_5_u_shape](phase5_5_u_shape.png)
-
-### Cross: 2D Yellow Input → 3D Labels
-![phase5_5_cross](phase5_5_cross.png)
-
 ## Phase 6: Bump & Cut
 Yellow = +z bump, Green = -z bump, Purple = hole cut. Smoothstep ramp.
 
