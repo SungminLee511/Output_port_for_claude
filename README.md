@@ -6,45 +6,25 @@ This repo is used to share result images from Claude Code.
 
 ---
 
-# Origami-Gemini-Gen — Full Pipeline Results (2026-04-22 23:58 KST)
+# Origami-Gemini-Gen — Sharp Fold Rewrite (2026-04-23 KST)
 
-## Phase 0: Test Image Generator
-11 diverse 전개도 (unfolding diagram) test cases generated programmatically.
-![phase0_overview](phase0_overview.png)
+**Changes:** Removed fillets, corner patches, stitcher. Panels snap together at fold edges. Sharp 90° folds with shared vertices.
 
-## Phase 1: Image Parser
-Panel extraction, fold line detection (red=+z, blue=-z), yellow region segmentation.
-![phase1_results](phase1_results.png)
-
-## Phase 2: Topology Builder
-BFS fold tree from panel adjacency graph. Root = largest panel.
-![phase2_results](phase2_results.png)
-
-## Phase 3: 3D Folder
-Cascading 90° rotations around fold axes. Panels trimmed by fillet radius.
-![phase3_results](phase3_results.png)
-
-## Phase 4: Mesh Generator
-Structured quad grids + quarter-cylinder fillets + spherical corner patches. All 11 cases PASS.
+## Phase 4: Mesh Generator (rewritten)
+Structured quad grids per panel. Shared vertices at fold edges via tight-epsilon weld. No fillets, no tris. Red = free edges.
 ![phase4_results](phase4_results.png)
 
-### L-Shape Detail (3D + Side View)
-![phase4_lshape](phase4_lshape.png)
-
-### Multi-Case Detail
-![phase4_multi](phase4_multi.png)
-
-## Phase 5: Stitcher
-Proximity-based free-edge welding + global vertex dedup. Red = free edges.
+## Phase 5: Free Edge QA (rewritten — plot only)
+No stitching. Just visualize free edges as red lines for QA.
 ![phase5_results](phase5_results.png)
 
-### L-Shape Before vs After
+### L-Shape (3D + Side)
 ![phase5_l_shape](phase5_l_shape.png)
 
-### T-Shape Before vs After
+### T-Shape (3D + Side)
 ![phase5_t_shape](phase5_t_shape.png)
 
-### Cross Before vs After
+### Cross (3D + Side)
 ![phase5_cross](phase5_cross.png)
 
 ## Phase 6: Bump & Cut
