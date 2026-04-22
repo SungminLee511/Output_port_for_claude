@@ -26,8 +26,9 @@ BFS fold tree. Root = largest panel. Color = BFS depth.
 Cascading 90° folds. No fillet gap — panels touch at fold edges.
 ![phase3_results](phase3_results.png)
 
-## Phase 4: Mesh Generator
-Structured quad grids. Shared vertices at fold edges. Red = free edges.
+## Phase 4: Mesh Generator (FIXED — 2026-04-23 00:30 KST)
+Fold-edge snapping fix: panels snap to fold_line.position, shared vertex spacing.
+Finer mesh (resolution=2.0). Internal shared edges confirmed across all 11 cases.
 ![phase4_results](phase4_results.png)
 
 ## Phase 5: Free Edge QA
