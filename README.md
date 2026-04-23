@@ -4,45 +4,30 @@
 
 ---
 
-# Origami-Gemini-Gen — Full Pipeline (2026-04-23 11:47 KST)
+# Origami-Gemini-Gen — Phase 5a Stitch + Phase 6 (2026-04-23 12:18 KST)
 
-Structural vertex sharing at fold edges. All 33 folds connected. Phases 0-6.
+Phase 5a stitcher: most cases 0 weld pairs (edges not close enough after fold). Staircase got 42 pairs at res=2.5.
 
-## Phase 0: Test Image Generator
-![phase0](phase0_20260423_1147.png)
+## Phase 5a: Proximity Stitching — Overview
+![phase5a_results](phase5a_results.png)
 
-## Phase 1: Image Parser
-![phase1](phase1_20260423_1147.png)
-
-## Phase 2: Topology Builder
-![phase2](phase2_20260423_1147.png)
-
-## Phase 3: 3D Folder
-![phase3](phase3_20260423_1147.png)
-
-## Phase 4: Mesh Generator
-![phase4](phase4_20260423_1147.png)
-
-## Phase 5: Free Edge QA
-![phase5](phase5_20260423_1147.png)
-
-### L-Shape Detail
-![phase5_lshape](phase5_lshape_20260423_1147.png)
-
-### T-Shape Detail
-![phase5_tshape](phase5_tshape_20260423_1147.png)
+### Box Unfolding Detail
+![phase5a_box](phase5a_box_unfolding.png)
 
 ### Cross Detail
-![phase5_cross](phase5_cross_20260423_1147.png)
-
-## Phase 6: Bump & Cut
-![phase6](phase6_20260423_1147.png)
+![phase5a_cross](phase5a_cross.png)
 
 ### L-Shape Detail
-![phase6_lshape](phase6_lshape_20260423_1147.png)
+![phase5a_lshape](phase5a_l_shape.png)
+
+## Phase 6: Bump & Cut — Overview
+![phase6_results](phase6_results.png)
+
+### L-Shape Detail
+![phase6_lshape](phase6_l_shape.png)
 
 ### T-Shape Detail
-![phase6_tshape](phase6_tshape_20260423_1147.png)
+![phase6_tshape](phase6_t_shape.png)
 
 ### Cross Detail
-![phase6_cross](phase6_cross_20260423_1147.png)
+![phase6_cross](phase6_cross.png)
