@@ -1,32 +1,14 @@
-# Origami-Gemini-Gen — Full Pipeline Test Results
-Updated: 2026-04-23 13:25:33 KST
+# Phase 5b: Topology Repair Results
+Updated: 2026-04-23 13:49:05 KST
 
-## Phase 0: Test Image Generator
-![phase0](phase0_overview.png)
+## Overview (5a vs 5b, red = free edges)
+![overview](phase5b_results.png)
 
-## Phase 1: Image Parser
-![phase1](phase1_results.png)
+## box_unfolding detail (952 → 240 free edges, 712 fixed)
+![box](phase5b_box_unfolding.png)
 
-## Phase 2: Topology Builder
-![phase2](phase2_results.png)
+## cross detail (572 → 552 free edges, 20 fixed)
+![cross](phase5b_cross.png)
 
-## Phase 3: 3D Folder
-![phase3](phase3_results.png)
-
-## Phase 4: Mesh Generator
-![phase4](phase4_results.png)
-
-## Phase 5: Stitcher
-![phase5](phase5a_results.png)
-
-## Phase 6: Bump & Cut (Overview)
-![phase6](phase6_results.png)
-
-## Phase 6: Bump & Cut (L-shape detail)
-![phase6_l](phase6_l_shape.png)
-
-## Phase 6: Bump & Cut (Cross detail)
-![phase6_cross](phase6_cross.png)
-
-## Phase 6: Bump & Cut (T-shape detail)
-![phase6_t](phase6_t_shape.png)
+## l_shape detail (334 → 328 free edges, 6 fixed)
+![lshape](phase5b_l_shape.png)
