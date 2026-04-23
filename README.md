@@ -1,21 +1,32 @@
-# Output Port for Claude
+# Origami-Gemini-Gen — Full Pipeline Test Results
+Updated: 2026-04-23 13:25:33 KST
 
-**Timezone: KST (UTC+9)**
+## Phase 0: Test Image Generator
+![phase0](phase0_overview.png)
 
----
+## Phase 1: Image Parser
+![phase1](phase1_results.png)
 
-# Origami-Gemini-Gen — Phase 5a Stitch (2026-04-23 12:52 KST)
+## Phase 2: Topology Builder
+![phase2](phase2_results.png)
 
-Updated phase 5a results after stitcher fixes. Cross: 128 weld pairs, box_unfolding: 248 weld pairs. Significant improvement.
+## Phase 3: 3D Folder
+![phase3](phase3_results.png)
 
-## Phase 5a: Proximity Stitching — Overview
-![phase5a_results](phase5a_results.png)
+## Phase 4: Mesh Generator
+![phase4](phase4_results.png)
 
-### Box Unfolding Detail
-![phase5a_box](phase5a_box_unfolding.png)
+## Phase 5: Stitcher
+![phase5](phase5a_results.png)
 
-### Cross Detail
-![phase5a_cross](phase5a_cross.png)
+## Phase 6: Bump & Cut (Overview)
+![phase6](phase6_results.png)
 
-### L-Shape Detail
-![phase5a_lshape](phase5a_l_shape.png)
+## Phase 6: Bump & Cut (L-shape detail)
+![phase6_l](phase6_l_shape.png)
+
+## Phase 6: Bump & Cut (Cross detail)
+![phase6_cross](phase6_cross.png)
+
+## Phase 6: Bump & Cut (T-shape detail)
+![phase6_t](phase6_t_shape.png)
