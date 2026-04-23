@@ -4,9 +4,9 @@
 
 ---
 
-# Origami-Gemini-Gen — Phase 5a Stitch + Phase 6 (2026-04-23 12:18 KST)
+# Origami-Gemini-Gen — Phase 5a Stitch (2026-04-23 12:52 KST)
 
-Phase 5a stitcher: most cases 0 weld pairs (edges not close enough after fold). Staircase got 42 pairs at res=2.5.
+Updated phase 5a results after stitcher fixes. Cross: 128 weld pairs, box_unfolding: 248 weld pairs. Significant improvement.
 
 ## Phase 5a: Proximity Stitching — Overview
 ![phase5a_results](phase5a_results.png)
@@ -19,15 +19,3 @@ Phase 5a stitcher: most cases 0 weld pairs (edges not close enough after fold). 
 
 ### L-Shape Detail
 ![phase5a_lshape](phase5a_l_shape.png)
-
-## Phase 6: Bump & Cut — Overview
-![phase6_results](phase6_results.png)
-
-### L-Shape Detail
-![phase6_lshape](phase6_l_shape.png)
-
-### T-Shape Detail
-![phase6_tshape](phase6_t_shape.png)
-
-### Cross Detail
-![phase6_cross](phase6_cross.png)
