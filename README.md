@@ -1,35 +1,67 @@
-# Origami-Gemini-Gen — Full Pipeline Test Results
-Updated: 2026-04-23 14:00:21 KST
+# Origami-Gemini-Gen — Full Pipeline Results
+Updated: 2026-04-24 14:03 KST
 
-## Phase 0: Test Image Generator
-![phase0](phase0_overview.png)
+ALL 11 CASES PASSED — Phase 0 through Phase 7, zero degenerate elements.
 
-## Phase 1: Image Parser
-![phase1](phase1_results.png)
+## Features Tested
+- Non-rectangular blobs (circle, ellipse, polygon, organic)
+- Clean hole boundary snapping
+- Heightmap z-displacement (curved planes)
+- Full pipeline regression (stitch, bump, cut, export)
 
-## Phase 2: Topology Builder
-![phase2](phase2_results.png)
+## Overview — Flat vs Heightmap (all cases)
+![Overview](all_phases_overview.png)
 
-## Phase 3: 3D Folder
-![phase3](phase3_results.png)
+## Per-Case Detail
 
-## Phase 4: Mesh Generator
-![phase4](phase4_results.png)
+### l_shape
+![l_shape](detail_l_shape.png)
 
-## Phase 5a: Stitcher
-![phase5a](phase5a_results.png)
+### t_shape
+![t_shape](detail_t_shape.png)
 
-## Phase 5b: Topology Repair (red = free edges)
-![phase5b](phase5b_results.png)
+### cross
+![cross](detail_cross.png)
 
-## Phase 5b: box_unfolding detail (952 → 240)
-![phase5b_box](phase5b_box_unfolding.png)
+### u_shape
+![u_shape](detail_u_shape.png)
 
-## Phase 6: Bump & Cut (Overview)
-![phase6](phase6_results.png)
+### box_unfolding
+![box_unfolding](detail_box_unfolding.png)
 
-## Phase 6: L-shape detail
-![phase6_l](phase6_l_shape.png)
+### branching_tree
+![branching_tree](detail_branching_tree.png)
 
-## Phase 6: Cross detail
-![phase6_cross](phase6_cross.png)
+### h_shape
+![h_shape](detail_h_shape.png)
+
+### staircase
+![staircase](detail_staircase.png)
+
+### l_shape_nonrect
+![l_shape_nonrect](detail_l_shape_nonrect.png)
+
+### cross_nonrect
+![cross_nonrect](detail_cross_nonrect.png)
+
+### t_shape_nonrect
+![t_shape_nonrect](detail_t_shape_nonrect.png)
+
+## Non-Rectangular Blobs Close-Up
+![nonrect](nonrect_blobs_detail.png)
+
+## Summary Table
+
+| Case | Status | Degen | Elems | HM verts |
+|------|--------|-------|-------|----------|
+| l_shape | PASS | 0 | 3838 | 3788 |
+| t_shape | PASS | 0 | 7659 | 6104 |
+| cross | PASS | 0 | 26148 | 25765 |
+| u_shape | PASS | 0 | 6981 | 178 |
+| box_unfolding | PASS | 0 | 17352 | 15847 |
+| branching_tree | PASS | 0 | 27682 | 21540 |
+| h_shape | PASS | 0 | 15223 | 15203 |
+| staircase | PASS | 0 | 21528 | 21507 |
+| l_shape_nonrect | PASS | 0 | 5709 | 159 |
+| cross_nonrect | PASS | 0 | 20295 | 18402 |
+| t_shape_nonrect | PASS | 0 | 9520 | 7505 |
