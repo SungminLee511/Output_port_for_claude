@@ -1,42 +1,290 @@
 # Origami-Gemini-Gen — Per-Phase Results
-Updated: 2026-04-24 14:45 KST
+Updated: 2026-04-24 14:51 KST
 
 ALL 11 CASES PASSED. Boundary buffer baked into PNG + runtime ramp.
-Each row: Main | Bump(Y/G) | Hole(P) | Heightmap(Viridis+buffer) | Mesh+Stitch | Bump+Cut
 
-## l_shape
-![l_shape](phases_l_shape_20260424_1445.png)
+---
+## Phase 0: Input Images
 
-## t_shape
-![t_shape](phases_t_shape_20260424_1445.png)
+### Main (Panels+Folds)
 
-## cross
-![cross](phases_cross_20260424_1445.png)
+**l_shape**
 
-## u_shape
-![u_shape](phases_u_shape_20260424_1445.png)
+![l_shape_main](P0_main_l_shape_20260424_1451.png)
 
-## box_unfolding
-![box_unfolding](phases_box_unfolding_20260424_1445.png)
+**t_shape**
 
-## branching_tree
-![branching_tree](phases_branching_tree_20260424_1445.png)
+![t_shape_main](P0_main_t_shape_20260424_1451.png)
 
-## h_shape
-![h_shape](phases_h_shape_20260424_1445.png)
+**cross**
 
-## staircase
-![staircase](phases_staircase_20260424_1445.png)
+![cross_main](P0_main_cross_20260424_1451.png)
 
-## l_shape_nonrect
-![l_shape_nonrect](phases_l_shape_nonrect_20260424_1445.png)
+**u_shape**
 
-## cross_nonrect
-![cross_nonrect](phases_cross_nonrect_20260424_1445.png)
+![u_shape_main](P0_main_u_shape_20260424_1451.png)
 
-## t_shape_nonrect
-![t_shape_nonrect](phases_t_shape_nonrect_20260424_1445.png)
+**box_unfolding**
 
+![box_unfolding_main](P0_main_box_unfolding_20260424_1451.png)
+
+**branching_tree**
+
+![branching_tree_main](P0_main_branching_tree_20260424_1451.png)
+
+**h_shape**
+
+![h_shape_main](P0_main_h_shape_20260424_1451.png)
+
+**staircase**
+
+![staircase_main](P0_main_staircase_20260424_1451.png)
+
+**l_shape_nonrect**
+
+![l_shape_nonrect_main](P0_main_l_shape_nonrect_20260424_1451.png)
+
+**cross_nonrect**
+
+![cross_nonrect_main](P0_main_cross_nonrect_20260424_1451.png)
+
+**t_shape_nonrect**
+
+![t_shape_nonrect_main](P0_main_t_shape_nonrect_20260424_1451.png)
+
+### Bump (Yellow/Green)
+
+**l_shape**
+
+![l_shape_bump](P0_bump_l_shape_20260424_1451.png)
+
+**t_shape**
+
+![t_shape_bump](P0_bump_t_shape_20260424_1451.png)
+
+**cross**
+
+![cross_bump](P0_bump_cross_20260424_1451.png)
+
+**u_shape**
+
+![u_shape_bump](P0_bump_u_shape_20260424_1451.png)
+
+**box_unfolding**
+
+![box_unfolding_bump](P0_bump_box_unfolding_20260424_1451.png)
+
+**branching_tree**
+
+![branching_tree_bump](P0_bump_branching_tree_20260424_1451.png)
+
+**h_shape**
+
+![h_shape_bump](P0_bump_h_shape_20260424_1451.png)
+
+**staircase**
+
+![staircase_bump](P0_bump_staircase_20260424_1451.png)
+
+**l_shape_nonrect**
+
+![l_shape_nonrect_bump](P0_bump_l_shape_nonrect_20260424_1451.png)
+
+**cross_nonrect**
+
+![cross_nonrect_bump](P0_bump_cross_nonrect_20260424_1451.png)
+
+**t_shape_nonrect**
+
+![t_shape_nonrect_bump](P0_bump_t_shape_nonrect_20260424_1451.png)
+
+### Hole (Purple)
+
+**l_shape**
+
+![l_shape_hole](P0_hole_l_shape_20260424_1451.png)
+
+**t_shape**
+
+![t_shape_hole](P0_hole_t_shape_20260424_1451.png)
+
+**cross**
+
+![cross_hole](P0_hole_cross_20260424_1451.png)
+
+**u_shape**
+
+![u_shape_hole](P0_hole_u_shape_20260424_1451.png)
+
+**box_unfolding**
+
+![box_unfolding_hole](P0_hole_box_unfolding_20260424_1451.png)
+
+**branching_tree**
+
+![branching_tree_hole](P0_hole_branching_tree_20260424_1451.png)
+
+**h_shape**
+
+![h_shape_hole](P0_hole_h_shape_20260424_1451.png)
+
+**staircase**
+
+![staircase_hole](P0_hole_staircase_20260424_1451.png)
+
+**l_shape_nonrect**
+
+![l_shape_nonrect_hole](P0_hole_l_shape_nonrect_20260424_1451.png)
+
+**cross_nonrect**
+
+![cross_nonrect_hole](P0_hole_cross_nonrect_20260424_1451.png)
+
+**t_shape_nonrect**
+
+![t_shape_nonrect_hole](P0_hole_t_shape_nonrect_20260424_1451.png)
+
+### Heightmap (Viridis+Buffer)
+
+**l_shape**
+
+![l_shape_heightmap](P0_heightmap_l_shape_20260424_1451.png)
+
+**t_shape**
+
+![t_shape_heightmap](P0_heightmap_t_shape_20260424_1451.png)
+
+**cross**
+
+![cross_heightmap](P0_heightmap_cross_20260424_1451.png)
+
+**u_shape**
+
+![u_shape_heightmap](P0_heightmap_u_shape_20260424_1451.png)
+
+**box_unfolding**
+
+![box_unfolding_heightmap](P0_heightmap_box_unfolding_20260424_1451.png)
+
+**branching_tree**
+
+![branching_tree_heightmap](P0_heightmap_branching_tree_20260424_1451.png)
+
+**h_shape**
+
+![h_shape_heightmap](P0_heightmap_h_shape_20260424_1451.png)
+
+**staircase**
+
+![staircase_heightmap](P0_heightmap_staircase_20260424_1451.png)
+
+**l_shape_nonrect**
+
+![l_shape_nonrect_heightmap](P0_heightmap_l_shape_nonrect_20260424_1451.png)
+
+**cross_nonrect**
+
+![cross_nonrect_heightmap](P0_heightmap_cross_nonrect_20260424_1451.png)
+
+**t_shape_nonrect**
+
+![t_shape_nonrect_heightmap](P0_heightmap_t_shape_nonrect_20260424_1451.png)
+
+---
+## Phase 4-5: Mesh + Stitch (before bump)
+
+**l_shape**
+
+![l_shape_stitch](P45_stitch_l_shape_20260424_1451.png)
+
+**t_shape**
+
+![t_shape_stitch](P45_stitch_t_shape_20260424_1451.png)
+
+**cross**
+
+![cross_stitch](P45_stitch_cross_20260424_1451.png)
+
+**u_shape**
+
+![u_shape_stitch](P45_stitch_u_shape_20260424_1451.png)
+
+**box_unfolding**
+
+![box_unfolding_stitch](P45_stitch_box_unfolding_20260424_1451.png)
+
+**branching_tree**
+
+![branching_tree_stitch](P45_stitch_branching_tree_20260424_1451.png)
+
+**h_shape**
+
+![h_shape_stitch](P45_stitch_h_shape_20260424_1451.png)
+
+**staircase**
+
+![staircase_stitch](P45_stitch_staircase_20260424_1451.png)
+
+**l_shape_nonrect**
+
+![l_shape_nonrect_stitch](P45_stitch_l_shape_nonrect_20260424_1451.png)
+
+**cross_nonrect**
+
+![cross_nonrect_stitch](P45_stitch_cross_nonrect_20260424_1451.png)
+
+**t_shape_nonrect**
+
+![t_shape_nonrect_stitch](P45_stitch_t_shape_nonrect_20260424_1451.png)
+
+---
+## Phase 6: Bump + Cut (final)
+
+**l_shape**
+
+![l_shape_final](P6_final_l_shape_20260424_1451.png)
+
+**t_shape**
+
+![t_shape_final](P6_final_t_shape_20260424_1451.png)
+
+**cross**
+
+![cross_final](P6_final_cross_20260424_1451.png)
+
+**u_shape**
+
+![u_shape_final](P6_final_u_shape_20260424_1451.png)
+
+**box_unfolding**
+
+![box_unfolding_final](P6_final_box_unfolding_20260424_1451.png)
+
+**branching_tree**
+
+![branching_tree_final](P6_final_branching_tree_20260424_1451.png)
+
+**h_shape**
+
+![h_shape_final](P6_final_h_shape_20260424_1451.png)
+
+**staircase**
+
+![staircase_final](P6_final_staircase_20260424_1451.png)
+
+**l_shape_nonrect**
+
+![l_shape_nonrect_final](P6_final_l_shape_nonrect_20260424_1451.png)
+
+**cross_nonrect**
+
+![cross_nonrect_final](P6_final_cross_nonrect_20260424_1451.png)
+
+**t_shape_nonrect**
+
+![t_shape_nonrect_final](P6_final_t_shape_nonrect_20260424_1451.png)
+
+---
 ## Summary
 
 | Case | Status | Degen | Elems | MinArea |
