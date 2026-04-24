@@ -1,12 +1,13 @@
 # Origami-Gemini-Gen — Full Pipeline Results
-Updated: 2026-04-24 14:09 KST
+Updated: 2026-04-24 14:19 KST
 
 ALL 11 CASES PASSED — Phase 0 through Phase 7, zero degenerate elements.
-Heightmap DEACTIVATED pending redesign.
+Heightmap REACTIVATED — viridis colormap + boundary buffer (10% ramp).
 
 ## Features Tested
 - Non-rectangular blobs (circle, ellipse, polygon, organic)
 - Clean hole boundary snapping
+- Viridis heightmap z-displacement with boundary buffer
 - Full pipeline regression (stitch, bump, cut, export)
 
 ## Overview — All Cases
@@ -54,14 +55,14 @@ Heightmap DEACTIVATED pending redesign.
 
 | Case | Status | Degen | Elems | MinArea |
 |------|--------|-------|-------|---------|
-| l_shape | PASS | 0 | 3838 | 0.002004 |
-| t_shape | PASS | 0 | 7659 | 0.010469 |
+| l_shape | PASS | 0 | 3838 | 0.299041 |
+| t_shape | PASS | 0 | 7659 | 0.314984 |
 | cross | PASS | 0 | 26148 | 0.242367 |
 | u_shape | PASS | 0 | 6981 | 0.041435 |
-| box_unfolding | PASS | 0 | 17352 | 0.000434 |
+| box_unfolding | PASS | 0 | 17352 | 0.000439 |
 | branching_tree | PASS | 0 | 27682 | 0.000143 |
-| h_shape | PASS | 0 | 15223 | 0.004020 |
-| staircase | PASS | 0 | 21528 | 0.001642 |
+| h_shape | PASS | 0 | 15223 | 0.003736 |
+| staircase | PASS | 0 | 21528 | 0.001692 |
 | l_shape_nonrect | PASS | 0 | 5709 | 0.009836 |
-| cross_nonrect | PASS | 0 | 20295 | 0.000343 |
-| t_shape_nonrect | PASS | 0 | 9520 | 0.028825 |
+| cross_nonrect | PASS | 0 | 20295 | 0.000344 |
+| t_shape_nonrect | PASS | 0 | 9520 | 0.221733 |
