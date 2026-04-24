@@ -1,49 +1,40 @@
-# Origami-Gemini-Gen — Full Pipeline Results
-Updated: 2026-04-24 14:26 KST
+# Origami-Gemini-Gen — Per-Phase Pipeline Results
+Updated: 2026-04-24 14:31 KST
 
-ALL 11 CASES PASSED — Phase 0-7, zero degenerate elements.
-Overlay removed. Viridis heightmap + boundary buffer active.
+ALL 11 CASES PASSED. Each image shows: Main | Bump(Y/G) | Hole(P) | Heightmap(Viridis) | Mesh+Stitch | Bump+Cut
 
-## Overview
-![Overview](all_phases_overview_20260424_1426.png)
+## l_shape
+![l_shape](phases_l_shape_20260424_1431.png)
 
-## Per-Case Detail
+## t_shape
+![t_shape](phases_t_shape_20260424_1431.png)
 
-### l_shape
-![l_shape](detail_l_shape_20260424_1426.png)
+## cross
+![cross](phases_cross_20260424_1431.png)
 
-### t_shape
-![t_shape](detail_t_shape_20260424_1426.png)
+## u_shape
+![u_shape](phases_u_shape_20260424_1431.png)
 
-### cross
-![cross](detail_cross_20260424_1426.png)
+## box_unfolding
+![box_unfolding](phases_box_unfolding_20260424_1431.png)
 
-### u_shape
-![u_shape](detail_u_shape_20260424_1426.png)
+## branching_tree
+![branching_tree](phases_branching_tree_20260424_1431.png)
 
-### box_unfolding
-![box_unfolding](detail_box_unfolding_20260424_1426.png)
+## h_shape
+![h_shape](phases_h_shape_20260424_1431.png)
 
-### branching_tree
-![branching_tree](detail_branching_tree_20260424_1426.png)
+## staircase
+![staircase](phases_staircase_20260424_1431.png)
 
-### h_shape
-![h_shape](detail_h_shape_20260424_1426.png)
+## l_shape_nonrect
+![l_shape_nonrect](phases_l_shape_nonrect_20260424_1431.png)
 
-### staircase
-![staircase](detail_staircase_20260424_1426.png)
+## cross_nonrect
+![cross_nonrect](phases_cross_nonrect_20260424_1431.png)
 
-### l_shape_nonrect
-![l_shape_nonrect](detail_l_shape_nonrect_20260424_1426.png)
-
-### cross_nonrect
-![cross_nonrect](detail_cross_nonrect_20260424_1426.png)
-
-### t_shape_nonrect
-![t_shape_nonrect](detail_t_shape_nonrect_20260424_1426.png)
-
-## Non-Rectangular Blobs
-![nonrect](nonrect_blobs_detail_20260424_1426.png)
+## t_shape_nonrect
+![t_shape_nonrect](phases_t_shape_nonrect_20260424_1431.png)
 
 ## Summary
 
