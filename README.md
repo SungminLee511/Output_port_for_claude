@@ -1,57 +1,51 @@
 # Origami-Gemini-Gen — Full Pipeline Results
-Updated: 2026-04-24 14:19 KST
+Updated: 2026-04-24 14:26 KST
 
-ALL 11 CASES PASSED — Phase 0 through Phase 7, zero degenerate elements.
-Heightmap REACTIVATED — viridis colormap + boundary buffer (10% ramp).
+ALL 11 CASES PASSED — Phase 0-7, zero degenerate elements.
+Overlay removed. Viridis heightmap + boundary buffer active.
 
-## Features Tested
-- Non-rectangular blobs (circle, ellipse, polygon, organic)
-- Clean hole boundary snapping
-- Viridis heightmap z-displacement with boundary buffer
-- Full pipeline regression (stitch, bump, cut, export)
-
-## Overview — All Cases
-![Overview](all_phases_overview.png)
+## Overview
+![Overview](all_phases_overview_20260424_1426.png)
 
 ## Per-Case Detail
 
 ### l_shape
-![l_shape](detail_l_shape.png)
+![l_shape](detail_l_shape_20260424_1426.png)
 
 ### t_shape
-![t_shape](detail_t_shape.png)
+![t_shape](detail_t_shape_20260424_1426.png)
 
 ### cross
-![cross](detail_cross.png)
+![cross](detail_cross_20260424_1426.png)
 
 ### u_shape
-![u_shape](detail_u_shape.png)
+![u_shape](detail_u_shape_20260424_1426.png)
 
 ### box_unfolding
-![box_unfolding](detail_box_unfolding.png)
+![box_unfolding](detail_box_unfolding_20260424_1426.png)
 
 ### branching_tree
-![branching_tree](detail_branching_tree.png)
+![branching_tree](detail_branching_tree_20260424_1426.png)
 
 ### h_shape
-![h_shape](detail_h_shape.png)
+![h_shape](detail_h_shape_20260424_1426.png)
 
 ### staircase
-![staircase](detail_staircase.png)
+![staircase](detail_staircase_20260424_1426.png)
 
 ### l_shape_nonrect
-![l_shape_nonrect](detail_l_shape_nonrect.png)
+![l_shape_nonrect](detail_l_shape_nonrect_20260424_1426.png)
 
 ### cross_nonrect
-![cross_nonrect](detail_cross_nonrect.png)
+![cross_nonrect](detail_cross_nonrect_20260424_1426.png)
 
 ### t_shape_nonrect
-![t_shape_nonrect](detail_t_shape_nonrect.png)
+![t_shape_nonrect](detail_t_shape_nonrect_20260424_1426.png)
 
-## Non-Rectangular Blobs Close-Up
-![nonrect](nonrect_blobs_detail.png)
+## Non-Rectangular Blobs
+![nonrect](nonrect_blobs_detail_20260424_1426.png)
 
-## Summary Table
+## Summary
 
 | Case | Status | Degen | Elems | MinArea |
 |------|--------|-------|-------|---------|
