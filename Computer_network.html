@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Thoughts Along the Way — Computer Networking</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 860px; margin: 40px auto; padding: 0 20px; font-size: 15px; line-height: 1.6; color: #111; }
+  h1 { font-size: 22px; border-bottom: 2px solid #000; padding-bottom: 6px; }
+  h2 { font-size: 17px; margin-top: 36px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+  .q { font-weight: bold; margin-top: 20px; }
+  p { margin: 6px 0; }
+  ul { margin: 6px 0 6px 20px; }
+  li { margin-bottom: 3px; }
+  .note { background: #f5f5f5; border-left: 3px solid #999; padding: 6px 12px; margin: 8px 0; font-size: 14px; }
+  a { color: #333; }
+  .divider { border: none; border-top: 1px dashed #ccc; margin: 20px 0; }
+</style>
+</head>
+<body>
+
+<h1>Thoughts Along the Way — Computer Networking</h1>
+<p><em>A running log of questions and answers, organized by topic.</em></p>
+<hr/>
+
+<h2>Table of Contents</h2>
+<ul>
+  <li><a href="#ip-routing">§1 — IP Addressing, NAT &amp; Routing</a>
+    <ul>
+      <li><a href="#q1-1">Do routers have IP addresses? Are they subjects of packets?</a></li>
+      <li><a href="#q1-2">Does a domain like google.com map to a single IP / single machine?</a></li>
+      <li><a href="#q1-3">Is it true every machine has a unique IP address?</a></li>
+      <li><a href="#q1-4">How are IP addresses assigned? At manufacture?</a></li>
+      <li><a href="#q1-5">So my laptop doesn't have an IP address?</a></li>
+      <li><a href="#q1-6">Is the router's public IP what's seen externally? Could the router itself be behind another router?</a></li>
+      <li><a href="#q1-7">Is IPv6 the same as IPv4 but with more characters?</a></li>
+      <li><a href="#q1-8">Must a server have its own public IP with no NAT bottlenecks?</a></li>
+    </ul>
+  </li>
+  <li><a href="#packets">§2 — Packets &amp; Data Transmission</a>
+    <ul>
+      <li><a href="#q2-1">What happens when a packet exceeds maximum packet size?</a></li>
+      <li><a href="#q2-2">Why does TCP use byte positions for sequencing rather than packet numbers?</a></li>
+    </ul>
+  </li>
+  <li><a href="#distributed">§3 — Distributed Systems &amp; Servers</a>
+    <ul>
+      <li><a href="#q3-1">How do distributed services handle databases and cookies across multiple machines? How do code updates work without downtime?</a></li>
+    </ul>
+  </li>
+  <li><a href="#protocols">§4 — Protocols &amp; the Internet's Nature</a>
+    <ul>
+      <li><a href="#q4-1">Is the internet more of a protocol/format globally agreed upon? Can protocols be updated globally? Does the kernel manage protocols?</a></li>
+    </ul>
+  </li>
+  <li><a href="#p2p">§5 — P2P Networks</a>
+    <ul>
+      <li><a href="#q5-1">Is Telegram a peer-to-peer network?</a></li>
+      <li><a href="#q5-2">Do P2P chat apps exist? How do they handle floating IPs? How did Napster handle it?</a></li>
+      <li><a href="#q5-3">If all BitTorrent nodes go offline and reconnect with new IPs, wouldn't the hash tables be worthless?</a></li>
+    </ul>
+  </li>
+  <li><a href="#sockets">§6 — Sockets &amp; Ports</a>
+    <ul>
+      <li><a href="#q6-1">How does a kernel differentiate packets arriving at the same port from many clients?</a></li>
+      <li><a href="#q6-2">What is the actual point of ports if the 5-tuple does the real differentiation work?</a></li>
+      <li><a href="#q6-3">What happens if two separate browser processes connect to google.com simultaneously from the same machine?</a></li>
+      <li><a href="#q6-4">So a socket is made between processes, and ports make that possible?</a></li>
+    </ul>
+  </li>
+</ul>
+<hr/>
+
+<!-- ============================================================ -->
+
+<h2 id="ip-routing">§1 — IP Addressing, NAT &amp; Routing</h2>
+
+<div id="q1-1">
+  <p class="q">Q: Do routers also have IP addresses? And if they do, are they also a subject of packets?</p>
+  <p>Yes. Routers have multiple network interfaces (ports), and each interface gets its own IP address — one per connected network.</p>
+  <p><strong>Example:</strong> A home router has a LAN-side IP (e.g. 192.168.1.1) facing local devices, and a WAN-side IP assigned by the ISP.</p>
+  <p><strong>Are routers subjects of packets?</strong></p>
+  <ul>
+    <li><strong>Passing-through traffic</strong> — the router is NOT the destination. It reads the destination IP, decrements the TTL, and forwards onward.</li>
+    <li><strong>Direct traffic</strong> (e.g. pinging your gateway, traceroute) — the router IS the destination.</li>
+    <li><strong>Routing protocol traffic</strong> (OSPF, BGP) — routers exchange packets with each other directly as sender and receiver.</li>
+  </ul>
+  <div class="note">Key terms: Network Interface · Default Gateway · Routing Table · TTL · ICMP</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q1-2">
+  <p class="q">Q: Does a domain like google.com really map to a single IP / single machine?</p>
+  <p>No. Several mechanisms distribute traffic across many machines:</p>
+  <ul>
+    <li><strong>DNS returning multiple IPs:</strong> A DNS query for google.com can return a different IP each time, rotating across servers.</li>
+    <li><strong>Anycast:</strong> The same IP is announced from many geographic locations; routing sends you to the nearest one.</li>
+    <li><strong>Load balancers:</strong> One public IP fronts many backend machines. The load balancer distributes incoming connections.</li>
+    <li><strong>GeoDNS:</strong> DNS returns different IPs depending on where in the world you're querying from.</li>
+  </ul>
+  <p>Google combines all three — GeoDNS, Anycast, and internal load balancing — to handle global scale.</p>
+  <div class="note">Key terms: DNS · Anycast · Load Balancer · GeoDNS</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q1-3">
+  <p class="q">Q: Is it true every machine has a unique IP address?</p>
+  <p>Only partially. The answer depends on which layer you're looking at:</p>
+  <ul>
+    <li><strong>Public IPs</strong> are globally unique — no two devices on the public internet share one.</li>
+    <li><strong>Private IPs</strong> (e.g. 192.168.x.x, 10.x.x.x) are intentionally reused across millions of private networks. They are only unique within their local network.</li>
+    <li><strong>NAT (Network Address Translation)</strong> is what makes this work — your router translates between your private IP and the single public IP your ISP gives you.</li>
+  </ul>
+  <div class="note">Key terms: Public IP · Private IP · NAT · RFC 1918</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q1-4">
+  <p class="q">Q: How are IP addresses assigned? At manufacture?</p>
+  <p>IPs are not baked into hardware. They are assigned dynamically and administratively through a hierarchy:</p>
+  <ul>
+    <li><strong>IANA</strong> (Internet Assigned Numbers Authority) manages the global pool.</li>
+    <li><strong>RIRs</strong> (Regional Internet Registries — e.g. ARIN, RIPE) allocate blocks to ISPs by region.</li>
+    <li><strong>ISPs</strong> assign IPs to customers, often dynamically via DHCP.</li>
+    <li><strong>Your router</strong> assigns private IPs to your devices via its own DHCP server.</li>
+  </ul>
+  <p>What IS fixed at manufacture is the <strong>MAC address</strong> — a hardware identifier that operates at Layer 2, not Layer 3. It has nothing to do with internet routing.</p>
+  <div class="note">Key terms: IANA · RIR · DHCP · MAC Address · Layer 2 vs Layer 3</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q1-5">
+  <p class="q">Q: So my laptop doesn't have an IP address?</p>
+  <p>It actually has two simultaneously:</p>
+  <ul>
+    <li>A <strong>private IP</strong> assigned by your router (e.g. 192.168.1.5) — used within your local network.</li>
+    <li>It indirectly <strong>shares the router's public IP</strong> via NAT — that's what the rest of the internet sees.</li>
+  </ul>
+  <p>From the internet's perspective, your laptop is hidden behind the router. The router keeps a NAT table to track which internal device sent which request, so returning packets reach the right machine.</p>
+  <div class="note">Key terms: Private IP · Public IP · NAT Table · Router</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q1-6">
+  <p class="q">Q: Is the router's public IP what's seen externally? Could the router itself be behind another router?</p>
+  <p>Yes — this happens with <strong>Carrier-Grade NAT (CGNAT)</strong>. Some ISPs run their own NAT layer, giving home routers private IPs. The ISP's router holds the real public IP, meaning your home router is itself behind a NAT.</p>
+  <ul>
+    <li>This means multiple households can share a single public IP.</li>
+    <li>Port forwarding (for hosting a server at home) <strong>breaks under CGNAT</strong> because you don't control the outer router.</li>
+    <li>CGNAT is increasingly common due to <strong>IPv4 address exhaustion</strong>, and is a key reason IPv6 adoption matters.</li>
+  </ul>
+  <div class="note">Key terms: CGNAT · IPv4 Exhaustion · Port Forwarding · Double NAT</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q1-7">
+  <p class="q">Q: Is IPv6 the same as IPv4 but with more characters?</p>
+  <p>The address space is larger (128-bit vs 32-bit), but IPv6 also introduces meaningful architectural changes:</p>
+  <ul>
+    <li><strong>No NAT required</strong> — every device can have a globally unique public IP.</li>
+    <li><strong>No router fragmentation</strong> — oversized packets are handled via Path MTU Discovery; routers drop and notify rather than fragment.</li>
+    <li><strong>Built-in IPSec</strong> — security was designed in, not bolted on.</li>
+    <li><strong>Multicast replaces broadcast</strong> — more efficient for local network communication.</li>
+    <li><strong>SLAAC</strong> (Stateless Address Autoconfiguration) — devices can generate their own IP without a DHCP server.</li>
+    <li><strong>Dual-stack transition</strong> — IPv4 and IPv6 are incompatible, so the internet runs both simultaneously during the long migration.</li>
+  </ul>
+  <div class="note">Key terms: IPv6 · 128-bit · SLAAC · IPSec · Dual-Stack · Multicast</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q1-8">
+  <p class="q">Q: Must a server have its own public IP with no NAT bottlenecks?</p>
+  <p>Not strictly — a server only needs to be <em>reachable</em>. Options:</p>
+  <ul>
+    <li><strong>Port forwarding through NAT</strong> can work for small/home servers — you forward a specific port on the router to the server's private IP.</li>
+    <li><strong>CGNAT breaks this</strong> — you can't port-forward through an ISP-controlled outer NAT you don't have access to.</li>
+    <li><strong>Professional servers</strong> typically have their own public IPs (or sit behind load balancers that do) for reliability, control, and no dependency on NAT cooperation.</li>
+  </ul>
+  <div class="note">Key terms: Port Forwarding · CGNAT · Load Balancer · Public IP</div>
+</div>
+
+<!-- ============================================================ -->
+
+<h2 id="packets">§2 — Packets &amp; Data Transmission</h2>
+
+<div id="q2-1">
+  <p class="q">Q: When a packet is sent, what happens if the data exceeds the maximum packet size?</p>
+  <p>Every network link has a <strong>Maximum Transmission Unit (MTU)</strong> — the largest packet size it can carry. Standard Ethernet MTU is 1500 bytes.</p>
+  <p><strong>IPv4 — Fragmentation:</strong></p>
+  <ul>
+    <li>Routers along the path break the oversized packet into smaller fragments.</li>
+    <li>Each fragment carries the same destination IP, plus a fragment offset and flags (e.g. "More Fragments") so they can be reassembled.</li>
+    <li>The <strong>Don't Fragment (DF) flag</strong> can be set by the sender — if set and the packet is too large, the router drops it and sends back an ICMP "Fragmentation Needed" error instead of fragmenting.</li>
+    <li>Reassembly happens at the <em>destination host</em>, not at intermediate routers.</li>
+    <li>If any single fragment is lost, the entire original packet must be retransmitted.</li>
+  </ul>
+  <p><strong>IPv6 — Path MTU Discovery (PMTUD):</strong></p>
+  <ul>
+    <li>IPv6 routers do NOT fragment. If a packet is too large, the router drops it and sends back an ICMPv6 "Packet Too Big" message to the sender.</li>
+    <li>The sender reduces its packet size and retries. This is called Path MTU Discovery.</li>
+  </ul>
+  <div class="note">Key difference: IPv4 lets routers fragment (burden on the network); IPv6 forces the sender to handle it (burden on the endpoint), keeping routers simpler and faster.</div>
+  <div class="note">Key terms: MTU · Fragmentation · Fragment Offset · DF Flag · Path MTU Discovery · ICMPv6 Packet Too Big</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q2-2">
+  <p class="q">Q: Why does TCP use byte positions for sequencing rather than packet numbers?</p>
+  <p>Because TCP has no fixed packet boundaries. Packet-based numbering would break under real conditions:</p>
+  <ul>
+    <li><strong>Retransmissions can be different sizes</strong> — a lost segment may be retransmitted as a different number of packets than the original.</li>
+    <li><strong>MTU changes mid-connection</strong> — segmentation can change due to path changes or congestion control.</li>
+    <li><strong>Nagle's algorithm</strong> — small writes can be coalesced into one segment; the segment boundaries are not fixed.</li>
+  </ul>
+  <p>Byte numbering reflects TCP's core abstraction: it is a <strong>pure byte stream</strong>, not a packet stream. The receiver doesn't care how the bytes were split — only that they arrive in order and complete.</p>
+  <ul>
+    <li><strong>Sequence number wraparound:</strong> Numbers are 32-bit and wrap around (modular arithmetic handles this correctly).</li>
+    <li><strong>PAWS</strong> (Protection Against Wrapped Sequences) — a timestamp extension that prevents old duplicate segments from being confused with new ones after wraparound.</li>
+  </ul>
+  <div class="note">Key terms: TCP · Byte Stream · Sequence Number · Nagle's Algorithm · PAWS · Retransmission</div>
+</div>
+
+<!-- ============================================================ -->
+
+<h2 id="distributed">§3 — Distributed Systems &amp; Servers</h2>
+
+<div id="q3-1">
+  <p class="q">Q: How do distributed services handle databases and cookies across multiple machines? How do code updates work without downtime?</p>
+
+  <p><strong>Databases:</strong></p>
+  <ul>
+    <li>All machines share a <strong>database cluster</strong> — not separate per-machine copies.</li>
+    <li><strong>Replication:</strong> A primary node handles writes; read replicas serve read queries for scale.</li>
+    <li><strong>Sharding:</strong> The dataset is split across multiple nodes so no single machine holds all the data.</li>
+  </ul>
+
+  <p><strong>Sessions &amp; Cookies:</strong></p>
+  <ul>
+    <li><strong>Sticky sessions:</strong> The load balancer always routes a user to the same server, so session state stays local.</li>
+    <li><strong>Centralized session store:</strong> Sessions stored in a shared cache (e.g. Redis) accessible by all servers.</li>
+    <li><strong>Stateless tokens (JWT):</strong> The session state is encoded in the token itself — no server-side storage needed.</li>
+  </ul>
+
+  <p><strong>Zero-downtime deployments:</strong></p>
+  <ul>
+    <li><strong>Rolling update:</strong> Update one machine at a time; traffic continues on the rest.</li>
+    <li><strong>Blue-Green deployment:</strong> Run two identical environments; switch all traffic from old (blue) to new (green) instantly.</li>
+    <li><strong>Canary deployment:</strong> Gradually shift a small percentage of traffic to the new version; expand if stable, roll back if not.</li>
+  </ul>
+  <div class="note">Also relevant: CAP Theorem — a distributed system can guarantee at most two of: Consistency, Availability, Partition Tolerance.</div>
+  <div class="note">Key terms: Replication · Sharding · Redis · JWT · Rolling Update · Blue-Green · Canary · CAP Theorem</div>
+</div>
+
+<!-- ============================================================ -->
+
+<h2 id="protocols">§4 — Protocols &amp; the Internet's Nature</h2>
+
+<div id="q4-1">
+  <p class="q">Q: Is the internet more of a protocol/format globally agreed upon, rather than a physical thing? Can protocols be updated globally? Does the kernel manage protocols so programmers don't have to?</p>
+
+  <p><strong>Nature of the internet:</strong> Yes — the internet is fundamentally a set of agreements (protocols) about how data should be formatted and routed, implemented across independently owned physical infrastructure.</p>
+
+  <p><strong>How protocols are updated:</strong></p>
+  <ul>
+    <li>Governed by <strong>IETF</strong> (internet protocols), <strong>W3C</strong> (web standards), <strong>IEEE</strong> (hardware/link layer) via published RFCs.</li>
+    <li>Updates are <strong>voluntary and gradual</strong> — no one can force adoption. Backward compatibility is required.</li>
+    <li>Layers are independent — an update at one layer doesn't break others (in principle).</li>
+    <li><strong>Protocol ossification</strong> is a real problem: TCP has barely changed since the 1970s because middleboxes (firewalls, NAT devices) that inspect TCP headers resist change. <strong>QUIC</strong> was built on UDP specifically to bypass this — by running inside UDP, it avoids being blocked or mangled by TCP-aware middleboxes.</li>
+  </ul>
+
+  <p><strong>Kernel managing protocols:</strong></p>
+  <ul>
+    <li>Yes — the full TCP/IP network stack lives in the kernel. Applications use the <strong>socket API</strong> and never touch raw TCP/IP.</li>
+    <li>A protocol change requires kernel/OS updates, sometimes hardware driver updates, sometimes application updates.</li>
+    <li><strong>User-space networking</strong> (e.g. DPDK, QUIC implemented in browsers) is an emerging exception — it bypasses the kernel stack entirely for performance or flexibility.</li>
+  </ul>
+  <div class="note">Key terms: IETF · RFC · W3C · IEEE · Protocol Ossification · QUIC · Socket API · User-space Networking</div>
+</div>
+
+<!-- ============================================================ -->
+
+<h2 id="p2p">§5 — P2P Networks</h2>
+
+<div id="q5-1">
+  <p class="q">Q: Is Telegram a peer-to-peer network?</p>
+  <p>No. Telegram is centralized — all messages route through Telegram's servers, even with end-to-end encryption enabled (in Secret Chats).</p>
+  <ul>
+    <li>Standard chats are encrypted in transit but stored on Telegram's servers.</li>
+    <li>Secret Chats use end-to-end encryption but the packets still physically pass through Telegram's infrastructure.</li>
+    <li>True P2P apps (e.g. <strong>Briar</strong>, <strong>Session</strong>) route messages directly between users or through a volunteer node network, with no central server.</li>
+  </ul>
+  <div class="note">Key terms: Centralized Architecture · End-to-End Encryption · P2P · Briar · Session</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q5-2">
+  <p class="q">Q: Do P2P chat apps exist? How do they handle floating IP addresses? How did Napster handle it?</p>
+  <p><strong>Napster's approach:</strong> Used a <strong>central index server</strong> that tracked which users had which files. The index was centralized; only the file transfers were P2P. This was its legal and architectural weakness.</p>
+  <p><strong>Modern solution — DHT (Distributed Hash Table):</strong></p>
+  <ul>
+    <li>The index itself is distributed across all nodes — no central server.</li>
+    <li>Each node is responsible for tracking a subset of the data, identified by hash.</li>
+    <li>Used by <strong>BitTorrent</strong>, and underlies decentralized chat/storage systems.</li>
+  </ul>
+  <p><strong>Real P2P apps:</strong></p>
+  <ul>
+    <li><strong>Briar</strong> — routes through Tor; works even without internet (Bluetooth/WiFi direct).</li>
+    <li><strong>Session</strong> — uses a volunteer-run node network (no central server).</li>
+    <li><strong>Matrix</strong> — federated (many independently run servers, not strictly P2P but decentralized).</li>
+  </ul>
+  <div class="note">Key terms: DHT · Napster · Bootstrap Node · BitTorrent · Briar · Session · Matrix · Federation</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q5-3">
+  <p class="q">Q: If all BitTorrent nodes go offline and reconnect with new IPs, wouldn't the hash tables be worthless? Doesn't there need to be a fixed address somewhere?</p>
+  <p>Yes — and BitTorrent acknowledges this. No system is truly free of fixed reference points:</p>
+  <ul>
+    <li><strong>Bootstrap nodes:</strong> BitTorrent clients are hardcoded with the addresses of a few known bootstrap nodes. These introduce you to the DHT network when you first connect.</li>
+    <li>Bootstrap nodes only provide initial peer introductions — they don't hold content or control the network. The actual DHT lives across all connected nodes.</li>
+    <li><strong>Peer caching:</strong> Clients store recently seen peer IPs on disk. On reconnect, they try cached peers first before falling back to bootstrap nodes, further reducing reliance on fixed addresses.</li>
+  </ul>
+  <p>The key insight: BitTorrent minimizes the <em>power</em> of fixed reference points (they can't censor or control content), but doesn't eliminate them entirely.</p>
+  <div class="note">Key terms: DHT · Bootstrap Node · Peer Caching · Decentralization</div>
+</div>
+
+<!-- ============================================================ -->
+
+<h2 id="sockets">§6 — Sockets &amp; Ports</h2>
+
+<div id="q6-1">
+  <p class="q">Q: A socket is an abstraction of a pipeline between two machines, unique per IP pair and port. How does a kernel differentiate packets arriving at the same port from many clients?</p>
+  <p>By the <strong>5-tuple</strong> — the full identifier of a connection:</p>
+  <ul>
+    <li>Protocol (TCP/UDP)</li>
+    <li>Source IP</li>
+    <li>Source Port</li>
+    <li>Destination IP</li>
+    <li>Destination Port</li>
+  </ul>
+  <p>Two clients connecting to port 443 on the same server will have different source IPs and/or source ports, making their 5-tuples unique. The kernel maps each incoming packet to the correct socket by matching its 5-tuple.</p>
+  <ul>
+    <li><strong>C10K problem:</strong> Handling 10,000+ simultaneous connections efficiently. Solved by event-driven I/O models (<strong>epoll</strong> on Linux, <strong>kqueue</strong> on BSD/macOS) rather than a thread-per-connection model.</li>
+    <li>At Google's scale, the real solution is distributing traffic across many machines before any single port is overwhelmed.</li>
+  </ul>
+  <div class="note">Key terms: 5-Tuple · Socket · epoll · kqueue · C10K Problem</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q6-2">
+  <p class="q">Q: What is the actual point of ports if the 5-tuple does the real differentiation work?</p>
+  <p>Ports and the 5-tuple solve different problems at different levels:</p>
+  <ul>
+    <li><strong>Ports route packets to the right process.</strong> When a packet arrives, the kernel uses the destination port to hand it to the correct listening application (e.g. port 80 → web server, port 22 → SSH daemon).</li>
+    <li><strong>The 5-tuple identifies the right connection within that process.</strong> A single web server process on port 80 may manage thousands of simultaneous connections — the 5-tuple is how it tells them apart.</li>
+    <li><strong>Well-known ports</strong> (80, 443, 22, etc.) are a global convention so clients know where to connect without being told in advance.</li>
+  </ul>
+  <div class="note">Key terms: Well-Known Ports · Ephemeral Ports · Process · 5-Tuple · Socket</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q6-3">
+  <p class="q">Q: What happens if two separate browser processes connect to google.com simultaneously from the same machine?</p>
+  <p>Each process is assigned a different <strong>ephemeral source port</strong> by the OS. Even though both connect to the same destination IP and port (e.g. 142.250.x.x:443), their 5-tuples remain unique because the source port differs.</p>
+  <ul>
+    <li>Returning packets are matched to the right process by <strong>destination port</strong> (which equals the ephemeral source port the process was assigned).</li>
+    <li>Within a process, multiple connections to the same server are distinguished by <strong>file descriptor</strong> — each accepted connection gets its own fd.</li>
+  </ul>
+  <div class="note">Key terms: Ephemeral Port · File Descriptor · 5-Tuple · OS Port Assignment</div>
+</div>
+
+<hr class="divider"/>
+
+<div id="q6-4">
+  <p class="q">Q: So a socket is made between processes, and ports make that possible?</p>
+  <p>Close — with a small refinement: a socket connects a <strong>local process to a remote endpoint</strong> (not two local processes). The full routing hierarchy, from most general to most specific:</p>
+  <ul>
+    <li><strong>IP address</strong> — which machine?</li>
+    <li><strong>Port</strong> — which process on that machine?</li>
+    <li><strong>5-tuple</strong> — which connection within that process?</li>
+    <li><strong>File descriptor</strong> — which socket handle inside the process's code?</li>
+  </ul>
+  <p>Each level answers a progressively more specific question about where data belongs.</p>
+  <div class="note">Key terms: Socket · Port · 5-Tuple · File Descriptor · Endpoint</div>
+</div>
+
+</body>
+</html>
