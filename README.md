@@ -1,75 +1,59 @@
-# OpenNC Experiment Results — 2026-04-27 18:59 KST
+# SOFA Framework Analysis — 2026-04-29 12:16 KST
 
-## Summary Grid
-![Summary Grid](summary_grid.png)
-
----
-
-## Exp01: Sanity Check — Headphone FxLMS (200 Hz Tone)
-Single-channel FxLMS on headphone geometry. Baseline validation.
-- **NR = 142.6 dB** (tonal, near-perfect cancellation)
-- Convergence within ~0.1s
-
-![Exp01 PSD](exp01_psd.png)
-![Exp01 Convergence](exp01_convergence.png)
-![Exp01 Time Domain](exp01_time_domain.png)
-
-**Analysis:** Pure tone in ideal headphone geometry achieves massive NR. PSD shows clean notch at 200 Hz. Convergence is rapid and monotonic.
+8 markdown documents analyzing the SOFA v25.12.00 codebase.
 
 ---
 
-## Exp02: Lambda/2 Spacing Cliff
-4-channel MC-FxLMS with varying speaker spacings (5/10/20/50 cm). Tests spatial Nyquist limit.
+## 01 - Folder Structure
+Full directory tree analysis of the 600MB repo. Core framework, components, plugins, examples.
 
-![Exp02 Lambda Half](exp02_lambda_half.png)
-
-**Analysis:** Clear performance cliff above f_cliff = c/(2*spacing). Below cliff: 20-150 dB NR. Above cliff: NR collapses to negative values (amplification). Wider spacing = lower cliff frequency. This confirms the lambda/2 rule is critical for multichannel ANC hardware design.
+[01_FOLDER_STRUCTURE.md](01_FOLDER_STRUCTURE.md)
 
 ---
 
-## Exp03: Latency Budget Sweep
-Single-channel FxLMS, sweeping algorithm latency from 10us to 5000us.
+## 02 - ODE Solvers & Time Integration
+All 11 ODE solvers: Euler explicit/implicit, Newmark, BDF, CentralDifference, RK2/4, Static, VariationalSymplectic. Full equations.
 
-![Exp03 Latency Sweep](exp03_latency_sweep.png)
-
-**Analysis:** NR degrades sharply around 500-1000us total latency. At 1000us (17 samples at 16kHz), system becomes unstable (-420 dB). Low latency (<250us) maintains >140 dB NR. Key takeaway: algorithm latency budget must stay under ~500us for 300 Hz tonal cancellation.
+[02_ODE_SOLVERS_AND_TIME_INTEGRATION.md](02_ODE_SOLVERS_AND_TIME_INTEGRATION.md)
 
 ---
 
-## Exp04: Channel Count Scaling
-MC-FxLMS with 2, 4, 8 channels at 10cm spacing, 300 Hz tone.
+## 03 - Solid Mechanics & FEM
+Linear elastic (corotational, tet, hex, tri, beam) + hyperelastic (NeoHookean, MooneyRivlin, Ogden, Costa, etc.). Strain energy functions and SPK tensors.
 
-![Exp04 Channel Count](exp04_channel_count.png)
-
-**Analysis:** 2-channel achieves highest NR (147 dB) due to simpler geometry. 4-ch and 8-ch show 24-33 dB — more channels increase degrees of freedom but also adaptation complexity. MC-FxLMS mu=0.001 may need per-config tuning for larger arrays.
+[03_SOLID_MECHANICS_AND_FEM.md](03_SOLID_MECHANICS_AND_FEM.md)
 
 ---
 
-## Exp05: Noise Type Sweep
-Single-channel FxLMS across tone, narrowband, white, and pink noise.
+## 04 - Linear Solvers
+Direct (LDL, LU, Cholesky, SVD), iterative (CG, PCG, MINRES), preconditioners (Jacobi, SSOR, Warp), ordering (AMD, COLAMD).
 
-![Exp05 Noise Types Bar](exp05_noise_types_bar.png)
-![Exp05 Noise Types PSD](exp05_noise_types_psd.png)
-
-**Analysis:** Tonal noise easiest to cancel (142.6 dB). Narrowband achieves 6.5 dB — reasonable but limited bandwidth. White noise: -3.4 dB (slight amplification). Pink: 2.0 dB (marginal). FxLMS excels at tonal/narrowband; broadband cancellation needs longer filters or different algorithms.
+[04_LINEAR_SOLVERS.md](04_LINEAR_SOLVERS.md)
 
 ---
 
-## Exp06: Algorithm Comparison — MC-FxLMS vs Kernel-Interpolation
-4-channel narrowband noise (250 +/- 100 Hz) in room scene.
+## 05 - Collision & Contact
+Full pipeline: broad phase (SAP), narrow phase (BVH), intersection tests (proximity, CCD), response (penalty, Lagrangian friction, Signorini+Coulomb).
 
-![Exp06 Algorithm Compare](exp06_algorithm_compare.png)
-
-**Analysis:** MC-FxLMS achieves 20.7 dB avg NR vs Kernel-Interp's 14.9 dB. MC-FxLMS converges faster. Kernel-Interp optimizes spatial volume (not just mic points), so slightly lower per-mic NR is expected — it trades point NR for spatial coverage uniformity.
+[05_COLLISION_AND_CONTACT.md](05_COLLISION_AND_CONTACT.md)
 
 ---
 
-## Exp07: Quiet Zone Heatmap
-Kernel-Interpolation FxLMS, 729-point observation grid, narrowband noise.
+## 06 - Mass, Loads, Mappings & Simulation Loop
+Mass types, external loads, multi-model mappings, animation loop, topology, diffusion.
 
-![Exp07 Quiet Zone Heatmap](exp07_quiet_zone_heatmap.png)
+[06_MASS_LOADS_MAPPINGS_AND_SIMULATION_LOOP.md](06_MASS_LOADS_MAPPINGS_AND_SIMULATION_LOOP.md)
 
-**Analysis:**
-- **>= 10 dB zone:** 27,250 cm^3 (29.9% of grid)
-- **>= 6 dB zone:** 37,875 cm^3 (41.6% of grid)
-- Quiet zone forms around speaker/mic array center. Attenuation drops off at grid edges. Demonstrates spatial ANC creates a usable quiet volume, not just quiet points.
+---
+
+## 07 - Plugins
+SofaCUDA, SofaOpenCL, MultiThreading, EulerianFluid, DistanceGrid, ImplicitField, ArticulatedSystem, Carving, Haptics, PARDISO.
+
+[07_PLUGINS.md](07_PLUGINS.md)
+
+---
+
+## 08 - SOFA vs Mesh_Solver Comparison
+Side-by-side comparison: elements, materials, solvers, contact, I/O, GPU, performance, when to use each.
+
+[08_COMPARISON_SOFA_VS_MESH_SOLVER.md](08_COMPARISON_SOFA_VS_MESH_SOLVER.md)
