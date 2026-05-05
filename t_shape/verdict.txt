@@ -1,0 +1,14 @@
+Case: t_shape @ res=2.0
+phase_reached: done
+gates passing: 6/10  (junction, soft gates only)
+  PASS  T1_no_orphans
+  PASS  T2_single_component
+  FAIL  T3_no_nm_edges
+  PASS  T5_no_dup_verts
+  PASS  G3_planarity
+  PASS  G4_no_inverted
+  PASS  Q1_aspect_p95
+  FAIL  Q2_aspect_max
+  FAIL  Q4_edge_cv
+  FAIL  Q6_no_slivers
+wall_seconds: 5.486

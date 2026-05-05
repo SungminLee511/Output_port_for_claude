@@ -1,0 +1,40 @@
+{
+  "case": "t_shape",
+  "resolution": 2.0,
+  "junction_case": true,
+  "phase_reached": "done",
+  "wall_seconds": 5.486,
+  "error": "",
+  "metrics": {
+    "n_vertices": 5777,
+    "n_quads": 5622,
+    "n_tris": 0,
+    "n_free_edges": 325,
+    "n_nonmanifold_edges": 13,
+    "n_orphans": 0,
+    "n_components": 1,
+    "n_duplicate_verts": 0,
+    "mean_edge_length": 2.0403115844641104,
+    "edge_length_cv": 0.5609180326011799,
+    "aspect_max": 24.758836806279895,
+    "aspect_p95": 1.0,
+    "planarity_max": 0.719362624704209,
+    "planarity_p95": 0.0,
+    "n_nonplanar_quads": 16,
+    "n_inverted_quads": 0,
+    "n_sliver_quads": 15,
+    "jacobian_min": 0.0
+  },
+  "gates": {
+    "T1_no_orphans": true,
+    "T2_single_component": true,
+    "T3_no_nm_edges": false,
+    "T5_no_dup_verts": true,
+    "G3_planarity": true,
+    "G4_no_inverted": true,
+    "Q1_aspect_p95": true,
+    "Q2_aspect_max": false,
+    "Q4_edge_cv": false,
+    "Q6_no_slivers": false
+  }
+}
