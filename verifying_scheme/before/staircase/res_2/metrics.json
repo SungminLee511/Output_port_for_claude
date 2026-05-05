@@ -1,0 +1,140 @@
+{
+  "case": "staircase",
+  "resolution": 2.0,
+  "before_stitch": {
+    "label": "before_stitch",
+    "n_vertices": 34797,
+    "n_quads": 34262,
+    "n_tris": 0,
+    "n_free_edges": 1416,
+    "n_nonmanifold_edges": 0,
+    "n_t_junctions": 0,
+    "n_duplicate_verts": 0,
+    "n_orphan_verts": 0,
+    "n_components": 1,
+    "mean_edge_length": 1.231367476306594,
+    "edge_length_cv": 0.7758472730562972,
+    "aspect_ratio": {
+      "min": 1.0,
+      "p05": 1.0000957946163411,
+      "median": 1.641228192505364,
+      "mean": 208.2199703548418,
+      "p95": 800.5394998303834,
+      "max": 10412.830188830738
+    },
+    "min_angle": {
+      "min": 89.99999999551201,
+      "p05": 90.0,
+      "median": 90.0,
+      "mean": 89.9999999999994,
+      "p95": 90.0,
+      "max": 90.0
+    },
+    "max_angle": {
+      "min": 90.0,
+      "p05": 90.0,
+      "median": 90.0,
+      "mean": 90.0000000000006,
+      "p95": 90.0,
+      "max": 90.00000000448799
+    },
+    "skewness": {
+      "min": 0.0,
+      "p05": 0.0,
+      "median": 0.0,
+      "mean": 6.659733793786479e-15,
+      "p95": 0.0,
+      "max": 4.9866520789186726e-11
+    },
+    "planarity": {
+      "min": 0.0,
+      "p05": 0.0,
+      "median": 0.0,
+      "mean": 1.989103753439181e-17,
+      "p95": 0.0,
+      "max": 7.173755031614139e-15
+    },
+    "jacobian": {
+      "min": 1.0,
+      "p05": 1.0,
+      "median": 1.0,
+      "mean": 1.0,
+      "p95": 1.0,
+      "max": 1.0
+    },
+    "n_sliver_quads": 14364,
+    "n_sliver_tris": 0,
+    "n_nonplanar_quads": 0,
+    "n_inverted_quads": 0
+  },
+  "after_stitch": {
+    "label": "after_stitch",
+    "n_vertices": 34797,
+    "n_quads": 34262,
+    "n_tris": 0,
+    "n_free_edges": 1306,
+    "n_nonmanifold_edges": 0,
+    "n_t_junctions": 0,
+    "n_duplicate_verts": 57,
+    "n_orphan_verts": 56,
+    "n_components": 1,
+    "mean_edge_length": 1.2323904726109898,
+    "edge_length_cv": 0.7750509190487052,
+    "aspect_ratio": {
+      "min": 1.0,
+      "p05": 1.0000957946163411,
+      "median": 1.6428571428535461,
+      "mean": 115798421.14873576,
+      "p95": 862.9601233690128,
+      "max": 1986323773095.3352
+    },
+    "min_angle": {
+      "min": 62.94306466904466,
+      "p05": 90.0,
+      "median": 90.0,
+      "mean": 89.98836637918718,
+      "p95": 90.0,
+      "max": 90.0
+    },
+    "max_angle": {
+      "min": 78.88384803909962,
+      "p05": 90.0,
+      "median": 90.0,
+      "mean": 90.00735654984952,
+      "p95": 90.0,
+      "max": 116.52010186702108
+    },
+    "skewness": {
+      "min": 0.0,
+      "p05": 0.0,
+      "median": 0.0,
+      "mean": 0.0001293370776280565,
+      "p95": 0.0,
+      "max": 0.30063261478839265
+    },
+    "planarity": {
+      "min": 0.0,
+      "p05": 0.0,
+      "median": 0.0,
+      "mean": 6.656360785085448e-05,
+      "p95": 0.0,
+      "max": 0.7633534840049423
+    },
+    "jacobian": {
+      "min": -1.0,
+      "p05": 1.0,
+      "median": 1.0,
+      "mean": 0.9969553080260602,
+      "p95": 1.0,
+      "max": 1.0
+    },
+    "n_sliver_quads": 14364,
+    "n_sliver_tris": 0,
+    "n_nonplanar_quads": 4,
+    "n_inverted_quads": 51
+  },
+  "parse": {
+    "n_panels": 4,
+    "n_fold_lines": 3
+  }
+}
