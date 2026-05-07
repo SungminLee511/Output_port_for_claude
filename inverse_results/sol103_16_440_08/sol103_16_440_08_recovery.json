@@ -1,0 +1,257 @@
+{
+  "case": "sol103_16_440_08",
+  "source": "/home/sky/home/TRASHCAN/data_port/hd-mobis/sol103_16_440_08.h5",
+  "phase_seconds": {
+    "load_characterize": 3.8143012523651123,
+    "smooth_taxonomy": 5.21350622177124,
+    "cylinder_fillets": 0.16822457313537598,
+    "segment_regions": 7.047934055328369,
+    "recover_folds": 0.25324296951293945,
+    "read_surface_marks": 0.4599924087524414,
+    "unfold_panels": 0.2856144905090332,
+    "evaluate_gate": 0.19704461097717285,
+    "validate": 0.06190681457519531,
+    "total": 17.50176739692688
+  },
+  "smooth_taxonomy_diagnostics": {
+    "face_count": 83526,
+    "panel_face_count": 82153,
+    "smooth_face_count": 1373,
+    "fold_candidate_face_count": 0,
+    "flange_component_count": 4,
+    "bump_component_count": 24,
+    "median_3ring_p50": 0.0,
+    "median_3ring_p95": 2.4796095959451767,
+    "median_3ring_max": 7.383365423040435,
+    "kind_counts": {
+      "PANEL": 82153,
+      "BUMP_REGION": 1275,
+      "FLANGE_REGION": 98
+    },
+    "k_ring": 3,
+    "panel_threshold_deg": 5.0,
+    "bump_threshold_deg": 25.0
+  },
+  "cylinder_fillets_diagnostics": {
+    "component_count": 28,
+    "accepted_count": 0,
+    "rejected_count": 28,
+    "rmse_to_radius_max": 0.02,
+    "radius_to_diag_max": 0.5,
+    "sweep_range_deg": [
+      60.0,
+      120.0
+    ],
+    "min_strip_faces": 4,
+    "rejections": [
+      {
+        "component_id": 0,
+        "reason": "rmse_ratio_0.4949",
+        "face_count": 144
+      },
+      {
+        "component_id": 1,
+        "reason": "sweep_40.6deg_out_of_range",
+        "face_count": 24
+      },
+      {
+        "component_id": 2,
+        "reason": "sweep_40.6deg_out_of_range",
+        "face_count": 24
+      },
+      {
+        "component_id": 3,
+        "reason": "rmse_ratio_0.5095",
+        "face_count": 139
+      },
+      {
+        "component_id": 4,
+        "reason": "sweep_54.2deg_out_of_range",
+        "face_count": 35
+      },
+      {
+        "component_id": 5,
+        "reason": "sweep_54.3deg_out_of_range",
+        "face_count": 34
+      },
+      {
+        "component_id": 6,
+        "reason": "sweep_51.3deg_out_of_range",
+        "face_count": 32
+      },
+      {
+        "component_id": 7,
+        "reason": "sweep_59.3deg_out_of_range",
+        "face_count": 40
+      },
+      {
+        "component_id": 8,
+        "reason": "sweep_40.6deg_out_of_range",
+        "face_count": 24
+      },
+      {
+        "component_id": 9,
+        "reason": "rmse_ratio_0.4894",
+        "face_count": 144
+      },
+      {
+        "component_id": 10,
+        "reason": "rmse_ratio_0.2974",
+        "face_count": 92
+      },
+      {
+        "component_id": 11,
+        "reason": "rmse_ratio_0.4898",
+        "face_count": 144
+      },
+      {
+        "component_id": 12,
+        "reason": "rmse_ratio_0.0207",
+        "face_count": 35
+      },
+      {
+        "component_id": 13,
+        "reason": "sweep_54.1deg_out_of_range",
+        "face_count": 34
+      },
+      {
+        "component_id": 14,
+        "reason": "sweep_53.8deg_out_of_range",
+        "face_count": 33
+      },
+      {
+        "component_id": 15,
+        "reason": "sweep_53.8deg_out_of_range",
+        "face_count": 33
+      },
+      {
+        "component_id": 16,
+        "reason": "sweep_53.8deg_out_of_range",
+        "face_count": 34
+      },
+      {
+        "component_id": 17,
+        "reason": "sweep_53.8deg_out_of_range",
+        "face_count": 36
+      },
+      {
+        "component_id": 18,
+        "reason": "sweep_53.8deg_out_of_range",
+        "face_count": 34
+      },
+      {
+        "component_id": 19,
+        "reason": "sweep_53.8deg_out_of_range",
+        "face_count": 34
+      },
+      {
+        "component_id": 20,
+        "reason": "sweep_53.8deg_out_of_range",
+        "face_count": 31
+      },
+      {
+        "component_id": 21,
+        "reason": "sweep_54.1deg_out_of_range",
+        "face_count": 34
+      },
+      {
+        "component_id": 22,
+        "reason": "sweep_54.1deg_out_of_range",
+        "face_count": 34
+      },
+      {
+        "component_id": 23,
+        "reason": "sweep_54.1deg_out_of_range",
+        "face_count": 32
+      },
+      {
+        "component_id": 24,
+        "reason": "sweep_54.1deg_out_of_range",
+        "face_count": 34
+      },
+      {
+        "component_id": 25,
+        "reason": "sweep_54.1deg_out_of_range",
+        "face_count": 32
+      },
+      {
+        "component_id": 26,
+        "reason": "rmse_ratio_0.0523",
+        "face_count": 26
+      },
+      {
+        "component_id": 27,
+        "reason": "too_few_faces",
+        "face_count": 1
+      }
+    ]
+  },
+  "region_diagnostics": {
+    "panel_count": 263,
+    "panel_faces_assigned": 82558,
+    "fillet_faces_skipped": 0,
+    "hole_boundary_faces_skipped": 0,
+    "panel_faces_in_clusters": 82153,
+    "panel_normal_clusters": 122,
+    "flange_panels_added": 1,
+    "bump_components_absorbed": 24,
+    "bump_components_orphaned": 0,
+    "cosine_threshold": 0.99,
+    "plane_offset_tol_frac": 0.005,
+    "bbox_diag": 287.3999074354095,
+    "merge_small_panels": true,
+    "merged_panel_count": 263
+  },
+  "fold_diagnostics": {
+    "fold_count": 7828,
+    "junction_count": 13,
+    "canonical_vertex_count": 17748,
+    "tol": 0.2873999074354095,
+    "v_view": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "sign_distribution": {
+      "+1": 3743,
+      "-1": 4085,
+      "0": 0
+    },
+    "skipped_nonmanifold_edges": 0,
+    "dihedral_p50_deg": 22.253063574542253,
+    "dihedral_p95_deg": 22.910850790968333,
+    "dihedral_max_deg": 42.47868190755142
+  },
+  "marks_diagnostics": {
+    "hole_count": 22,
+    "bump_count": 7,
+    "yellow_bumps_plus": 1,
+    "green_bumps_minus": 6,
+    "panels_with_bumps": 6,
+    "panels_with_holes": 9
+  },
+  "layout_diagnostics": {
+    "panel_count": 263,
+    "fold_count": 281,
+    "root_panel_id": 0,
+    "skipped_back_edge_count": 280,
+    "aabb_overlap_pairs": 870,
+    "stretch_min_global": 0.005040014718291119,
+    "stretch_max_global": 1.000000000000259
+  },
+  "validation": {
+    "ok": true,
+    "gate_passed": true,
+    "topology_preserved": true,
+    "region_coverage_fraction": 0.9884107942437086,
+    "input_boundary_loops": 18,
+    "output_boundary_loops": 285,
+    "panel_count": 263,
+    "fold_count": 7828,
+    "fold_residual_p95_deg": 22.910850790968333,
+    "fold_residual_max_deg": 42.47868190755142,
+    "panel_stretch_min": 0.005040014718291119,
+    "panel_stretch_max": 1.000000000000259,
+    "determinism_hash": "0112e36205303ac032a82850ebf03a421e1b171be82496aed967a424c819de2f"
+  }
+}

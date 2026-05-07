@@ -1,0 +1,217 @@
+{
+  "case": "sol103_23_450_16",
+  "source": "/home/sky/home/TRASHCAN/data_port/hd-mobis/sol103_23_450_16.h5",
+  "phase_seconds": {
+    "load_characterize": 3.2846791744232178,
+    "smooth_taxonomy": 4.303165435791016,
+    "cylinder_fillets": 0.1356823444366455,
+    "segment_regions": 5.51092267036438,
+    "recover_folds": 0.17662262916564941,
+    "read_surface_marks": 0.3259153366088867,
+    "unfold_panels": 0.1643226146697998,
+    "evaluate_gate": 0.16774630546569824,
+    "validate": 0.042903900146484375,
+    "total": 14.111960411071777
+  },
+  "smooth_taxonomy_diagnostics": {
+    "face_count": 72229,
+    "panel_face_count": 71565,
+    "smooth_face_count": 664,
+    "fold_candidate_face_count": 0,
+    "flange_component_count": 6,
+    "bump_component_count": 14,
+    "median_3ring_p50": 0.0,
+    "median_3ring_p95": 0.8309655906135875,
+    "median_3ring_max": 8.150075092616373,
+    "kind_counts": {
+      "PANEL": 71565,
+      "FLANGE_REGION": 143,
+      "BUMP_REGION": 521
+    },
+    "k_ring": 3,
+    "panel_threshold_deg": 5.0,
+    "bump_threshold_deg": 25.0
+  },
+  "cylinder_fillets_diagnostics": {
+    "component_count": 20,
+    "accepted_count": 0,
+    "rejected_count": 20,
+    "rmse_to_radius_max": 0.02,
+    "radius_to_diag_max": 0.5,
+    "sweep_range_deg": [
+      60.0,
+      120.0
+    ],
+    "min_strip_faces": 4,
+    "rejections": [
+      {
+        "component_id": 0,
+        "reason": "rmse_ratio_0.0499",
+        "face_count": 19
+      },
+      {
+        "component_id": 1,
+        "reason": "rmse_ratio_0.0303",
+        "face_count": 38
+      },
+      {
+        "component_id": 2,
+        "reason": "rmse_ratio_0.0298",
+        "face_count": 37
+      },
+      {
+        "component_id": 3,
+        "reason": "rmse_ratio_0.4257",
+        "face_count": 28
+      },
+      {
+        "component_id": 4,
+        "reason": "rmse_ratio_0.0250",
+        "face_count": 38
+      },
+      {
+        "component_id": 5,
+        "reason": "rmse_ratio_0.0310",
+        "face_count": 38
+      },
+      {
+        "component_id": 6,
+        "reason": "rmse_ratio_0.0236",
+        "face_count": 35
+      },
+      {
+        "component_id": 7,
+        "reason": "rmse_ratio_0.0282",
+        "face_count": 37
+      },
+      {
+        "component_id": 8,
+        "reason": "rmse_ratio_0.0283",
+        "face_count": 38
+      },
+      {
+        "component_id": 9,
+        "reason": "rmse_ratio_0.0279",
+        "face_count": 38
+      },
+      {
+        "component_id": 10,
+        "reason": "rmse_ratio_0.0247",
+        "face_count": 36
+      },
+      {
+        "component_id": 11,
+        "reason": "rmse_ratio_0.0295",
+        "face_count": 37
+      },
+      {
+        "component_id": 12,
+        "reason": "sweep_39.3deg_out_of_range",
+        "face_count": 24
+      },
+      {
+        "component_id": 13,
+        "reason": "sweep_39.3deg_out_of_range",
+        "face_count": 24
+      },
+      {
+        "component_id": 14,
+        "reason": "sweep_39.3deg_out_of_range",
+        "face_count": 24
+      },
+      {
+        "component_id": 15,
+        "reason": "sweep_39.3deg_out_of_range",
+        "face_count": 24
+      },
+      {
+        "component_id": 16,
+        "reason": "rmse_ratio_0.0284",
+        "face_count": 37
+      },
+      {
+        "component_id": 17,
+        "reason": "rmse_ratio_0.0303",
+        "face_count": 38
+      },
+      {
+        "component_id": 18,
+        "reason": "rmse_ratio_0.0299",
+        "face_count": 38
+      },
+      {
+        "component_id": 19,
+        "reason": "rmse_ratio_0.0244",
+        "face_count": 36
+      }
+    ]
+  },
+  "region_diagnostics": {
+    "panel_count": 161,
+    "panel_faces_assigned": 71599,
+    "fillet_faces_skipped": 0,
+    "hole_boundary_faces_skipped": 0,
+    "panel_faces_in_clusters": 71565,
+    "panel_normal_clusters": 68,
+    "flange_panels_added": 1,
+    "bump_components_absorbed": 14,
+    "bump_components_orphaned": 0,
+    "cosine_threshold": 0.99,
+    "plane_offset_tol_frac": 0.005,
+    "bbox_diag": 284.81485324065204,
+    "merge_small_panels": true,
+    "merged_panel_count": 133
+  },
+  "fold_diagnostics": {
+    "fold_count": 4826,
+    "junction_count": 7,
+    "canonical_vertex_count": 14056,
+    "tol": 0.28481485324065203,
+    "v_view": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "sign_distribution": {
+      "+1": 1675,
+      "-1": 2815,
+      "0": 336
+    },
+    "skipped_nonmanifold_edges": 0,
+    "dihedral_p50_deg": 23.37192983037666,
+    "dihedral_p95_deg": 23.900694155572992,
+    "dihedral_max_deg": 41.71189460076726
+  },
+  "marks_diagnostics": {
+    "hole_count": 21,
+    "bump_count": 0,
+    "yellow_bumps_plus": 0,
+    "green_bumps_minus": 0,
+    "panels_with_bumps": 0,
+    "panels_with_holes": 9
+  },
+  "layout_diagnostics": {
+    "panel_count": 161,
+    "fold_count": 163,
+    "root_panel_id": 4,
+    "skipped_back_edge_count": 167,
+    "aabb_overlap_pairs": 613,
+    "stretch_min_global": 0.010638798973802334,
+    "stretch_max_global": 1.0000000000000862
+  },
+  "validation": {
+    "ok": true,
+    "gate_passed": true,
+    "topology_preserved": true,
+    "region_coverage_fraction": 0.9912777416273242,
+    "input_boundary_loops": 18,
+    "output_boundary_loops": 182,
+    "panel_count": 161,
+    "fold_count": 4826,
+    "fold_residual_p95_deg": 23.900694155572992,
+    "fold_residual_max_deg": 41.71189460076726,
+    "panel_stretch_min": 0.010638798973802334,
+    "panel_stretch_max": 1.0000000000000862,
+    "determinism_hash": "3eb127c64c36153f77db3a6bcfe1474a3a1da5e72c5243597f83c9fb2035a6eb"
+  }
+}

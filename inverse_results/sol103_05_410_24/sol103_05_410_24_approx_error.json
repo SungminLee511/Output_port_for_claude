@@ -1,0 +1,61 @@
+{
+  "case": "sol103_05_410_24",
+  "representability_passed": true,
+  "checks": [
+    {
+      "name": "planar_area_fraction",
+      "measured": 0.7805826886196896,
+      "threshold": 0.0,
+      "passed": true,
+      "detail": "\u03b8=5.0\u00b0"
+    },
+    {
+      "name": "fold_dihedral_residual_max",
+      "measured": 52.28652729599842,
+      "threshold": 180.0,
+      "passed": true,
+      "detail": "7860 folds inspected"
+    },
+    {
+      "name": "panel_stretch_min_warn",
+      "measured": 0.0744558955419825,
+      "threshold": 0.0744558955419825,
+      "passed": true,
+      "detail": "lenient mode \u2014 informational only"
+    },
+    {
+      "name": "panel_stretch_max_warn",
+      "measured": 1.000000000000237,
+      "threshold": 1.000000000000237,
+      "passed": true,
+      "detail": "lenient mode \u2014 informational only"
+    },
+    {
+      "name": "layout_overlap_count_warn",
+      "measured": 949,
+      "threshold": 949,
+      "passed": true,
+      "detail": "lenient mode \u2014 informational only"
+    },
+    {
+      "name": "panel_graph_components_warn",
+      "measured": 15,
+      "threshold": 15,
+      "passed": true,
+      "detail": "lenient mode \u2014 informational only"
+    },
+    {
+      "name": "hole_loops_placed",
+      "measured": 23,
+      "threshold": 16,
+      "passed": true,
+      "detail": "input shell hole loops: 17"
+    }
+  ],
+  "fold_residual_p95_deg": 22.74610787746158,
+  "fold_residual_max_deg": 52.28652729599842,
+  "panel_stretch_min": 0.0744558955419825,
+  "panel_stretch_max": 1.000000000000237,
+  "boundary_loop_count_input": 18,
+  "boundary_loop_count_output": 242
+}

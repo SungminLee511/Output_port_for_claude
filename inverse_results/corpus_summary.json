@@ -1,0 +1,411 @@
+{
+  "in_dir": "/home/sky/home/TRASHCAN/data_port/hd-mobis",
+  "file_count": 40,
+  "family_count": 8,
+  "overall_seconds": 1164.5039892196655,
+  "average_seconds_per_case": 29.112599730491638,
+  "gate_pass_count": 40,
+  "validation_ok_count": 35,
+  "results": [
+    {
+      "case": "sol103_01_410_08",
+      "family_hash": "c32a44822de337c9d54ccee74a25927448c448ec41567270a90ea3193c6d1690",
+      "family_first_variant": "sol103_01_410_08",
+      "is_first_of_family": true,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "460519d464139f026dc7e2896410c087a6dbfd8fdea5a68e4a7f418bcb06ed50",
+      "seconds": 14.073818683624268
+    },
+    {
+      "case": "sol103_02_410_12",
+      "family_hash": "c32a44822de337c9d54ccee74a25927448c448ec41567270a90ea3193c6d1690",
+      "family_first_variant": "sol103_01_410_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "460519d464139f026dc7e2896410c087a6dbfd8fdea5a68e4a7f418bcb06ed50",
+      "seconds": 13.994625329971313
+    },
+    {
+      "case": "sol103_03_410_16",
+      "family_hash": "c32a44822de337c9d54ccee74a25927448c448ec41567270a90ea3193c6d1690",
+      "family_first_variant": "sol103_01_410_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "460519d464139f026dc7e2896410c087a6dbfd8fdea5a68e4a7f418bcb06ed50",
+      "seconds": 13.97535514831543
+    },
+    {
+      "case": "sol103_04_410_20",
+      "family_hash": "c32a44822de337c9d54ccee74a25927448c448ec41567270a90ea3193c6d1690",
+      "family_first_variant": "sol103_01_410_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "460519d464139f026dc7e2896410c087a6dbfd8fdea5a68e4a7f418bcb06ed50",
+      "seconds": 14.053094625473022
+    },
+    {
+      "case": "sol103_05_410_24",
+      "family_hash": "c32a44822de337c9d54ccee74a25927448c448ec41567270a90ea3193c6d1690",
+      "family_first_variant": "sol103_01_410_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "460519d464139f026dc7e2896410c087a6dbfd8fdea5a68e4a7f418bcb06ed50",
+      "seconds": 14.052328824996948
+    },
+    {
+      "case": "sol103_06_420_08",
+      "family_hash": "3495f5eabe19f8bbe5b95f84228088e681e2e986a09dcedacff895fca02aa221",
+      "family_first_variant": "sol103_06_420_08",
+      "is_first_of_family": true,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "dfda4958ed8a9cc9ffdc702f46121e39e266271348ff519c66f27083c85c1820",
+      "seconds": 15.611305952072144
+    },
+    {
+      "case": "sol103_07_420_12",
+      "family_hash": "3495f5eabe19f8bbe5b95f84228088e681e2e986a09dcedacff895fca02aa221",
+      "family_first_variant": "sol103_06_420_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "dfda4958ed8a9cc9ffdc702f46121e39e266271348ff519c66f27083c85c1820",
+      "seconds": 15.635018348693848
+    },
+    {
+      "case": "sol103_08_420_16",
+      "family_hash": "3495f5eabe19f8bbe5b95f84228088e681e2e986a09dcedacff895fca02aa221",
+      "family_first_variant": "sol103_06_420_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "dfda4958ed8a9cc9ffdc702f46121e39e266271348ff519c66f27083c85c1820",
+      "seconds": 15.527456760406494
+    },
+    {
+      "case": "sol103_09_420_20",
+      "family_hash": "3495f5eabe19f8bbe5b95f84228088e681e2e986a09dcedacff895fca02aa221",
+      "family_first_variant": "sol103_06_420_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "dfda4958ed8a9cc9ffdc702f46121e39e266271348ff519c66f27083c85c1820",
+      "seconds": 15.536071538925171
+    },
+    {
+      "case": "sol103_10_420_24",
+      "family_hash": "3495f5eabe19f8bbe5b95f84228088e681e2e986a09dcedacff895fca02aa221",
+      "family_first_variant": "sol103_06_420_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "dfda4958ed8a9cc9ffdc702f46121e39e266271348ff519c66f27083c85c1820",
+      "seconds": 15.563069581985474
+    },
+    {
+      "case": "sol103_11_430_08",
+      "family_hash": "19f89a594937cec6204d754ba443f8a39c6f15de81753417066647fd1e44edb8",
+      "family_first_variant": "sol103_11_430_08",
+      "is_first_of_family": true,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "7e33ee309c93ba89f2724cde407406381293f7d31b20561b0f6c99ff3dec4718",
+      "seconds": 17.079004049301147
+    },
+    {
+      "case": "sol103_12_430_12",
+      "family_hash": "19f89a594937cec6204d754ba443f8a39c6f15de81753417066647fd1e44edb8",
+      "family_first_variant": "sol103_11_430_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "7e33ee309c93ba89f2724cde407406381293f7d31b20561b0f6c99ff3dec4718",
+      "seconds": 17.1261248588562
+    },
+    {
+      "case": "sol103_13_430_16",
+      "family_hash": "19f89a594937cec6204d754ba443f8a39c6f15de81753417066647fd1e44edb8",
+      "family_first_variant": "sol103_11_430_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "7e33ee309c93ba89f2724cde407406381293f7d31b20561b0f6c99ff3dec4718",
+      "seconds": 17.106367588043213
+    },
+    {
+      "case": "sol103_14_430_20",
+      "family_hash": "19f89a594937cec6204d754ba443f8a39c6f15de81753417066647fd1e44edb8",
+      "family_first_variant": "sol103_11_430_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "7e33ee309c93ba89f2724cde407406381293f7d31b20561b0f6c99ff3dec4718",
+      "seconds": 17.157336473464966
+    },
+    {
+      "case": "sol103_15_430_24",
+      "family_hash": "19f89a594937cec6204d754ba443f8a39c6f15de81753417066647fd1e44edb8",
+      "family_first_variant": "sol103_11_430_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "7e33ee309c93ba89f2724cde407406381293f7d31b20561b0f6c99ff3dec4718",
+      "seconds": 16.91352605819702
+    },
+    {
+      "case": "sol103_16_440_08",
+      "family_hash": "adfa66619158e5b9a0eb7c5b1e2cedb8728dcfa6fe64197eb3668cc2307fd644",
+      "family_first_variant": "sol103_16_440_08",
+      "is_first_of_family": true,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "0112e36205303ac032a82850ebf03a421e1b171be82496aed967a424c819de2f",
+      "seconds": 18.570805311203003
+    },
+    {
+      "case": "sol103_17_440_12",
+      "family_hash": "adfa66619158e5b9a0eb7c5b1e2cedb8728dcfa6fe64197eb3668cc2307fd644",
+      "family_first_variant": "sol103_16_440_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "0112e36205303ac032a82850ebf03a421e1b171be82496aed967a424c819de2f",
+      "seconds": 18.643000602722168
+    },
+    {
+      "case": "sol103_18_440_16",
+      "family_hash": "adfa66619158e5b9a0eb7c5b1e2cedb8728dcfa6fe64197eb3668cc2307fd644",
+      "family_first_variant": "sol103_16_440_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "0112e36205303ac032a82850ebf03a421e1b171be82496aed967a424c819de2f",
+      "seconds": 18.681418657302856
+    },
+    {
+      "case": "sol103_19_440_20",
+      "family_hash": "adfa66619158e5b9a0eb7c5b1e2cedb8728dcfa6fe64197eb3668cc2307fd644",
+      "family_first_variant": "sol103_16_440_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "0112e36205303ac032a82850ebf03a421e1b171be82496aed967a424c819de2f",
+      "seconds": 18.670145750045776
+    },
+    {
+      "case": "sol103_20_440_24",
+      "family_hash": "adfa66619158e5b9a0eb7c5b1e2cedb8728dcfa6fe64197eb3668cc2307fd644",
+      "family_first_variant": "sol103_16_440_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "0112e36205303ac032a82850ebf03a421e1b171be82496aed967a424c819de2f",
+      "seconds": 18.63164973258972
+    },
+    {
+      "case": "sol103_21_450_08",
+      "family_hash": "f5283b2f596f4c94e32216692f990fda87c49489e357dc5d8d99e9e77563158b",
+      "family_first_variant": "sol103_21_450_08",
+      "is_first_of_family": true,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "3eb127c64c36153f77db3a6bcfe1474a3a1da5e72c5243597f83c9fb2035a6eb",
+      "seconds": 15.007668495178223
+    },
+    {
+      "case": "sol103_22_450_12",
+      "family_hash": "f5283b2f596f4c94e32216692f990fda87c49489e357dc5d8d99e9e77563158b",
+      "family_first_variant": "sol103_21_450_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "3eb127c64c36153f77db3a6bcfe1474a3a1da5e72c5243597f83c9fb2035a6eb",
+      "seconds": 15.094272375106812
+    },
+    {
+      "case": "sol103_23_450_16",
+      "family_hash": "f5283b2f596f4c94e32216692f990fda87c49489e357dc5d8d99e9e77563158b",
+      "family_first_variant": "sol103_21_450_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "3eb127c64c36153f77db3a6bcfe1474a3a1da5e72c5243597f83c9fb2035a6eb",
+      "seconds": 14.888514280319214
+    },
+    {
+      "case": "sol103_24_450_20",
+      "family_hash": "f5283b2f596f4c94e32216692f990fda87c49489e357dc5d8d99e9e77563158b",
+      "family_first_variant": "sol103_21_450_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "3eb127c64c36153f77db3a6bcfe1474a3a1da5e72c5243597f83c9fb2035a6eb",
+      "seconds": 15.161544799804688
+    },
+    {
+      "case": "sol103_25_450_24",
+      "family_hash": "f5283b2f596f4c94e32216692f990fda87c49489e357dc5d8d99e9e77563158b",
+      "family_first_variant": "sol103_21_450_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "3eb127c64c36153f77db3a6bcfe1474a3a1da5e72c5243597f83c9fb2035a6eb",
+      "seconds": 15.247272968292236
+    },
+    {
+      "case": "sol103_26_461_08",
+      "family_hash": "db32d69c804924b4603fce94b84f03e38999b6ec11a3929237b781c2720c1888",
+      "family_first_variant": "sol103_26_461_08",
+      "is_first_of_family": true,
+      "gate_passed": true,
+      "validation_ok": false,
+      "determinism_hash": "dbed7805ca95053438e16612564bde27fd1de8eeb085b3229579b7703f5091ab",
+      "seconds": 110.6393370628357
+    },
+    {
+      "case": "sol103_27_461_12",
+      "family_hash": "db32d69c804924b4603fce94b84f03e38999b6ec11a3929237b781c2720c1888",
+      "family_first_variant": "sol103_26_461_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": false,
+      "determinism_hash": "dbed7805ca95053438e16612564bde27fd1de8eeb085b3229579b7703f5091ab",
+      "seconds": 114.5601954460144
+    },
+    {
+      "case": "sol103_28_461_16",
+      "family_hash": "db32d69c804924b4603fce94b84f03e38999b6ec11a3929237b781c2720c1888",
+      "family_first_variant": "sol103_26_461_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": false,
+      "determinism_hash": "dbed7805ca95053438e16612564bde27fd1de8eeb085b3229579b7703f5091ab",
+      "seconds": 111.57662034034729
+    },
+    {
+      "case": "sol103_29_461_20",
+      "family_hash": "db32d69c804924b4603fce94b84f03e38999b6ec11a3929237b781c2720c1888",
+      "family_first_variant": "sol103_26_461_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": false,
+      "determinism_hash": "dbed7805ca95053438e16612564bde27fd1de8eeb085b3229579b7703f5091ab",
+      "seconds": 110.7937753200531
+    },
+    {
+      "case": "sol103_30_461_24",
+      "family_hash": "db32d69c804924b4603fce94b84f03e38999b6ec11a3929237b781c2720c1888",
+      "family_first_variant": "sol103_26_461_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": false,
+      "determinism_hash": "dbed7805ca95053438e16612564bde27fd1de8eeb085b3229579b7703f5091ab",
+      "seconds": 111.42445921897888
+    },
+    {
+      "case": "sol103_31_462_08",
+      "family_hash": "4a5c4e161e79aeff6c35fa5b3cc91a9666369e729a176020b113ad2f2b9d06b0",
+      "family_first_variant": "sol103_31_462_08",
+      "is_first_of_family": true,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "e6086002d7612b642ec919fce08d7fdae96bc52b491ef2d46606bd1eab7651c1",
+      "seconds": 16.26621150970459
+    },
+    {
+      "case": "sol103_32_462_12",
+      "family_hash": "4a5c4e161e79aeff6c35fa5b3cc91a9666369e729a176020b113ad2f2b9d06b0",
+      "family_first_variant": "sol103_31_462_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "e6086002d7612b642ec919fce08d7fdae96bc52b491ef2d46606bd1eab7651c1",
+      "seconds": 16.261122703552246
+    },
+    {
+      "case": "sol103_33_462_16",
+      "family_hash": "4a5c4e161e79aeff6c35fa5b3cc91a9666369e729a176020b113ad2f2b9d06b0",
+      "family_first_variant": "sol103_31_462_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "e6086002d7612b642ec919fce08d7fdae96bc52b491ef2d46606bd1eab7651c1",
+      "seconds": 16.382793426513672
+    },
+    {
+      "case": "sol103_34_462_20",
+      "family_hash": "4a5c4e161e79aeff6c35fa5b3cc91a9666369e729a176020b113ad2f2b9d06b0",
+      "family_first_variant": "sol103_31_462_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "e6086002d7612b642ec919fce08d7fdae96bc52b491ef2d46606bd1eab7651c1",
+      "seconds": 16.311582326889038
+    },
+    {
+      "case": "sol103_35_462_24",
+      "family_hash": "4a5c4e161e79aeff6c35fa5b3cc91a9666369e729a176020b113ad2f2b9d06b0",
+      "family_first_variant": "sol103_31_462_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "e6086002d7612b642ec919fce08d7fdae96bc52b491ef2d46606bd1eab7651c1",
+      "seconds": 16.201266288757324
+    },
+    {
+      "case": "sol103_36_463_08",
+      "family_hash": "b02f9dcfef637a0aa04f36afd95128707a587bffc391b7fab980cc111405d2af",
+      "family_first_variant": "sol103_36_463_08",
+      "is_first_of_family": true,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "ea593205709684eb50ca75508663c1573c6694ecedf86c14e0a67c43e12d2e4d",
+      "seconds": 16.066741228103638
+    },
+    {
+      "case": "sol103_37_463_12",
+      "family_hash": "b02f9dcfef637a0aa04f36afd95128707a587bffc391b7fab980cc111405d2af",
+      "family_first_variant": "sol103_36_463_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "ea593205709684eb50ca75508663c1573c6694ecedf86c14e0a67c43e12d2e4d",
+      "seconds": 16.178751230239868
+    },
+    {
+      "case": "sol103_38_463_16",
+      "family_hash": "b02f9dcfef637a0aa04f36afd95128707a587bffc391b7fab980cc111405d2af",
+      "family_first_variant": "sol103_36_463_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "ea593205709684eb50ca75508663c1573c6694ecedf86c14e0a67c43e12d2e4d",
+      "seconds": 16.153644323349
+    },
+    {
+      "case": "sol103_39_463_20",
+      "family_hash": "b02f9dcfef637a0aa04f36afd95128707a587bffc391b7fab980cc111405d2af",
+      "family_first_variant": "sol103_36_463_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "ea593205709684eb50ca75508663c1573c6694ecedf86c14e0a67c43e12d2e4d",
+      "seconds": 16.221394538879395
+    },
+    {
+      "case": "sol103_40_463_24",
+      "family_hash": "b02f9dcfef637a0aa04f36afd95128707a587bffc391b7fab980cc111405d2af",
+      "family_first_variant": "sol103_36_463_08",
+      "is_first_of_family": false,
+      "gate_passed": true,
+      "validation_ok": true,
+      "determinism_hash": "ea593205709684eb50ca75508663c1573c6694ecedf86c14e0a67c43e12d2e4d",
+      "seconds": 16.095054149627686
+    }
+  ]
+}
