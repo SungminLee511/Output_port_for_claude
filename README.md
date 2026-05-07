@@ -69,39 +69,63 @@ Family 461 excluded going forward (per user direction).
 `step2_mainplanes/sol103_<NN>_<YYY>_<ZZ>_planes_15deg.png` — files
 01–25 + 26 (461) covered.
 
-## Step 3 — Phase 2: main vs bump, flat vs bend
+## Step 3 — Phase 2: main vs bump, flat vs bend (with edge-line demotion)
 
 After phase-1 plane segmentation, each region is classified as
-**main** (touches outer boundary) or **bump** (interior).  Bumps
-are then grouped into connected blobs, and each blob is marked
-**flat** (sits on one main panel) or **bend** (bridges two
-diverging main panels).
+**main** or **bump**.  Bumps are grouped into connected blobs, and
+each blob is marked **flat** (sits on one main panel) or **bend**
+(bridges two diverging main panels).
 
 Pipeline (vendored from MOBIS_GEN SML, RBE2 logic stripped):
 
 1. `find_boundary_loops` — all boundary edges chained into closed loops.
 2. `pick_outer_loop` — outer = largest 3D perimeter (replaces MOBIS
    XY-shoelace; HD Mobis isn't XY-aligned).
-3. `classify_main_bump` — region with ≥1 outer-loop node = main; else
-   bump.
-4. `build_region_adjacency` — region graph from triangle adjacency.
-5. `group_bump_blobs` — connected components in bump-only sub-graph;
+3. `classify_main_bump` — region with ≥1 outer-loop node = main; else bump.
+4. `reclassify_main_with_parallel_outer_edges` — **new**: a region
+   currently classified as main is *demoted to bump* iff:
+     - its outer-loop edges form **a single contiguous chain** (multiple
+       disjoint chains → keep main, since they bridge far parts of the
+       boundary and indicate a real panel), AND
+     - all those edges are parallel within **15°**.
+   Captures the case where a small feature just clips the panel edge
+   along one straight stretch.
+5. `build_region_adjacency` — region graph from triangle adjacency.
+6. `group_bump_blobs` — connected components in bump-only sub-graph;
    drop blobs with fewer than 3 regions.
-6. `classify_blob_flat_or_bend` — adjacent main-region face normals
+7. `classify_blob_flat_or_bend` — adjacent main-region face normals
    coplanar within 30° → flat; diverging → bend.
 
 Color code in PNGs:
 
 | Color | Meaning |
 |---|---|
-| **Light gray** | main region (touches outer loop) |
+| **HSV-swept hues** (each main region distinct) | main region |
 | **Gold** | flat bump blob |
 | **Crimson** | bend bump blob |
 | **Light yellow** | small / ungrouped bump regions (below `min_blob_size=3`) |
-| **Green wireframe** | outer boundary loop overlay |
+| **Green wireframe** | outer boundary loop |
+| **Red wireframe** | hole loops (non-outer boundaries) |
 
 Coverage: **35 / 40 files** (family 461 excluded per user direction).
 Per-file ~40 s on CUDA.
+
+Per-case mesh + classification cached as `.npz` in
+`data_port/inverse_cache/phase2/<case>.npz` (verts, triangles, region
+labels, all loops, outer index, main/bump/demoted IDs, blobs, blob
+types) so downstream phases don't have to re-segment.
+
+Stats summary across families (main / bump / demoted / blobs):
+
+| family | main | bump | demoted | blobs |
+|---|---|---|---|---|
+| 410 | 6–7 | 242–248 | 24–27 | 7 |
+| 420 | 10 | 261–269 | 37–40 | 9 |
+| 430 | 10–12 | 264–271 | 34–38 | 9 |
+| 440 | 9–10 | 256–264 | 31–37 | 9 |
+| 450 | 7–10 | 142–148 | 5–6 | 5 |
+| 462 | 11–14 | 146–148 | 13–15 | 6 |
+| 463 | 10–14 | 135–142 | 7–10 | 5 |
 
 ### Family gallery (one canonical variant per family)
 
