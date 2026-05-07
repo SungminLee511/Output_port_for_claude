@@ -9,6 +9,24 @@ Files Claude moved here are visible on GitHub.
 End-to-end run of the v2.0 inverse pipeline (`SOLVERX/Origami_Gen/inverse/`)
 in **lenient mode** on the full HD Mobis FEA shell-mesh corpus.
 
+#### Example: family 1, case `sol103_01_410_08`
+
+| _main.png (panels + folds) | _hole.png (shell boundaries) | _bump.png (bumps) |
+|---|---|---|
+| ![main](inverse_results/sol103_01_410_08/sol103_01_410_08_main.png) | ![hole](inverse_results/sol103_01_410_08/sol103_01_410_08_hole.png) | ![bump](inverse_results/sol103_01_410_08/sol103_01_410_08_bump.png) |
+
+#### Family gallery (one canonical variant per family)
+
+| family 1 | family 2 | family 3 | family 4 |
+|---|---|---|---|
+| ![f1](inverse_results/sol103_01_410_08/sol103_01_410_08_main.png) | ![f2](inverse_results/sol103_06_420_08/sol103_06_420_08_main.png) | ![f3](inverse_results/sol103_11_430_08/sol103_11_430_08_main.png) | ![f4](inverse_results/sol103_16_440_08/sol103_16_440_08_main.png) |
+| `_410_*` | `_420_*` | `_430_*` | `_440_*` |
+
+| family 5 | family 6 | family 7 | family 8 |
+|---|---|---|---|
+| ![f5](inverse_results/sol103_21_450_08/sol103_21_450_08_main.png) | ![f6](inverse_results/sol103_26_461_08/sol103_26_461_08_main.png) | ![f7](inverse_results/sol103_31_462_08/sol103_31_462_08_main.png) | ![f8](inverse_results/sol103_36_463_08/sol103_36_463_08_main.png) |
+| `_450_*` | `_461_*` (dome-like) | `_462_*` | `_463_*` |
+
 **Headline numbers**
 
 | metric | value |
