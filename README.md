@@ -69,5 +69,56 @@ Family 461 excluded going forward (per user direction).
 `step2_mainplanes/sol103_<NN>_<YYY>_<ZZ>_planes_15deg.png` — files
 01–25 + 26 (461) covered.
 
+## Step 3 — Phase 2: main vs bump, flat vs bend
+
+After phase-1 plane segmentation, each region is classified as
+**main** (touches outer boundary) or **bump** (interior).  Bumps
+are then grouped into connected blobs, and each blob is marked
+**flat** (sits on one main panel) or **bend** (bridges two
+diverging main panels).
+
+Pipeline (vendored from MOBIS_GEN SML, RBE2 logic stripped):
+
+1. `find_boundary_loops` — all boundary edges chained into closed loops.
+2. `pick_outer_loop` — outer = largest 3D perimeter (replaces MOBIS
+   XY-shoelace; HD Mobis isn't XY-aligned).
+3. `classify_main_bump` — region with ≥1 outer-loop node = main; else
+   bump.
+4. `build_region_adjacency` — region graph from triangle adjacency.
+5. `group_bump_blobs` — connected components in bump-only sub-graph;
+   drop blobs with fewer than 3 regions.
+6. `classify_blob_flat_or_bend` — adjacent main-region face normals
+   coplanar within 30° → flat; diverging → bend.
+
+Color code in PNGs:
+
+| Color | Meaning |
+|---|---|
+| **Light gray** | main region (touches outer loop) |
+| **Gold** | flat bump blob |
+| **Crimson** | bend bump blob |
+| **Light yellow** | small / ungrouped bump regions (below `min_blob_size=3`) |
+| **Green wireframe** | outer boundary loop overlay |
+
+Coverage: **35 / 40 files** (family 461 excluded per user direction).
+Per-file ~40 s on CUDA.
+
+### Family gallery (one canonical variant per family)
+
+| family 1 (`_410_*`) | family 2 (`_420_*`) | family 3 (`_430_*`) | family 4 (`_440_*`) |
+|---|---|---|---|
+| ![p2-f1](step3_classify_blobs/sol103_01_410_08_blobs.png) | ![p2-f2](step3_classify_blobs/sol103_06_420_08_blobs.png) | ![p2-f3](step3_classify_blobs/sol103_11_430_08_blobs.png) | ![p2-f4](step3_classify_blobs/sol103_16_440_08_blobs.png) |
+
+| family 5 (`_450_*`) | family 7 (`_462_*`) | family 8 (`_463_*`) |
+|---|---|---|
+| ![p2-f5](step3_classify_blobs/sol103_21_450_08_blobs.png) | ![p2-f7](step3_classify_blobs/sol103_31_462_08_blobs.png) | ![p2-f8](step3_classify_blobs/sol103_36_463_08_blobs.png) |
+
+Family 461 excluded.
+
+### All PNGs
+
+`step3_classify_blobs/sol103_<NN>_<YYY>_<ZZ>_blobs.png` — files
+01–25 + 31–40 (35 total).
+
 ### `tmp/`
 Earlier deliverables, kept for reference.
