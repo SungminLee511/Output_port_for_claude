@@ -144,5 +144,72 @@ Family 461 excluded.
 `step3_classify_blobs/sol103_<NN>_<YYY>_<ZZ>_blobs.png` — files
 01–25 + 31–40 (35 total).
 
-### `tmp/`
-Earlier deliverables, kept for reference.
+## Step 4 — Blob-topology graph
+
+For every phase-2 cached case (35 files), built a **graph** whose
+nodes are origami-relevant blobs (main panels + classified bump
+blobs) and edges are shared mesh-boundary contacts.  Cached NPZs
+from phase 2 (`data_port/inverse_cache/phase2/<case>.npz`) feed in
+directly — no re-segmentation.
+
+### Node categories
+
+| Color | Node category | Meaning |
+|---|---|---|
+| **blue** | `main` | main panel region (touches outer loop) |
+| **gold** | `flat_bump` | flat bump blob, no outer-loop-clipping members |
+| **crimson** | `bend_bump` | bend bump blob, no outer-loop-clipping members |
+| **dark-orange** | `flat_bump_clipping` | flat bump blob containing ≥1 demoted (outer-loop-clipping) region |
+| **dark-red** | `bend_bump_clipping` | bend bump blob containing ≥1 demoted region |
+
+Node size in the figure ∝ triangle count of that graph node.
+
+### Edge categories
+
+| Color | Edge category | Meaning |
+|---|---|---|
+| **blue** | `main_main` | two main panels share a boundary (a fold / crease) |
+| **gold** | `flat_main` | flat bump blob → main panel |
+| **crimson** | `bend_main` | bend bump blob → main panel |
+| **dark-orange** | `flat_clip_main` | flat-clipping bump → main |
+| **dark-red** | `bend_clip_main` | bend-clipping bump → main |
+| **gray** | `bump_bump` | two bump blobs share a boundary |
+
+Edge width ∝ number of mesh edges shared across the two blobs.
+Edge labels show the raw shared-edge count.
+
+### Graph construction
+
+1. Load NPZ (verts, triangles, region labels, main IDs, blobs,
+   blob types, demoted IDs).
+2. Map every triangle to a graph node:
+   - main region → `M<rid>`
+   - blob member → `B<bi>`
+   - ungrouped bump (region in `bump_ids` but not in any blob)
+     → dropped from the graph (count reported in the title).
+3. Walk triangle adjacency (`_build_tri_adjacency`); each pair of
+   adjacent triangles whose graph-node assignments differ
+   contributes one shared edge between those nodes.
+4. Categorise every node by main vs. blob-type vs. clipping flag,
+   and every edge by the unordered pair of node categories at its
+   endpoints.
+
+### Coverage
+
+35 / 40 cases (family 461 excluded, matching phase 2).  ~1 s per
+case.
+
+### Family gallery (one canonical variant per family)
+
+| family 1 (`_410_*`) | family 2 (`_420_*`) | family 3 (`_430_*`) | family 4 (`_440_*`) |
+|---|---|---|---|
+| ![g-f1](step4_blob_graph/sol103_01_410_08_graph.png) | ![g-f2](step4_blob_graph/sol103_06_420_08_graph.png) | ![g-f3](step4_blob_graph/sol103_11_430_08_graph.png) | ![g-f4](step4_blob_graph/sol103_16_440_08_graph.png) |
+
+| family 5 (`_450_*`) | family 7 (`_462_*`) | family 8 (`_463_*`) |
+|---|---|---|
+| ![g-f5](step4_blob_graph/sol103_21_450_08_graph.png) | ![g-f7](step4_blob_graph/sol103_31_462_08_graph.png) | ![g-f8](step4_blob_graph/sol103_36_463_08_graph.png) |
+
+### All PNGs
+
+`step4_blob_graph/sol103_<NN>_<YYY>_<ZZ>_graph.png` — files
+01–25 + 31–40 (35 total).
