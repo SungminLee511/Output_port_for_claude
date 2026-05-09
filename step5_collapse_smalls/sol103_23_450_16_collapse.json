@@ -1,0 +1,20 @@
+{
+  "stats": {
+    "case": "sol103_23_450_16",
+    "threshold": 300,
+    "n_main_before": 7,
+    "n_main_after": 7,
+    "n_collapsed": 0,
+    "n_nodes_before": 12,
+    "n_nodes_after": 12,
+    "n_edges_before": 11,
+    "n_edges_after": 11,
+    "n_components": 1,
+    "n_nontrivial_components": 1,
+    "n_tris_before": 142715,
+    "n_tris_after": 142715,
+    "n_tris_deleted": 0,
+    "deleted_region_ids": []
+  },
+  "collapses": []
+}

@@ -1,0 +1,100 @@
+{
+  "stats": {
+    "case": "sol103_38_463_16",
+    "threshold": 300,
+    "n_main_before": 14,
+    "n_main_after": 10,
+    "n_collapsed": 4,
+    "n_nodes_before": 19,
+    "n_nodes_after": 15,
+    "n_edges_before": 18,
+    "n_edges_after": 14,
+    "n_components": 1,
+    "n_nontrivial_components": 1,
+    "n_tris_before": 145334,
+    "n_tris_after": 144587,
+    "n_tris_deleted": 747,
+    "deleted_region_ids": [
+      36,
+      98,
+      99,
+      103
+    ]
+  },
+  "collapses": [
+    {
+      "src": "M103",
+      "src_region_ids": [
+        103
+      ],
+      "src_size": 180,
+      "dst": "M100",
+      "dst_region_ids_before": [
+        100
+      ],
+      "dst_size": 720,
+      "component_largest_size": 79872,
+      "dst_region_ids_after": [
+        100,
+        103
+      ]
+    },
+    {
+      "src": "M99",
+      "src_region_ids": [
+        99
+      ],
+      "src_size": 188,
+      "dst": "M0",
+      "dst_region_ids_before": [
+        0
+      ],
+      "dst_size": 79872,
+      "component_largest_size": 79872,
+      "dst_region_ids_after": [
+        0,
+        99
+      ]
+    },
+    {
+      "src": "M36",
+      "src_region_ids": [
+        36
+      ],
+      "src_size": 189,
+      "dst": "M0",
+      "dst_region_ids_before": [
+        0,
+        99
+      ],
+      "dst_size": 79872,
+      "component_largest_size": 79872,
+      "dst_region_ids_after": [
+        0,
+        99,
+        36
+      ]
+    },
+    {
+      "src": "M98",
+      "src_region_ids": [
+        98
+      ],
+      "src_size": 190,
+      "dst": "M0",
+      "dst_region_ids_before": [
+        0,
+        99,
+        36
+      ],
+      "dst_size": 79872,
+      "component_largest_size": 79872,
+      "dst_region_ids_after": [
+        0,
+        99,
+        36,
+        98
+      ]
+    }
+  ]
+}

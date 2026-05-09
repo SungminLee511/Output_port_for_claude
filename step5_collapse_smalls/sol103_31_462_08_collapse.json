@@ -1,0 +1,40 @@
+{
+  "stats": {
+    "case": "sol103_31_462_08",
+    "threshold": 300,
+    "n_main_before": 12,
+    "n_main_after": 11,
+    "n_collapsed": 1,
+    "n_nodes_before": 18,
+    "n_nodes_after": 17,
+    "n_edges_before": 17,
+    "n_edges_after": 16,
+    "n_components": 3,
+    "n_nontrivial_components": 1,
+    "n_tris_before": 144071,
+    "n_tris_after": 143851,
+    "n_tris_deleted": 220,
+    "deleted_region_ids": [
+      33
+    ]
+  },
+  "collapses": [
+    {
+      "src": "M33",
+      "src_region_ids": [
+        33
+      ],
+      "src_size": 220,
+      "dst": "M0",
+      "dst_region_ids_before": [
+        0
+      ],
+      "dst_size": 78364,
+      "component_largest_size": 78364,
+      "dst_region_ids_after": [
+        0,
+        33
+      ]
+    }
+  ]
+}

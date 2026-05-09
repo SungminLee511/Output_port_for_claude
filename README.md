@@ -213,3 +213,63 @@ case.
 
 `step4_blob_graph/sol103_<NN>_<YYY>_<ZZ>_graph.png` — files
 01–25 + 31–40 (35 total).
+
+## Step 5 — Collapse small main regions
+
+Within each connected component of the **main_main subgraph** (i.e.
+mains linked only via main↔main edges, ignoring bump bridges), every
+main with **< 300 triangles** is greedily collapsed into its largest
+currently-alive main neighbour.
+
+Greedy loop:
+
+```
+while ∃ small main with at least one main_main neighbour:
+    pick the smallest such main
+    pick its largest main_main neighbour
+    merge: small → target
+```
+
+Merge semantics:
+
+- **Mesh:** triangles labeled with the small main's region ids are
+  *deleted* from the surviving triangle array (they leave a hole —
+  the user-asked behaviour).
+- **Graph:** every edge incident to the small main is re-routed to
+  the target main. Bumps that touched the deleted small main lose
+  their mesh neighbour on that side (they remain "floating" in the
+  mesh) but their graph edge is re-pointed to the target main, so
+  topology stays connected for downstream phases.
+- The target's `region_ids` list extends with the small's
+  `region_ids`; its triangle count is **not** increased (the small's
+  triangles are gone, not absorbed).
+
+Per-case outputs:
+
+- `<case>_graph.png` — post-collapse graph
+- `<case>_mesh.png` — mesh with collapsed regions removed (holes
+  visible)
+- `<case>_collapse.json` — per-collapse log + per-case stats
+- (cache) `data_port/inverse_cache/step5/<case>.npz` — surviving
+  triangles + labels + collapse map for downstream phases
+
+Coverage: **35 / 35 cases** (family 461 still excluded). ~19 s per
+case.
+
+### Pre / post / deleted-mesh gallery — one canonical variant per family
+
+| family | pre-delete graph (step 4) | post-delete graph (step 5) | mesh after deletion (step 5) |
+|---|---|---|---|
+| 1 (`_410_*`) | ![pre1](step4_blob_graph/sol103_01_410_08_graph.png) | ![post1](step5_collapse_smalls/sol103_01_410_08_graph.png) | ![mesh1](step5_collapse_smalls/sol103_01_410_08_mesh.png) |
+| 2 (`_420_*`) | ![pre2](step4_blob_graph/sol103_06_420_08_graph.png) | ![post2](step5_collapse_smalls/sol103_06_420_08_graph.png) | ![mesh2](step5_collapse_smalls/sol103_06_420_08_mesh.png) |
+| 3 (`_430_*`) | ![pre3](step4_blob_graph/sol103_11_430_08_graph.png) | ![post3](step5_collapse_smalls/sol103_11_430_08_graph.png) | ![mesh3](step5_collapse_smalls/sol103_11_430_08_mesh.png) |
+| 4 (`_440_*`) | ![pre4](step4_blob_graph/sol103_16_440_08_graph.png) | ![post4](step5_collapse_smalls/sol103_16_440_08_graph.png) | ![mesh4](step5_collapse_smalls/sol103_16_440_08_mesh.png) |
+| 5 (`_450_*`) | ![pre5](step4_blob_graph/sol103_21_450_08_graph.png) | ![post5](step5_collapse_smalls/sol103_21_450_08_graph.png) | ![mesh5](step5_collapse_smalls/sol103_21_450_08_mesh.png) |
+| 7 (`_462_*`) | ![pre7](step4_blob_graph/sol103_31_462_08_graph.png) | ![post7](step5_collapse_smalls/sol103_31_462_08_graph.png) | ![mesh7](step5_collapse_smalls/sol103_31_462_08_mesh.png) |
+| 8 (`_463_*`) | ![pre8](step4_blob_graph/sol103_36_463_08_graph.png) | ![post8](step5_collapse_smalls/sol103_36_463_08_graph.png) | ![mesh8](step5_collapse_smalls/sol103_36_463_08_mesh.png) |
+
+### All PNGs
+
+`step5_collapse_smalls/sol103_<NN>_<YYY>_<ZZ>_graph.png` &
+`..._mesh.png` & `..._collapse.json` — files 01–25 + 31–40
+(35 cases).
