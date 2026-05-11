@@ -1,7 +1,10 @@
 # Output Port — Origami_Gen v2.0 Pipeline Gallery
 
 Per-phase per-case pipeline pictures from Origami_Gen v2.0
-verification runs. 16 cases, all 10/10 §3 gates passing.
+verification runs at the **finest** corpus setting:
+`mesh_resolution = 1.0 px/cell` with `RENDER_SCALE = 2`
+(Fix 1 + Fix 3 active). All 16 cases pass every §3 hard gate
+(10/10) — see `Origami_Gen_p6_mapper_verification/SUMMARY.md`.
 
 Source repo: https://github.com/voltwin-dev/Origami_Gen
 
@@ -20,12 +23,52 @@ Source repo: https://github.com/voltwin-dev/Origami_Gen
 | **P7 Bump+Cut** | `bumper/` | + `MapResult` → `BumpResult` |
 | P8 Export | `export/` | files (no picture) |
 
-P6 was originally the "Heightmap" phase. v2.0 dropped viridis
-heightmap input as out of scope and repurposed P6 as the **Mapper**:
-the prelim step that tags every post-stitch quad / tri with the
-yellow / green / purple overlay channels P7 will consume. P7 no
-longer re-derives its labels from masks; the mapping is now an
-inspectable artifact.
+## Per-phase performance (16-case corpus, this run)
+
+`mesh_resolution = 1.0` + `RENDER_SCALE = 2` →
+**950 288 quads / 957 496 verts corpus-wide**.
+
+| Phase | Aggregate (ms) | Aggregate (s) |
+|---|---:|---:|
+| P1 Parse | 535 | 0.5 |
+| P2 Topology | 1 | 0.0 |
+| P3 Fold | 14 | 0.0 |
+| P4 Mesh | 2 654 | 2.7 |
+| **P5 Stitch** | **46 357** | **46.4** |
+| P6 Mapper | 311 | 0.3 |
+| **P7 Bump + Cut** | **63 085** | **63.1** |
+| **Total (P1..P7)** | **112 958** | **113.0** |
+| Avg peak RSS | — | **153 MB / case** |
+
+Per-quad rate: **0.119 ms/quad** — near-linear across 950 k quads
+thanks to scipy.sparse.csgraph + vectorized numpy in P5 / P7.
+
+Per-case breakdown is in [`perf_res1.md`](perf_res1.md).
+
+### Per-case totals (this run)
+
+| Case | quads | total (ms) | total (s) | peak RSS (MB) |
+|---|---:|---:|---:|---:|
+| tiny_panel | 17 984 | 1 779 | 1.8 | 145 |
+| zigzag_6 | 31 104 | 3 498 | 3.5 | 141 |
+| cascade_5_deep | 32 000 | 3 757 | 3.8 | 140 |
+| zigzag_4 | 40 000 | 5 049 | 5.0 | 141 |
+| staircase_3 | 43 200 | 5 071 | 5.1 | 145 |
+| cross_fold_demo | 58 800 | 6 393 | 6.4 | 138 |
+| long_thin_panel | 60 800 | 6 405 | 6.4 | 144 |
+| multi_hole_strip | 58 800 | 6 575 | 6.6 | 145 |
+| single_fold | 61 440 | 6 569 | 6.6 | 145 |
+| closed_box | 60 000 | 7 049 | 7.0 | 137 |
+| mismatched_resolution | 65 920 | 7 537 | 7.5 | 145 |
+| corner_3panel | 58 800 | 8 261 | 8.3 | 137 |
+| cross | 72 000 | 10 308 | 10.3 | 142 |
+| box_unfolding | 72 000 | 10 469 | 10.5 | 142 |
+| l_shape | 97 920 | 10 690 | 10.7 | 152 |
+| u_shape | 119 520 | 13 549 | 13.5 | 159 |
+
+(Hardware: `SML_env` CPU only — see `Origami_Gen.git` README for
+the optimization story; GPU intentionally not used at this graph
+scale.)
 
 ## Per-phase mosaics (all cases on one figure)
 
@@ -50,102 +93,12 @@ inspectable artifact.
 ### P7 — Bump + Cut
 ![P7_bump_cut](Origami_Gen_p6_mapper_verification/phases/P7_bump_cut.png)
 
-## Per-phase performance (16-case corpus)
-
-Per-case wall-time + peak RSS measured by `scripts/perf_measure.py`
-on `SML_env` (CPU — numpy / scipy.sparse.csgraph vectorization;
-GPU explored, see "GPU?" below). Render pass (matplotlib)
-excluded; numbers reflect the pure pipeline P1..P7.
-
-Two improvements landed in this revision:
-- **Fix 1**: optional **`mesh_resolution = 1.0`** (was 2.0 px/cell)
-  — 4× finer mesh per panel, smoother bump ramp, sharper purple-cut
-  contour snap.
-- **Fix 3**: **`RENDER_SCALE = 2`** in `corpus/_primitives.py` — every
-  generated PNG is rendered at 2× pixel density (panel positions
-  scaled, fold thickness held at 4 px so parser morphology budgets
-  stay valid). 4× the pixel real-estate per panel, 4× more cells at
-  the same `mesh_resolution`.
-
-### Default audit (Fix 3 active, `resolution = 2.0` px/cell, 237 k quads)
-
-| Phase | Aggregate (ms) | Notes |
-|---|---|---|
-| P1 Parse | 537 | PNG decode + per-axis morphological fold detect |
-| P2 Topology | 2 | BFS over panel-fold graph |
-| P3 Fold | 17 | Integer cube-rotation pose composition |
-| P4 Mesh | 685 | Anchor-aware grid + junction routing |
-| P5 Stitch | **11 366** | Fixpoint: weld → split → dedup → compact (cKDTree + scipy sparse) |
-| P6 Mapper | 84 | Per-element 3D centroid → 2D pixel → mask lookup |
-| P7 Bump+Cut | **15 571** | scipy.sparse.csgraph multi-source Dijkstra geodesic + hole-snap |
-| **Total** | **28 260** | ~1.77 s / case, **237 572 quads / 241 184 verts** corpus-wide |
-| Avg peak RSS | 109 MB | per case |
-
-### Fix 1 + Fix 3 (`resolution = 1.0` px/cell, 950 k quads — finest)
-
-| Phase | Aggregate (ms) | × vs default |
-|---|---|---|
-| P1 Parse | 536 | 1.0× |
-| P2 Topology | 1 | 1.0× |
-| P3 Fold | 16 | 1.0× |
-| P4 Mesh | 2 669 | 3.9× |
-| P5 Stitch | **45 807** | 4.0× |
-| P6 Mapper | 317 | 3.8× |
-| P7 Bump+Cut | **62 692** | 4.0× |
-| **Total** | **112 037** | 4.0× |
-| Avg peak RSS | 150 MB | +38 % |
-
-Quad counts: **950 288** corpus-wide at res 1.0 + Fix 3. Wall-time
-scales **near-linearly** with quad count (~4× quads → ~4× time)
-thanks to the scipy / numpy vectorization layer — no super-linear
-Python overhead spikes left.
-
-### Optimization history (the speedup work that landed alongside Fix 3)
-
-| Hot path | Before | After | Change |
-|---|---|---|---|
-| `apply_bump` geodesic | `heapq` Dijkstra in pure Python over per-vertex `dict` adjacency | scipy.sparse.csgraph multi-source Dijkstra on CSR adjacency | C-vectorized, ~10× faster on labeled-region size |
-| `_mean_edge_length` | Python `set` over every quad/tri edge, then `np.linalg.norm` per pair | `np.unique(np.sort(edges,axis=1))` + batched `np.linalg.norm` | ~50× on 60 k-quad corpus |
-| `collect_fold_edge_verts` | Python `dict[v] = set(pids)` over every element | `np.bincount` on the unique `(v, pid)` pair array | ~30× |
-| `split_t_junctions` | `np.linalg.norm(vertices[r]-vertices[p])` × 4 × Q calls | precomputed `quad_edge_halflen` / `tri_edge_halflen` tensors | P5 −35 % at res 2.0 |
-| `apply_welds` (earlier) | midpoint averaging | pure index redirect | unchanged speed, byte-stable |
-
-### GPU?
-
-`Project_Definition.md` §4.11 (the "out-of-scope" anti-goal list
-that previously forbade GPU) has been **removed** in this revision —
-GPU is now allowed in any phase.
-
-After this round of vectorization the two hottest phases (P5
-stitch, P7 bumper) are dominated by graph algorithms (`cKDTree`
-pair-search and `scipy.sparse.csgraph.dijkstra`) whose CPU
-implementations are already C-vectorized and stay roughly
-**near-linear in quad count** through 950 k quads. A naive port of
-SSSP to torch CUDA at this graph size would be slower than scipy
-because CUDA kernel-launch latency (~10–50 μs / kernel × thousands
-of iterative kernels) overwhelms the saved compute. A future move
-to cuGraph SSSP / batched Bellman-Ford would start paying off
-beyond **~10⁶ quads** — beyond the current corpus.
-
-The phases that *would* gain from GPU today (P3 pose compose, P4
-grid emit, P6 mapper centroid→pixel) collectively account for
-**< 3 %** of total wall time after the vectorization pass, so
-moving them adds engineering overhead without changing the bottom
-line. Status: **not blocked by spec, deferred until corpus scale
-makes it worth the launch-latency cost.**
-
----
-
 ## Per-case pipeline pictures
 
 For each case: the **input PNG bundle** (`_main`, `_bump`, `_hole`)
 followed by every phase picture (P1 → P2 → P3 → P4 → P5 → P6 → P7).
 P6 colors: gold = yellow-mask quads, green = green-mask quads,
-purple = purple-mask (hole) quads, grey = unmapped. Pictures
-below were rendered at **`mesh_resolution = 2.0` px/cell with Fix 3
-(`RENDER_SCALE = 2`) active** — equivalent to 4× the pre-Fix-3
-quad count per panel, so the bump ramp is visibly smooth and the
-purple-cut contour snap is at the new finer PNG mask granularity.
+purple = purple-mask (hole) quads, grey = unmapped.
 
 ### box_unfolding
 
@@ -370,22 +323,3 @@ purple-cut contour snap is at the new finer PNG mask granularity.
 | P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut |
 |---|---|---|---|---|---|---|
 | ![](Origami_Gen_p6_mapper_verification/zigzag_6/parse.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/topology.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/fold.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/bump_p7.png) |
-
-## Other Origami_Gen verification folders
-
-- `Origami_Gen_dihedral_90/` — dihedral-angle verification renders
-  (every fold ≡ 90°) per case.
-- `Origami_Gen_P7_6_compare/` — P7.6 quad-split fallback comparison
-  (default vs. stress).
-- `Origami_Gen_p6_mapper_verification/SUMMARY.md` — per-case gate counts + composite storyboards.
-
-## Legacy MOBIS_GEN inverse-pipeline folders
-
-Phase-1..5 inverse-design output from prior MOBIS_GEN work, kept
-for reference only:
-
-- `step1_visualize/` — H5 mesh renders (40 files).
-- `step2_mainplanes/` — region-growing plane segmentation.
-- `step3_classify_blobs/` — main / flat-bump / bend-bump classify.
-- `step4_blob_graph/` — blob-topology graph.
-- `step5_collapse_smalls/` — small-region collapse.
