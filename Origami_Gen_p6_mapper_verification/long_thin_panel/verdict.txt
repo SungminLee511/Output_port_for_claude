@@ -11,4 +11,4 @@ gates passing: 10/10  (simple, hard gates)
   PASS  Q2_aspect_max
   PASS  Q4_edge_cv
   PASS  Q6_no_slivers
-wall_seconds: 70.523
+wall_seconds: 82.983

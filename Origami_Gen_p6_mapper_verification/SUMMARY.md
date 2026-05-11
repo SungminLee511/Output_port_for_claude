@@ -1,6 +1,6 @@
 # Origami_Gen v2.0 — Per-Case Verification Report
 
-**Pipeline:** P1 parse → P2 topology → P3 fold → P4 mesh → P5 stitch → P6 mapper → P7 bump+cut
+**Pipeline:** P1 parse → P2 topology → P3 fold → P4 mesh → P5 stitch → P6 mapper → P7 bump+cut → P8 dihedral
 **Cases:** 16    **Phases reached `done`:** 16/16
 **Simple cases passing all gates:** 16/16
 **Junction-case (WIP) total:** 0 (soft-gate acceptance only)
@@ -36,6 +36,10 @@
 ### P7 bump cut
 
 ![P7_bump_cut](phases/P7_bump_cut.png)
+
+### P8 dihedral
+
+![P8_dihedral](phases/P8_dihedral.png)
 
 ## Per-case results
 
