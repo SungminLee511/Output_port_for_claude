@@ -1,4 +1,4 @@
-Case: cascade_5_deep @ res=2.0
+Case: cascade_5_deep @ res=1.0
 phase_reached: done
 gates passing: 10/10  (simple, hard gates)
   PASS  T1_no_orphans
@@ -11,4 +11,4 @@ gates passing: 10/10  (simple, hard gates)
   PASS  Q2_aspect_max
   PASS  Q4_edge_cv
   PASS  Q6_no_slivers
-wall_seconds: 2.83
+wall_seconds: 9.286

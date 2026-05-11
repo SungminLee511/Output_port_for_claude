@@ -1,4 +1,4 @@
-Case: l_shape @ res=2.0
+Case: l_shape @ res=1.0
 phase_reached: done
 gates passing: 10/10  (simple, hard gates)
   PASS  T1_no_orphans
@@ -11,4 +11,4 @@ gates passing: 10/10  (simple, hard gates)
   PASS  Q2_aspect_max
   PASS  Q4_edge_cv
   PASS  Q6_no_slivers
-wall_seconds: 6.972
+wall_seconds: 26.902

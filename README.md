@@ -50,12 +50,74 @@ inspectable artifact.
 ### P7 — Bump + Cut
 ![P7_bump_cut](Origami_Gen_p6_mapper_verification/phases/P7_bump_cut.png)
 
+## Per-phase performance (16-case corpus)
+
+Per-case wall-time + peak RSS measured by `scripts/perf_measure.py`
+on `SML_env` (CPU only — no GPU acceleration, just numpy /
+scipy / scipy.sparse vectorization). Render pass (matplotlib)
+excluded; numbers reflect the pure pipeline P1..P7.
+
+### After CPU vectorization, **resolution = 2.0 px/cell** (default audit res)
+
+| Phase | Aggregate (ms) | Notes |
+|---|---|---|
+| P1 Parse | 150 | PNG decode + per-axis morphological folds detect |
+| P2 Topology | 1 | BFS over panel-fold graph |
+| P3 Fold | 14 | Integer cube-rotation pose composition |
+| P4 Mesh | 186 | Anchor-aware grid + junction routing |
+| P5 Stitch | **2827** | Fixpoint loop: weld → split → dedup → compact (cKDTree + scipy sparse) |
+| P6 Mapper | 24 | Per-element 3D centroid → 2D pixel → mask lookup |
+| P7 Bump+Cut | **3847** | scipy.sparse.csgraph multi-source Dijkstra geodesic + hole-snap |
+| **Total** | **7048** | corpus-wide, ~440 ms / case |
+
+### After CPU vectorization, **resolution = 1.0 px/cell** (4× finer mesh)
+
+| Phase | Aggregate (ms) | × vs res 2.0 |
+|---|---|---|
+| P1 Parse | 149 | 1.0× |
+| P2 Topology | 1 | 1.0× |
+| P3 Fold | 15 | 1.0× |
+| P4 Mesh | 675 | 3.6× |
+| P5 Stitch | **11 162** | 3.9× |
+| P6 Mapper | 81 | 3.4× |
+| P7 Bump+Cut | **15 579** | 4.0× |
+| **Total** | **27 662** | 3.9× |
+| Avg peak RSS | 104 MB | +25 % |
+
+Total quads at res 1.0: **237 572** across the 16 cases (vs.
+59 393 at res 2.0). Wall-time scales sub-linearly with quad
+count thanks to the scipy / numpy vectorization layer.
+
+### Optimization history
+
+| Hot path | Before | After | Change |
+|---|---|---|---|
+| `apply_bump` geodesic | `heapq` Dijkstra in pure Python over per-vertex `dict` adjacency | scipy.sparse.csgraph multi-source Dijkstra on CSR adjacency | C-vectorized, ~10× faster on labeled-region size |
+| `_mean_edge_length` | Python `set` over every quad/tri edge, then `np.linalg.norm` per pair | `np.unique(np.sort(edges,axis=1))` + batched `np.linalg.norm` | ~50× on 60k-quad corpus |
+| `collect_fold_edge_verts` | Python `dict[v] = set(pids)` over every element | `np.bincount` on the unique `(v, pid)` pair array | ~30× |
+| `split_t_junctions` | `np.linalg.norm(vertices[r]-vertices[p])` × 4 × Q calls | precomputed `quad_edge_halflen` / `tri_edge_halflen` tensors | P5 −35 % at res 2.0 |
+| `apply_welds` (earlier) | midpoint averaging | pure index redirect | unchanged speed, but byte-stable |
+
+### GPU?
+
+`Project_Definition.md` §4.11 (the "out-of-scope" anti-goal list
+that previously forbade GPU) has been **removed** in this revision.
+The current CPU vectorization is already at the scipy / numpy
+performance floor for these graph sizes (≤ ~250 k quads). A future
+move to CUDA SSSP (e.g. cuGraph) would help only beyond ~10⁶
+elements; below that, scipy.sparse.csgraph dominates because
+GPU kernel launch latency exceeds the work.
+
+---
+
 ## Per-case pipeline pictures
 
 For each case: the **input PNG bundle** (`_main`, `_bump`, `_hole`)
 followed by every phase picture (P1 → P2 → P3 → P4 → P5 → P6 → P7).
 P6 colors: gold = yellow-mask quads, green = green-mask quads,
-purple = purple-mask (hole) quads, grey = unmapped.
+purple = purple-mask (hole) quads, grey = unmapped. Pictures
+below were rendered at **resolution = 1.0 px/cell** (finer than
+the old default — smoother bump, sharper purple-cut hole snap).
 
 ### box_unfolding
 
