@@ -53,60 +53,86 @@ inspectable artifact.
 ## Per-phase performance (16-case corpus)
 
 Per-case wall-time + peak RSS measured by `scripts/perf_measure.py`
-on `SML_env` (CPU only — no GPU acceleration, just numpy /
-scipy / scipy.sparse vectorization). Render pass (matplotlib)
+on `SML_env` (CPU — numpy / scipy.sparse.csgraph vectorization;
+GPU explored, see "GPU?" below). Render pass (matplotlib)
 excluded; numbers reflect the pure pipeline P1..P7.
 
-### After CPU vectorization, **resolution = 2.0 px/cell** (default audit res)
+Two improvements landed in this revision:
+- **Fix 1**: optional **`mesh_resolution = 1.0`** (was 2.0 px/cell)
+  — 4× finer mesh per panel, smoother bump ramp, sharper purple-cut
+  contour snap.
+- **Fix 3**: **`RENDER_SCALE = 2`** in `corpus/_primitives.py` — every
+  generated PNG is rendered at 2× pixel density (panel positions
+  scaled, fold thickness held at 4 px so parser morphology budgets
+  stay valid). 4× the pixel real-estate per panel, 4× more cells at
+  the same `mesh_resolution`.
+
+### Default audit (Fix 3 active, `resolution = 2.0` px/cell, 237 k quads)
 
 | Phase | Aggregate (ms) | Notes |
 |---|---|---|
-| P1 Parse | 150 | PNG decode + per-axis morphological folds detect |
-| P2 Topology | 1 | BFS over panel-fold graph |
-| P3 Fold | 14 | Integer cube-rotation pose composition |
-| P4 Mesh | 186 | Anchor-aware grid + junction routing |
-| P5 Stitch | **2827** | Fixpoint loop: weld → split → dedup → compact (cKDTree + scipy sparse) |
-| P6 Mapper | 24 | Per-element 3D centroid → 2D pixel → mask lookup |
-| P7 Bump+Cut | **3847** | scipy.sparse.csgraph multi-source Dijkstra geodesic + hole-snap |
-| **Total** | **7048** | corpus-wide, ~440 ms / case |
+| P1 Parse | 537 | PNG decode + per-axis morphological fold detect |
+| P2 Topology | 2 | BFS over panel-fold graph |
+| P3 Fold | 17 | Integer cube-rotation pose composition |
+| P4 Mesh | 685 | Anchor-aware grid + junction routing |
+| P5 Stitch | **11 366** | Fixpoint: weld → split → dedup → compact (cKDTree + scipy sparse) |
+| P6 Mapper | 84 | Per-element 3D centroid → 2D pixel → mask lookup |
+| P7 Bump+Cut | **15 571** | scipy.sparse.csgraph multi-source Dijkstra geodesic + hole-snap |
+| **Total** | **28 260** | ~1.77 s / case, **237 572 quads / 241 184 verts** corpus-wide |
+| Avg peak RSS | 109 MB | per case |
 
-### After CPU vectorization, **resolution = 1.0 px/cell** (4× finer mesh)
+### Fix 1 + Fix 3 (`resolution = 1.0` px/cell, 950 k quads — finest)
 
-| Phase | Aggregate (ms) | × vs res 2.0 |
+| Phase | Aggregate (ms) | × vs default |
 |---|---|---|
-| P1 Parse | 149 | 1.0× |
+| P1 Parse | 536 | 1.0× |
 | P2 Topology | 1 | 1.0× |
-| P3 Fold | 15 | 1.0× |
-| P4 Mesh | 675 | 3.6× |
-| P5 Stitch | **11 162** | 3.9× |
-| P6 Mapper | 81 | 3.4× |
-| P7 Bump+Cut | **15 579** | 4.0× |
-| **Total** | **27 662** | 3.9× |
-| Avg peak RSS | 104 MB | +25 % |
+| P3 Fold | 16 | 1.0× |
+| P4 Mesh | 2 669 | 3.9× |
+| P5 Stitch | **45 807** | 4.0× |
+| P6 Mapper | 317 | 3.8× |
+| P7 Bump+Cut | **62 692** | 4.0× |
+| **Total** | **112 037** | 4.0× |
+| Avg peak RSS | 150 MB | +38 % |
 
-Total quads at res 1.0: **237 572** across the 16 cases (vs.
-59 393 at res 2.0). Wall-time scales sub-linearly with quad
-count thanks to the scipy / numpy vectorization layer.
+Quad counts: **950 288** corpus-wide at res 1.0 + Fix 3. Wall-time
+scales **near-linearly** with quad count (~4× quads → ~4× time)
+thanks to the scipy / numpy vectorization layer — no super-linear
+Python overhead spikes left.
 
-### Optimization history
+### Optimization history (the speedup work that landed alongside Fix 3)
 
 | Hot path | Before | After | Change |
 |---|---|---|---|
 | `apply_bump` geodesic | `heapq` Dijkstra in pure Python over per-vertex `dict` adjacency | scipy.sparse.csgraph multi-source Dijkstra on CSR adjacency | C-vectorized, ~10× faster on labeled-region size |
-| `_mean_edge_length` | Python `set` over every quad/tri edge, then `np.linalg.norm` per pair | `np.unique(np.sort(edges,axis=1))` + batched `np.linalg.norm` | ~50× on 60k-quad corpus |
+| `_mean_edge_length` | Python `set` over every quad/tri edge, then `np.linalg.norm` per pair | `np.unique(np.sort(edges,axis=1))` + batched `np.linalg.norm` | ~50× on 60 k-quad corpus |
 | `collect_fold_edge_verts` | Python `dict[v] = set(pids)` over every element | `np.bincount` on the unique `(v, pid)` pair array | ~30× |
 | `split_t_junctions` | `np.linalg.norm(vertices[r]-vertices[p])` × 4 × Q calls | precomputed `quad_edge_halflen` / `tri_edge_halflen` tensors | P5 −35 % at res 2.0 |
-| `apply_welds` (earlier) | midpoint averaging | pure index redirect | unchanged speed, but byte-stable |
+| `apply_welds` (earlier) | midpoint averaging | pure index redirect | unchanged speed, byte-stable |
 
 ### GPU?
 
 `Project_Definition.md` §4.11 (the "out-of-scope" anti-goal list
-that previously forbade GPU) has been **removed** in this revision.
-The current CPU vectorization is already at the scipy / numpy
-performance floor for these graph sizes (≤ ~250 k quads). A future
-move to CUDA SSSP (e.g. cuGraph) would help only beyond ~10⁶
-elements; below that, scipy.sparse.csgraph dominates because
-GPU kernel launch latency exceeds the work.
+that previously forbade GPU) has been **removed** in this revision —
+GPU is now allowed in any phase.
+
+After this round of vectorization the two hottest phases (P5
+stitch, P7 bumper) are dominated by graph algorithms (`cKDTree`
+pair-search and `scipy.sparse.csgraph.dijkstra`) whose CPU
+implementations are already C-vectorized and stay roughly
+**near-linear in quad count** through 950 k quads. A naive port of
+SSSP to torch CUDA at this graph size would be slower than scipy
+because CUDA kernel-launch latency (~10–50 μs / kernel × thousands
+of iterative kernels) overwhelms the saved compute. A future move
+to cuGraph SSSP / batched Bellman-Ford would start paying off
+beyond **~10⁶ quads** — beyond the current corpus.
+
+The phases that *would* gain from GPU today (P3 pose compose, P4
+grid emit, P6 mapper centroid→pixel) collectively account for
+**< 3 %** of total wall time after the vectorization pass, so
+moving them adds engineering overhead without changing the bottom
+line. Status: **not blocked by spec, deferred until corpus scale
+makes it worth the launch-latency cost.**
 
 ---
 
@@ -116,8 +142,10 @@ For each case: the **input PNG bundle** (`_main`, `_bump`, `_hole`)
 followed by every phase picture (P1 → P2 → P3 → P4 → P5 → P6 → P7).
 P6 colors: gold = yellow-mask quads, green = green-mask quads,
 purple = purple-mask (hole) quads, grey = unmapped. Pictures
-below were rendered at **resolution = 1.0 px/cell** (finer than
-the old default — smoother bump, sharper purple-cut hole snap).
+below were rendered at **`mesh_resolution = 2.0` px/cell with Fix 3
+(`RENDER_SCALE = 2`) active** — equivalent to 4× the pre-Fix-3
+quad count per panel, so the bump ramp is visibly smooth and the
+purple-cut contour snap is at the new finer PNG mask granularity.
 
 ### box_unfolding
 
