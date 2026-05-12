@@ -20,7 +20,7 @@ Source repo: https://github.com/voltwin-dev/Origami_Gen
 | **P5 Stitch** | `stitcher/` | `MeshResult` → `StitchResult` (post-stitch baseline) |
 | **P6 Mapper** | `mapper/` | + masks → `MapResult` (yellow / green / purple element labels — pure tagging, no mesh mutation) |
 | **P7 Bump+Cut** | `bumper/` | + `MapResult` → `BumpResult` |
-| **P8 Dihedral** | `dihedral/` | `BumpResult` → `DihedralResult` (~90 deg edges in red — pure analysis, no mesh mutation) |
+| **P8 Dihedral** | `dihedral/` | `BumpResult` → `DihedralResult` (~90 deg edges in red, neighbouring-face shell up to 2 BFS layers in orange, corner vertices (≥3 90 deg edges meet) in red dots with blue corner-face shell up to 2 BFS layers — pure analysis, no mesh mutation) |
 | P9 Export | `export/` | files (no picture) |
 
 P8 was promoted from the old standalone `scripts/dihedral_90.py`
@@ -57,9 +57,13 @@ into a real typed phase; the original P8 Export has moved to P9.
 For each case: the **input PNG bundle** (`_main`, `_bump`, `_hole`)
 followed by every phase picture (P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8).
 P6 colors: gold = yellow-mask quads, green = green-mask quads,
-purple = purple-mask (hole) quads, grey = unmapped. P8 red lines:
-mesh edges with dihedral angle ∈ [85, 95] deg (the fold seams,
-post bump+cut).
+purple = purple-mask (hole) quads, grey = unmapped. P8: red lines
+= mesh edges with dihedral angle ∈ [85, 95] deg (the fold seams,
+post bump+cut); orange palette (L0/L1/L2) = faces within 2 BFS
+layers of any 90 deg edge; red dots = corner verts where ≥ 3
+90 deg edges converge; blue palette (L0/L1/L2) = faces within 2
+BFS layers of any corner vert; grey = faces outside both shells.
+Title carries `edges`, `corners`, and the per-layer face counts.
 
 ### box_unfolding
 
