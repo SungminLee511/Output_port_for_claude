@@ -1,7 +1,7 @@
 # Origami_Gen v2.0 — Per-Case Verification Report
 
 **Pipeline:** P1 parse → P2 topology → P3 fold → P4 mesh → P5 stitch → P6 mapper → P7 bump+cut → P8 dihedral
-**Cases:** 16    **Phases reached `done`:** 16/16
+**Cases:** 16    **Phases reached `done`:** 15/16
 **Simple cases passing all gates:** 16/16
 **Junction-case (WIP) total:** 0 (soft-gate acceptance only)
 
@@ -58,7 +58,7 @@
 | closed_box | simple | done | 15002 | 15000 | 0 | 0 | 0 | 1 | 0 | 0 | 1.00 | 0.00e+00 | 0.00 | 10/10 |
 | corner_3panel | simple | done | 14911 | 14700 | 0 | 0 | 0 | 1 | 0 | 0 | 1.00 | 0.00e+00 | 0.00 | 10/10 |
 | cross | simple | done | 18121 | 18000 | 0 | 0 | 0 | 1 | 0 | 0 | 1.00 | 0.00e+00 | 0.00 | 10/10 |
-| cross_fold_demo | simple | done | 14981 | 14700 | 0 | 0 | 0 | 1 | 0 | 0 | 1.00 | 0.00e+00 | 0.00 | 10/10 |
+| cross_fold_demo | simple | P10.bumpcut | 14981 | 14700 | 0 | 0 | 0 | 1 | 0 | 0 | 1.00 | 0.00e+00 | 0.00 | 10/10 |
 | l_shape | simple | done | 24797 | 24480 | 0 | 0 | 0 | 1 | 0 | 0 | 1.00 | 0.00e+00 | 0.00 | 10/10 |
 | long_thin_panel | simple | done | 15471 | 15200 | 0 | 0 | 0 | 1 | 0 | 0 | 1.00 | 0.00e+00 | 0.00 | 10/10 |
 | mismatched_resolution | simple | done | 16797 | 16480 | 0 | 0 | 0 | 1 | 0 | 0 | 1.00 | 0.00e+00 | 0.00 | 10/10 |
@@ -106,6 +106,7 @@
 
 ![cross_fold_demo](cross_fold_demo/composite.png)
 
+**Error:** `PYTHON_EXC: IndexError: index 27456 is out of bounds for axis 0 with size 27456`
 **All measured gates pass.**
 
 ### l_shape
