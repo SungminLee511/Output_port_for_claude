@@ -9,7 +9,7 @@ Source repo: https://github.com/voltwin-dev/Origami_Gen
 
 ![headline gate matrix](Origami_Gen_p6_mapper_verification/headline.png)
 
-## Pipeline phases (8 phases visualized; P9 export emits files only)
+## Pipeline phases (9 phases visualized; P10 export emits files only)
 
 | Phase | Module | Input → Output |
 |---|---|---|
@@ -21,7 +21,8 @@ Source repo: https://github.com/voltwin-dev/Origami_Gen
 | **P6 Mapper** | `mapper/` | + masks → `MapResult` (yellow / green / purple element labels — pure tagging, no mesh mutation) |
 | **P7 Bump+Cut** | `bumper/` | + `MapResult` → `BumpResult` |
 | **P8 Dihedral** | `dihedral/` | `BumpResult` → `DihedralResult` (~90 deg edges in red, neighbouring-face shell up to 4 BFS layers in red→orange→yellow, corner vertices (≥3 90 deg edges meet) in red dots with purple→violet→lavender corner-face shell up to 4 BFS layers — pure analysis, no mesh mutation) |
-| P9 Export | `export/` | files (no picture) |
+| **P9 Fillet** | `fillet/` | `BumpResult` + `DihedralResult` → `FilletResult` (tris only). Deletes P8 BFS-tagged faces (layers 0..4), replaces them with analytic quarter-cylinder fillets along every 90 deg fold edge (orange) and spherical caps at every ≥3-edge corner (blue), constant radius `r`. v1: cylinders + spheres NOT yet welded to surviving mesh boundary. |
+| P10 Export | `export/` | files (no picture) |
 
 P8 was promoted from the old standalone `scripts/dihedral_90.py`
 into a real typed phase; the original P8 Export has moved to P9.
@@ -52,6 +53,9 @@ into a real typed phase; the original P8 Export has moved to P9.
 ### P8 — Dihedral
 ![P8_dihedral](Origami_Gen_p6_mapper_verification/phases/P8_dihedral.png)
 
+### P9 — Fillet
+![P9_fillet](Origami_Gen_p6_mapper_verification/phases/P9_fillet.png)
+
 ## Per-case pipeline pictures
 
 For each case: the **input PNG bundle** (`_main`, `_bump`, `_hole`)
@@ -76,9 +80,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/box_unfolding/parse.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/topology.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/fold.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/box_unfolding/parse.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/topology.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/fold.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/box_unfolding/fillet_p9.png) |
 
 ### cascade_5_deep
 
@@ -90,9 +94,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/parse.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/topology.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/fold.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/parse.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/topology.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/fold.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/cascade_5_deep/fillet_p9.png) |
 
 ### closed_box
 
@@ -104,9 +108,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/closed_box/parse.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/topology.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/fold.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/closed_box/parse.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/topology.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/fold.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/closed_box/fillet_p9.png) |
 
 ### corner_3panel
 
@@ -118,9 +122,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/corner_3panel/parse.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/topology.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/fold.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/corner_3panel/parse.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/topology.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/fold.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/corner_3panel/fillet_p9.png) |
 
 ### cross
 
@@ -132,9 +136,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/cross/parse.png) | ![](Origami_Gen_p6_mapper_verification/cross/topology.png) | ![](Origami_Gen_p6_mapper_verification/cross/fold.png) | ![](Origami_Gen_p6_mapper_verification/cross/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/cross/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/cross/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/cross/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/cross/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/cross/parse.png) | ![](Origami_Gen_p6_mapper_verification/cross/topology.png) | ![](Origami_Gen_p6_mapper_verification/cross/fold.png) | ![](Origami_Gen_p6_mapper_verification/cross/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/cross/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/cross/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/cross/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/cross/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/cross/fillet_p9.png) |
 
 ### cross_fold_demo
 
@@ -146,9 +150,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/parse.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/topology.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/fold.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/parse.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/topology.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/fold.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/cross_fold_demo/fillet_p9.png) |
 
 ### l_shape
 
@@ -160,9 +164,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/l_shape/parse.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/topology.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/fold.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/l_shape/parse.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/topology.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/fold.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/l_shape/fillet_p9.png) |
 
 ### long_thin_panel
 
@@ -174,9 +178,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/long_thin_panel/parse.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/topology.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/fold.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/long_thin_panel/parse.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/topology.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/fold.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/long_thin_panel/fillet_p9.png) |
 
 ### mismatched_resolution
 
@@ -188,9 +192,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/parse.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/topology.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/fold.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/parse.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/topology.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/fold.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/mismatched_resolution/fillet_p9.png) |
 
 ### multi_hole_strip
 
@@ -202,9 +206,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/parse.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/topology.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/fold.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/parse.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/topology.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/fold.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/multi_hole_strip/fillet_p9.png) |
 
 ### single_fold
 
@@ -216,9 +220,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/single_fold/parse.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/topology.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/fold.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/single_fold/parse.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/topology.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/fold.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/single_fold/fillet_p9.png) |
 
 ### staircase_3
 
@@ -230,9 +234,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/staircase_3/parse.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/topology.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/fold.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/staircase_3/parse.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/topology.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/fold.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/staircase_3/fillet_p9.png) |
 
 ### tiny_panel
 
@@ -244,9 +248,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/tiny_panel/parse.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/topology.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/fold.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/tiny_panel/parse.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/topology.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/fold.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/tiny_panel/fillet_p9.png) |
 
 ### u_shape
 
@@ -258,9 +262,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/u_shape/parse.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/topology.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/fold.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/u_shape/parse.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/topology.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/fold.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/u_shape/fillet_p9.png) |
 
 ### zigzag_4
 
@@ -272,9 +276,9 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/zigzag_4/parse.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/topology.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/fold.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/zigzag_4/parse.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/topology.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/fold.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_4/fillet_p9.png) |
 
 ### zigzag_6
 
@@ -286,6 +290,6 @@ the per-layer face counts.
 
 **Pipeline:**
 
-| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral |
-|---|---|---|---|---|---|---|---|
-| ![](Origami_Gen_p6_mapper_verification/zigzag_6/parse.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/topology.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/fold.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/dihedral_p8.png) |
+| P1 parse | P2 topology | P3 fold | P4 mesh | P5 stitch | P6 mapper | P7 bump+cut | P8 dihedral | P9 fillet |
+|---|---|---|---|---|---|---|---|---|
+| ![](Origami_Gen_p6_mapper_verification/zigzag_6/parse.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/topology.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/fold.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/mesh_p4.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/stitch_p5.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/map_p6.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/bump_p7.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/dihedral_p8.png) | ![](Origami_Gen_p6_mapper_verification/zigzag_6/fillet_p9.png) |

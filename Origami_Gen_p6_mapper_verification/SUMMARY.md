@@ -41,6 +41,10 @@
 
 ![P8_dihedral](phases/P8_dihedral.png)
 
+### P9 fillet
+
+![P9_fillet](phases/P9_fillet.png)
+
 ## Per-case results
 
 | Case | Class | Phase | Verts | Quads | Tris | nm | orph | comp | inv | sliver | asp_p95 | plan_p95 | edge_cv | Gates |
