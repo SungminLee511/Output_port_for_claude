@@ -1,0 +1,43 @@
+{
+  "case": "cross",
+  "resolution": 1.0,
+  "junction_case": false,
+  "phase_reached": "done",
+  "wall_seconds": 195.042,
+  "error": "",
+  "metrics": {
+    "n_vertices": 72241,
+    "n_quads": 72000,
+    "n_tris": 0,
+    "n_free_edges": 480,
+    "n_nonmanifold_edges": 0,
+    "n_orphans": 0,
+    "n_components": 1,
+    "n_duplicate_verts": 0,
+    "mean_edge_length": 1.0,
+    "edge_length_cv": 0.0,
+    "aspect_max": 1.0,
+    "aspect_p95": 1.0,
+    "planarity_max": 0.0,
+    "planarity_p95": 0.0,
+    "n_nonplanar_quads": 0,
+    "n_inverted_quads": 0,
+    "n_sliver_quads": 0,
+    "jacobian_min": 1.0,
+    "n_non_axis_aligned_quads": 0,
+    "n_non_axis_aligned_tris": 0,
+    "axis_alignment_max_off": 0.0
+  },
+  "gates": {
+    "T1_no_orphans": true,
+    "T2_single_component": true,
+    "T3_no_nm_edges": true,
+    "T5_no_dup_verts": true,
+    "G3_planarity": true,
+    "G4_no_inverted": true,
+    "Q1_aspect_p95": true,
+    "Q2_aspect_max": true,
+    "Q4_edge_cv": true,
+    "Q6_no_slivers": true
+  }
+}
