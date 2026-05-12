@@ -1,4 +1,4 @@
-Case: zigzag_4 @ res=1.0
+Case: zigzag_4 @ res=2.0
 phase_reached: done
 gates passing: 10/10  (simple, hard gates)
   PASS  T1_no_orphans
@@ -11,4 +11,4 @@ gates passing: 10/10  (simple, hard gates)
   PASS  Q2_aspect_max
   PASS  Q4_edge_cv
   PASS  Q6_no_slivers
-wall_seconds: 112.656
+wall_seconds: 28.141
