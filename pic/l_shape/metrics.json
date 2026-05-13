@@ -3,7 +3,7 @@
   "resolution": 2.0,
   "junction_case": false,
   "phase_reached": "done",
-  "wall_seconds": 61.529,
+  "wall_seconds": 63.685,
   "error": "",
   "metrics": {
     "n_vertices": 24797,
