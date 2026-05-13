@@ -1,2 +1,0 @@
-python: can't open file '/home/sky/home/TRASHCAN/output_port/scripts/verify_visualize.py': [Errno 2] No such file or directory
-ERROR conda.cli.main_run:execute(124): `conda run python -u scripts/verify_visualize.py --resolution 2.0 --workers 1` failed. (See above for error)
