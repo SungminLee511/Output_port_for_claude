@@ -2,9 +2,9 @@
   "case": "cross_fold_demo",
   "resolution": 2.0,
   "junction_case": false,
-  "phase_reached": "P10.bumpcut",
-  "wall_seconds": 16.979,
-  "error": "PYTHON_EXC: IndexError: index 27456 is out of bounds for axis 0 with size 27456",
+  "phase_reached": "done",
+  "wall_seconds": 37.856,
+  "error": "",
   "metrics": {
     "n_vertices": 14981,
     "n_quads": 14700,

@@ -1,6 +1,5 @@
 Case: cross_fold_demo @ res=2.0
-phase_reached: P10.bumpcut
-ERROR: PYTHON_EXC: IndexError: index 27456 is out of bounds for axis 0 with size 27456
+phase_reached: done
 gates passing: 10/10  (simple, hard gates)
   PASS  T1_no_orphans
   PASS  T2_single_component
@@ -12,4 +11,4 @@ gates passing: 10/10  (simple, hard gates)
   PASS  Q2_aspect_max
   PASS  Q4_edge_cv
   PASS  Q6_no_slivers
-wall_seconds: 16.979
+wall_seconds: 37.856
