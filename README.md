@@ -1,294 +1,165 @@
-# HD Mobis bracket source-mesh views
+# Origami_Gen bracket variants v01..v20
 
-Multi-view renders of every `sol103_*.h5` bracket from the data port. Each image grid shows seven viewpoints: iso, top (+Z), bottom (-Z), front (+Y), back (-Y), right (+X), left (-X). Vertex point cloud only — no triangle fill, no RBE2 markers.
+Twenty parametric L-with-cap-stack bracket cases authored against `BRACKET_RECIPE.md` §0a (Complexity Floor C1..C11). All share the `hd_mobis_bracket` / `accessory_l_bracket` archetype:
 
-Filenames follow the original `sol103_<idx>_<code>_<thk>` scheme: `<idx>` = sample index 01..40, `<code>` = geometry-variant code (410..463), `<thk>` = sheet thickness (08..24).
+* **5 panels** — A main plate + B flange + C/D/E cap stack.
+* **C2 valley fold** at B↔C (blue), rest mountain (red).
+* **C3 wider-child** at C→D (D extends past C as a free edge).
+* **C4 irregular outline** — main plate has a TL chamfer and a bottom narrow-tab carve with two `_concave_fillet` inside corners (C8).
+* **C5/C10 bosses** — 2 boss-stiffener groups × 3 bolts each on the main plate; bolts sit ≥ 6 mm inside their boss.
+* **C6 pocket-with-bump** — central rrect cutout wrapped by a matching rrect bump 5 mm larger on every side.
+* **C7 fold-spanning beads** — one across A↔B plus one double-fold-cross across B↔C↔D.
+* **C9 corner fillets** on every non-fold corner.
+* **C11 sub-panel bolts** on B + D.
 
-Rendered with `origami_gen.corpus.mobis_bracket.visualize_source_mesh`.
+Variants sweep across main-plate aspect, flange depth, cap proportions, boss placement, and pocket dimensions. Generator: `origami_gen.corpus.mobis_bracket.bracket_variants`.
 
-## Sample summary
+Each preview shows the three input PNGs side by side:
+`_main.png` (panels + folds), `_hole.png` (purple cuts), `_bump.png` (yellow / green displacement).
 
-| # | Sample | Nodes | Tris |
-|---:|---|---:|---:|
-| 1 | `sol103_01_410_08` | 71,504 | 140,912 |
-| 2 | `sol103_02_410_12` | 71,504 | 140,912 |
-| 3 | `sol103_03_410_16` | 71,504 | 140,912 |
-| 4 | `sol103_04_410_20` | 71,504 | 140,912 |
-| 5 | `sol103_05_410_24` | 71,504 | 140,912 |
-| 6 | `sol103_06_420_08` | 72,317 | 142,503 |
-| 7 | `sol103_07_420_12` | 72,317 | 142,503 |
-| 8 | `sol103_08_420_16` | 72,317 | 142,503 |
-| 9 | `sol103_09_420_20` | 72,317 | 142,503 |
-| 10 | `sol103_10_420_24` | 72,317 | 142,503 |
-| 11 | `sol103_11_430_08` | 75,457 | 148,793 |
-| 12 | `sol103_12_430_12` | 75,457 | 148,793 |
-| 13 | `sol103_13_430_16` | 75,457 | 148,793 |
-| 14 | `sol103_14_430_20` | 75,457 | 148,793 |
-| 15 | `sol103_15_430_24` | 75,457 | 148,793 |
-| 16 | `sol103_16_440_08` | 83,735 | 165,249 |
-| 17 | `sol103_17_440_12` | 83,735 | 165,249 |
-| 18 | `sol103_18_440_16` | 83,735 | 165,249 |
-| 19 | `sol103_19_440_20` | 83,735 | 165,249 |
-| 20 | `sol103_20_440_24` | 83,735 | 165,249 |
-| 21 | `sol103_21_450_08` | 72,398 | 142,715 |
-| 22 | `sol103_22_450_12` | 72,398 | 142,715 |
-| 23 | `sol103_23_450_16` | 72,398 | 142,715 |
-| 24 | `sol103_24_450_20` | 72,398 | 142,715 |
-| 25 | `sol103_25_450_24` | 72,398 | 142,715 |
-| 26 | `sol103_26_461_08` | 74,302 | 146,501 |
-| 27 | `sol103_27_461_12` | 74,302 | 146,501 |
-| 28 | `sol103_28_461_16` | 74,302 | 146,501 |
-| 29 | `sol103_29_461_20` | 74,302 | 146,501 |
-| 30 | `sol103_30_461_24` | 74,302 | 146,501 |
-| 31 | `sol103_31_462_08` | 73,175 | 144,071 |
-| 32 | `sol103_32_462_12` | 73,175 | 144,071 |
-| 33 | `sol103_33_462_16` | 73,175 | 144,071 |
-| 34 | `sol103_34_462_20` | 73,175 | 144,071 |
-| 35 | `sol103_35_462_24` | 73,175 | 144,071 |
-| 36 | `sol103_36_463_08` | 73,729 | 145,334 |
-| 37 | `sol103_37_463_12` | 73,729 | 145,334 |
-| 38 | `sol103_38_463_16` | 73,729 | 145,334 |
-| 39 | `sol103_39_463_20` | 73,729 | 145,334 |
-| 40 | `sol103_40_463_24` | 73,729 | 145,334 |
+## Summary
 
-## All views
+| # | Variant | Canvas |
+|---:|---|---:|
+| 1 | `bracket_v01` | 800 × 888 |
+| 2 | `bracket_v02` | 920 × 808 |
+| 3 | `bracket_v03` | 760 × 1008 |
+| 4 | `bracket_v04` | 912 × 928 |
+| 5 | `bracket_v05` | 784 × 888 |
+| 6 | `bracket_v06` | 872 × 888 |
+| 7 | `bracket_v07` | 800 × 920 |
+| 8 | `bracket_v08` | 800 × 888 |
+| 9 | `bracket_v09` | 800 × 888 |
+| 10 | `bracket_v10` | 800 × 888 |
+| 11 | `bracket_v11` | 800 × 888 |
+| 12 | `bracket_v12` | 800 × 888 |
+| 13 | `bracket_v13` | 800 × 888 |
+| 14 | `bracket_v14` | 800 × 888 |
+| 15 | `bracket_v15` | 800 × 888 |
+| 16 | `bracket_v16` | 800 × 888 |
+| 17 | `bracket_v17` | 840 × 904 |
+| 18 | `bracket_v18` | 776 × 872 |
+| 19 | `bracket_v19` | 832 × 904 |
+| 20 | `bracket_v20` | 856 × 920 |
 
-### `sol103_01_410_08`
+## All variants
 
-71,504 nodes · 140,912 triangles
+### `bracket_v01`
 
-![sol103_01_410_08](sol103_01_410_08_t20260526b.png)
+800 × 888 px
 
-### `sol103_02_410_12`
+![bracket_v01](bracket_v01_t20260526.png)
 
-71,504 nodes · 140,912 triangles
+### `bracket_v02`
 
-![sol103_02_410_12](sol103_02_410_12_t20260526b.png)
+920 × 808 px
 
-### `sol103_03_410_16`
+![bracket_v02](bracket_v02_t20260526.png)
 
-71,504 nodes · 140,912 triangles
+### `bracket_v03`
 
-![sol103_03_410_16](sol103_03_410_16_t20260526b.png)
+760 × 1008 px
 
-### `sol103_04_410_20`
+![bracket_v03](bracket_v03_t20260526.png)
 
-71,504 nodes · 140,912 triangles
+### `bracket_v04`
 
-![sol103_04_410_20](sol103_04_410_20_t20260526b.png)
+912 × 928 px
 
-### `sol103_05_410_24`
+![bracket_v04](bracket_v04_t20260526.png)
 
-71,504 nodes · 140,912 triangles
+### `bracket_v05`
 
-![sol103_05_410_24](sol103_05_410_24_t20260526b.png)
+784 × 888 px
 
-### `sol103_06_420_08`
+![bracket_v05](bracket_v05_t20260526.png)
 
-72,317 nodes · 142,503 triangles
+### `bracket_v06`
 
-![sol103_06_420_08](sol103_06_420_08_t20260526b.png)
+872 × 888 px
 
-### `sol103_07_420_12`
+![bracket_v06](bracket_v06_t20260526.png)
 
-72,317 nodes · 142,503 triangles
+### `bracket_v07`
 
-![sol103_07_420_12](sol103_07_420_12_t20260526b.png)
+800 × 920 px
 
-### `sol103_08_420_16`
+![bracket_v07](bracket_v07_t20260526.png)
 
-72,317 nodes · 142,503 triangles
+### `bracket_v08`
 
-![sol103_08_420_16](sol103_08_420_16_t20260526b.png)
+800 × 888 px
 
-### `sol103_09_420_20`
+![bracket_v08](bracket_v08_t20260526.png)
 
-72,317 nodes · 142,503 triangles
+### `bracket_v09`
 
-![sol103_09_420_20](sol103_09_420_20_t20260526b.png)
+800 × 888 px
 
-### `sol103_10_420_24`
+![bracket_v09](bracket_v09_t20260526.png)
 
-72,317 nodes · 142,503 triangles
+### `bracket_v10`
 
-![sol103_10_420_24](sol103_10_420_24_t20260526b.png)
+800 × 888 px
 
-### `sol103_11_430_08`
+![bracket_v10](bracket_v10_t20260526.png)
 
-75,457 nodes · 148,793 triangles
+### `bracket_v11`
 
-![sol103_11_430_08](sol103_11_430_08_t20260526b.png)
+800 × 888 px
 
-### `sol103_12_430_12`
+![bracket_v11](bracket_v11_t20260526.png)
 
-75,457 nodes · 148,793 triangles
+### `bracket_v12`
 
-![sol103_12_430_12](sol103_12_430_12_t20260526b.png)
+800 × 888 px
 
-### `sol103_13_430_16`
+![bracket_v12](bracket_v12_t20260526.png)
 
-75,457 nodes · 148,793 triangles
+### `bracket_v13`
 
-![sol103_13_430_16](sol103_13_430_16_t20260526b.png)
+800 × 888 px
 
-### `sol103_14_430_20`
+![bracket_v13](bracket_v13_t20260526.png)
 
-75,457 nodes · 148,793 triangles
+### `bracket_v14`
 
-![sol103_14_430_20](sol103_14_430_20_t20260526b.png)
+800 × 888 px
 
-### `sol103_15_430_24`
+![bracket_v14](bracket_v14_t20260526.png)
 
-75,457 nodes · 148,793 triangles
+### `bracket_v15`
 
-![sol103_15_430_24](sol103_15_430_24_t20260526b.png)
+800 × 888 px
 
-### `sol103_16_440_08`
+![bracket_v15](bracket_v15_t20260526.png)
 
-83,735 nodes · 165,249 triangles
+### `bracket_v16`
 
-![sol103_16_440_08](sol103_16_440_08_t20260526b.png)
+800 × 888 px
 
-### `sol103_17_440_12`
+![bracket_v16](bracket_v16_t20260526.png)
 
-83,735 nodes · 165,249 triangles
+### `bracket_v17`
 
-![sol103_17_440_12](sol103_17_440_12_t20260526b.png)
+840 × 904 px
 
-### `sol103_18_440_16`
+![bracket_v17](bracket_v17_t20260526.png)
 
-83,735 nodes · 165,249 triangles
+### `bracket_v18`
 
-![sol103_18_440_16](sol103_18_440_16_t20260526b.png)
+776 × 872 px
 
-### `sol103_19_440_20`
+![bracket_v18](bracket_v18_t20260526.png)
 
-83,735 nodes · 165,249 triangles
+### `bracket_v19`
 
-![sol103_19_440_20](sol103_19_440_20_t20260526b.png)
+832 × 904 px
 
-### `sol103_20_440_24`
+![bracket_v19](bracket_v19_t20260526.png)
 
-83,735 nodes · 165,249 triangles
+### `bracket_v20`
 
-![sol103_20_440_24](sol103_20_440_24_t20260526b.png)
+856 × 920 px
 
-### `sol103_21_450_08`
-
-72,398 nodes · 142,715 triangles
-
-![sol103_21_450_08](sol103_21_450_08_t20260526b.png)
-
-### `sol103_22_450_12`
-
-72,398 nodes · 142,715 triangles
-
-![sol103_22_450_12](sol103_22_450_12_t20260526b.png)
-
-### `sol103_23_450_16`
-
-72,398 nodes · 142,715 triangles
-
-![sol103_23_450_16](sol103_23_450_16_t20260526b.png)
-
-### `sol103_24_450_20`
-
-72,398 nodes · 142,715 triangles
-
-![sol103_24_450_20](sol103_24_450_20_t20260526b.png)
-
-### `sol103_25_450_24`
-
-72,398 nodes · 142,715 triangles
-
-![sol103_25_450_24](sol103_25_450_24_t20260526b.png)
-
-### `sol103_26_461_08`
-
-74,302 nodes · 146,501 triangles
-
-![sol103_26_461_08](sol103_26_461_08_t20260526b.png)
-
-### `sol103_27_461_12`
-
-74,302 nodes · 146,501 triangles
-
-![sol103_27_461_12](sol103_27_461_12_t20260526b.png)
-
-### `sol103_28_461_16`
-
-74,302 nodes · 146,501 triangles
-
-![sol103_28_461_16](sol103_28_461_16_t20260526b.png)
-
-### `sol103_29_461_20`
-
-74,302 nodes · 146,501 triangles
-
-![sol103_29_461_20](sol103_29_461_20_t20260526b.png)
-
-### `sol103_30_461_24`
-
-74,302 nodes · 146,501 triangles
-
-![sol103_30_461_24](sol103_30_461_24_t20260526b.png)
-
-### `sol103_31_462_08`
-
-73,175 nodes · 144,071 triangles
-
-![sol103_31_462_08](sol103_31_462_08_t20260526b.png)
-
-### `sol103_32_462_12`
-
-73,175 nodes · 144,071 triangles
-
-![sol103_32_462_12](sol103_32_462_12_t20260526b.png)
-
-### `sol103_33_462_16`
-
-73,175 nodes · 144,071 triangles
-
-![sol103_33_462_16](sol103_33_462_16_t20260526b.png)
-
-### `sol103_34_462_20`
-
-73,175 nodes · 144,071 triangles
-
-![sol103_34_462_20](sol103_34_462_20_t20260526b.png)
-
-### `sol103_35_462_24`
-
-73,175 nodes · 144,071 triangles
-
-![sol103_35_462_24](sol103_35_462_24_t20260526b.png)
-
-### `sol103_36_463_08`
-
-73,729 nodes · 145,334 triangles
-
-![sol103_36_463_08](sol103_36_463_08_t20260526b.png)
-
-### `sol103_37_463_12`
-
-73,729 nodes · 145,334 triangles
-
-![sol103_37_463_12](sol103_37_463_12_t20260526b.png)
-
-### `sol103_38_463_16`
-
-73,729 nodes · 145,334 triangles
-
-![sol103_38_463_16](sol103_38_463_16_t20260526b.png)
-
-### `sol103_39_463_20`
-
-73,729 nodes · 145,334 triangles
-
-![sol103_39_463_20](sol103_39_463_20_t20260526b.png)
-
-### `sol103_40_463_24`
-
-73,729 nodes · 145,334 triangles
-
-![sol103_40_463_24](sol103_40_463_24_t20260526b.png)
+![bracket_v20](bracket_v20_t20260526.png)
