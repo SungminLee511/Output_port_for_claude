@@ -50,11 +50,15 @@ Each preview shows the three input PNGs side by side:
 
 ![bracket_v01](bracket_v01_t20260526c.png)
 
+![bracket_v01 pipeline](bracket_v01_pipeline_t20260526d.png)
+
 ### `bracket_v02`
 
 1032 × 920 px
 
 ![bracket_v02](bracket_v02_t20260526c.png)
+
+![bracket_v02 pipeline](bracket_v02_pipeline_t20260526d.png)
 
 ### `bracket_v03`
 
@@ -62,11 +66,15 @@ Each preview shows the three input PNGs side by side:
 
 ![bracket_v03](bracket_v03_t20260526c.png)
 
+![bracket_v03 pipeline](bracket_v03_pipeline_t20260526d.png)
+
 ### `bracket_v04`
 
 1096 × 944 px
 
 ![bracket_v04](bracket_v04_t20260526c.png)
+
+![bracket_v04 pipeline](bracket_v04_pipeline_t20260526d.png)
 
 ### `bracket_v05`
 
@@ -74,11 +82,15 @@ Each preview shows the three input PNGs side by side:
 
 ![bracket_v05](bracket_v05_t20260526c.png)
 
+![bracket_v05 pipeline](bracket_v05_pipeline_t20260526d.png)
+
 ### `bracket_v06`
 
 816 × 1000 px
 
 ![bracket_v06](bracket_v06_t20260526c.png)
+
+![bracket_v06 pipeline](bracket_v06_pipeline_t20260526d.png)
 
 ### `bracket_v07`
 
@@ -86,11 +98,15 @@ Each preview shows the three input PNGs side by side:
 
 ![bracket_v07](bracket_v07_t20260526c.png)
 
+![bracket_v07 pipeline](bracket_v07_pipeline_t20260526d.png)
+
 ### `bracket_v08`
 
 792 × 944 px
 
 ![bracket_v08](bracket_v08_t20260526c.png)
+
+![bracket_v08 pipeline](bracket_v08_pipeline_t20260526d.png)
 
 ### `bracket_v09`
 
@@ -98,11 +114,15 @@ Each preview shows the three input PNGs side by side:
 
 ![bracket_v09](bracket_v09_t20260526c.png)
 
+![bracket_v09 pipeline](bracket_v09_pipeline_t20260526d.png)
+
 ### `bracket_v10`
 
 880 × 1048 px
 
 ![bracket_v10](bracket_v10_t20260526c.png)
+
+![bracket_v10 pipeline](bracket_v10_pipeline_t20260526d.png)
 
 ### `bracket_v11`
 
@@ -110,11 +130,15 @@ Each preview shows the three input PNGs side by side:
 
 ![bracket_v11](bracket_v11_t20260526c.png)
 
+![bracket_v11 pipeline](bracket_v11_pipeline_t20260526d.png)
+
 ### `bracket_v12`
 
 1048 × 760 px
 
 ![bracket_v12](bracket_v12_t20260526c.png)
+
+![bracket_v12 pipeline](bracket_v12_pipeline_t20260526d.png)
 
 ### `bracket_v13`
 
@@ -122,11 +146,15 @@ Each preview shows the three input PNGs side by side:
 
 ![bracket_v13](bracket_v13_t20260526c.png)
 
+![bracket_v13 pipeline](bracket_v13_pipeline_t20260526d.png)
+
 ### `bracket_v14`
 
 976 × 920 px
 
 ![bracket_v14](bracket_v14_t20260526c.png)
+
+![bracket_v14 pipeline](bracket_v14_pipeline_t20260526d.png)
 
 ### `bracket_v15`
 
@@ -134,11 +162,15 @@ Each preview shows the three input PNGs side by side:
 
 ![bracket_v15](bracket_v15_t20260526c.png)
 
+![bracket_v15 pipeline](bracket_v15_pipeline_t20260526d.png)
+
 ### `bracket_v16`
 
 944 × 976 px
 
 ![bracket_v16](bracket_v16_t20260526c.png)
+
+![bracket_v16 pipeline](bracket_v16_pipeline_t20260526d.png)
 
 ### `bracket_v17`
 
@@ -146,11 +178,15 @@ Each preview shows the three input PNGs side by side:
 
 ![bracket_v17](bracket_v17_t20260526c.png)
 
+![bracket_v17 pipeline](bracket_v17_pipeline_t20260526d.png)
+
 ### `bracket_v18`
 
 1096 × 1136 px
 
 ![bracket_v18](bracket_v18_t20260526c.png)
+
+![bracket_v18 pipeline](bracket_v18_pipeline_t20260526d.png)
 
 ### `bracket_v19`
 
@@ -158,8 +194,12 @@ Each preview shows the three input PNGs side by side:
 
 ![bracket_v19](bracket_v19_t20260526c.png)
 
+![bracket_v19 pipeline](bracket_v19_pipeline_t20260526d.png)
+
 ### `bracket_v20`
 
 1080 × 1120 px
 
 ![bracket_v20](bracket_v20_t20260526c.png)
+
+![bracket_v20 pipeline](bracket_v20_pipeline_t20260526d.png)
