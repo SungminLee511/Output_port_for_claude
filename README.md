@@ -828,3 +828,97 @@ case_b_frictionless_8step: V1 6.09e+05 → V2(F9) 2.44e+02 = +3.4 orders
 
 Convergence count still **5/11** — case_b_frictionless_8step is the
 closest near-miss yet (244, target 1e-3, gap = 5 orders).
+
+### Step 6 — F10/F11 attempts; Phase 5 HALT at architectural wall
+
+**F10 (nr_max_iter=80):** mixed — case_b_friction +2 orders to 412, but
+case_c_fl_1 regressed catastrophically 5.0e+20.
+
+**F11 (ε_N=1e8 + damp floor 0.3):** catastrophic across the board.
+case_b_fl_1 → 2.5e+64. Reverted.
+
+**Phase 5 final canonical config** (F1+F3+F2+F2.5+F4+F5+F5.5+F6+F7+F9,
+F8 and F8.5 opt-in only, F4.5/F10/F11 reverted):
+
+| Case | V1 | V2 Phase 5 final | Δ vs V1 |
+|---|---:|---:|---:|
+| baseline frictionless | 7.3e-13 ✅ | 7.3e-13 ✅ | identical |
+| baseline friction | 4.1e-2 ✅ | 4.1e-2 ✅ | identical |
+| a frictionless 1step | 1.0e-10 ✅ | 1.0e-10 ✅ | identical |
+| a frictionless 4step | 7.1e-10 ✅ | 3.9e-10 ✅ | identical |
+| **a friction 4step** | 1.1e+17 ❌ | **8.92e-10 ✅** | **+25 (CONVERGED)** |
+| b frictionless 1step | 3.0e+4 | 5.86e+2 | +1.7 |
+| **b frictionless 8step** | 6.1e+5 | **2.44e+2** | **+3.4** (5 orders to nr_tol) |
+| **b friction 8step** | 2.7e+45 | 7.10e+4 | **+40** |
+| **c frictionless 1step** | 5.8e+22 | 6.94e+4 | **+18** |
+| c frictionless 8step | 5.2e+54 | 1.20e+25 | +29 |
+| **c friction 8step** | 5.8e+79 | 3.15e+22 | **+57** |
+
+**Converged: 5 / 11** (same as V2 Phase 3 end — F9 dropped residuals
+dramatically but didn't bridge any new variant across `nr_tol = 1e-3`).
+
+---
+
+## 16. WHY THE WALL — penalty-contact chattering
+
+`tests/curved_contact_validation/results_v2/v2_case_b_frictionless_8step_console.log`
+shows iterations 60-79 of the final load step alternating
+`Contact: True / Contact: False` with residual swinging 240..515:
+
+```
+Step 08 | NR Iter 63 | Res: 2.376e+02 | Contact: False
+Step 08 | NR Iter 64 | Res: 3.539e+02 | Contact: False
+...
+Step 08 | NR Iter 79 | Res: 5.157e+02 | Contact: False
+WARNING: Newton-Raphson did not converge in load step 8 within 80 iters.
+```
+
+This is **chattering** — the slave punch is rebounded *off* the
+curved sphere master each iter, gets re-pulled by `F_ext`, re-engages,
+gets kicked out again. The penalty stiffness `ε_N` cannot enforce a
+*hard* non-penetration constraint:
+- Increase `ε_N`: tested 1e8 in F11 → `K_tan` becomes near-singular,
+  NR overshoots wildly (case_b_fl_1 → 2.5e+64).
+- Decrease `ε_N`: tested 1e4 in original FINDINGS → constraint too soft
+  to prevent the slave from passing through.
+
+Damping (F9) reduces overshoot magnitude but cannot eliminate the
+*sign flip* — the slave still leaves and re-enters contact every iter.
+
+**Conclusion:** the remaining 6/11 are bottlenecked by the inherent
+chattering limit of pure penalty N2S contact on curved masters. No
+penalty-side parameter tuning (we exhausted every reasonable knob in
+Phase 5) bridges the gap to `nr_tol = 1e-3` on these geometries.
+
+### What's needed (v3 — out of scope for this relay)
+
+1. **Augmented Lagrangian** (Alart-Curnier / Uzawa update): combine
+   penalty spring + Lagrange multiplier running-offset. Enforces
+   `gap_eff = gap − λ/ε_N → 0` *exactly* rather than `gap → 0`
+   *approximately*. Removes chattering at any `ε_N`. ~1500 LOC.
+2. **Mortar / segment-to-segment contact**: treat contact pair as a
+   continuous surface integral, not discrete node-to-face. Removes the
+   single-slave on/off binary state. ~2000 LOC redesign.
+
+Either is a major architectural change — **v3 territory**.
+
+---
+
+## 17. Ship-as-is recommendation
+
+V2 with Phase 5 is **production-ready for case-A-style geometry**:
+
+- Curved or flat slave against a **flat or near-flat master**
+- With or without friction
+- Typical robot fingertip-on-workpiece grasp (the user's primary
+  workload)
+
+For **case-B/C-style geometry** (rigid punch into a curved master,
+two-finger pinch on a small curved object), residuals plateau at
+10²-10²⁵ — below "blown up" but above "physically converged".
+Results may be qualitatively wrong; v3 (augmented Lagrangian or
+mortar) is required for production trust.
+
+The user's robot-grasp data-generation use case can ship today on
+case-A-style geometry. case-B/C use cases must wait for v3 architecture
+work. This concludes the V2 program.
