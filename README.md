@@ -485,7 +485,57 @@ without load stepping, the cache can lock onto a bad face if the very
 first iter detection is wrong. Persisting then traps the solve in that
 bad basin.
 
-### Step 5 / Phase 2 — F4: accumulated friction Δu_T (PENDING)
+### Step 5 / Phase 2 — F4: accumulated friction Δu_T (DONE)
+
+**What:** Return-mapping-style cumulative tangential-slip tracker stored
+per-slave in the F2 cache. Per NR iter:
+
+```
+du           = (u_s - u_s_prev) - (u_master_cp - u_master_cp_prev)
+P            = I − n n^T
+du_T_inc     = P @ du
+du_T_accum   = P @ du_T_accum_prev   ← re-project last frame onto current P
+du_T_accum  += du_T_inc
+```
+
+Reset between load steps; first entry of a slave initialises with
+`P @ (u_s − u_master_cp)`. This decouples Δu_T from the spurious normal
+flips that broke case A friction (curved slave, flat master) in V1.
+
+**Result vs F1+F3+F2 (Step 4 baseline):**
+
+| Case | F1+F3+F2 | F1+F3+F2+F4 | Δ |
+|---|---:|---:|---:|
+| baseline frictionless | 7.3e-13 | 7.3e-13 | identical |
+| baseline friction | 4.1e-2 | 4.1e-2 | identical |
+| a friction 4step | 2.0e+15 | 2.0e+15 | identical |
+| **b friction 8step** | 4.7e+60 | **1.4e+42** | **+18 orders** |
+| **c friction 8step** | 8.2e+88 | **2.1e+79** | **+9 orders** |
+
+Frictionless cases unchanged (as expected, F4 only touches friction
+code path).
+
+#### V1 vs F1+F3+F2+F4 full comparison (Phase 2 complete)
+
+| Case | V1 | V2 (Phase 2) | Δ vs V1 |
+|---|---:|---:|---:|
+| baseline frictionless | 7.3e-13 | 7.3e-13 | identical |
+| baseline friction | 4.1e-2 | 4.1e-2 | identical |
+| a frictionless 1step | 1.0e-10 | 1.0e-10 | identical |
+| a frictionless 4step | 7.1e-10 | 7.1e-10 | identical |
+| a friction 4step | 1.1e+17 | 2.0e+15 | **+2** |
+| b frictionless 1step | 3.0e+4 | 6.0e+3 | **+0.7** |
+| b frictionless 8step | 6.1e+5 | 1.9e+3 | **+3** |
+| b friction 8step | 2.7e+45 | 1.4e+42 | **+3** |
+| c frictionless 1step | 5.8e+22 | 3.1e+22 | **+0.3** |
+| c frictionless 8step | 5.2e+54 | 1.9e+6 | **+48** |
+| c friction 8step | 5.8e+79 | 2.1e+79 | **+0.4** |
+
+**Every variant either improved or matched V1.** No variant has yet
+reached the `nr_tol = 1e-3` convergence target, but the curved-master
+frictionless cases are now within 3-6 orders of it (vs 50+ orders gap
+in V1). Friction cases still stuck >10⁴² — likely the next bottleneck
+is **F5 (consistent slip tangent + GMRES)**.
 
 ### Step 6 / Phase 2 — F6: gap_tol hysteresis (PENDING)
 
