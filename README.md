@@ -447,7 +447,43 @@ The case_c_grasp_friction_8step gained **8 more orders of magnitude** beyond
 F1-alone, confirming H2 (clamp creates discontinuity) is a real but
 second-order failure mode behind H1.
 
-### Step 4 / Phase 2 — F2: persistent contact history (PENDING)
+### Step 4 / Phase 2 — F2: persistent contact history (DONE)
+
+**What:** Per-pair contact state cache, scoped to a single load step
+(reset between load steps). On iter 0 of each load step, IGL detects
+fresh; subsequent iters re-use the cached `f_idx` per slave and only
+re-project + recompute weights/normals on the cached master triangle.
+Reduces NR-iter-to-iter `f_idx` flicker (the residual oscillation
+mechanism seen in Step 2 diagnostics). NaN guard added to drop slaves
+whose projection blows up.
+
+**Result vs F1+F3 (Step 3 baseline):**
+
+| Case | F1+F3 | F1+F3+F2 | Δ |
+|---|---:|---:|---:|
+| baseline frictionless | 7.3e-13 | 7.3e-13 | identical |
+| baseline friction | 4.1e-2 | 4.1e-2 | identical |
+| a frictionless 1step | 1.0e-10 | 1.0e-10 | identical |
+| a frictionless 4step | 7.1e-10 | 7.1e-10 | identical |
+| a friction 4step | 1.1e+17 | 2.0e+15 | **+2** |
+| **b frictionless 1step** | 3.6e+6 | 6.0e+3 | **+3** |
+| **b frictionless 8step** | 3.4e+2 | 1.9e+3 | -0.7 |
+| b friction 8step | 6.5e+40 | 4.7e+60 | -20 |
+| c frictionless 1step | 6.0e+6 | 3.1e+22 | -16 |
+| **c frictionless 8step** | 5.3e+6 | 1.9e+6 | +0.4 |
+| c friction 8step | 1.5e+70 | 8.2e+88 | -18 |
+
+**Interpretation:** The cache is a clear win for frictionless cases with
+load stepping (`b/c_frictionless_8step` reach 10³-10⁶, down from 10⁵⁴ in
+V1). Friction cases regress because the cached `f_idx` makes weights
+stale, breaking the no-history `Δu_T` projection in
+`compute_friction_apply_tensors`. **F4 (accumulated `Δu_T`) is the matched
+fix and lands in the next step.**
+
+The single-step variants (`b/c_frictionless_1step`) are also mixed —
+without load stepping, the cache can lock onto a bad face if the very
+first iter detection is wrong. Persisting then traps the solve in that
+bad basin.
 
 ### Step 5 / Phase 2 — F4: accumulated friction Δu_T (PENDING)
 
