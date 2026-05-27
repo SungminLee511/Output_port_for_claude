@@ -603,6 +603,52 @@ Phase 3 step 1: 1 of 11 variants now hits `nr_tol`. Curved-master friction
 cases (b, c) still need work — probably F7 (penalty ramp) and possibly
 F2-style cache extended to the friction state.
 
-### Step 8 / Phase 3 — F7: adaptive penalty ramp (PENDING)
+### Step 8 / Phase 3 — F7: adaptive penalty stiffness ramp (DONE)
+
+**What:** `contact_v2_penalty_ramp_start` parameter scales `ε_N` (and
+`ε_T`) per load step:
+
+```
+ε_N(k) = contact_epsilon · (start + (1 − start) · k / N)
+```
+
+Soft early steps condition the linearisation; full stiffness restored
+by the final load step. Default `start=1.0` (off).
+
+**Result with `ramp_start=0.1` (F1+F3+F2+F4+F6+F5+F7 stack vs Step 7 baseline):**
+
+| Case | F5 (Step 7) | F5+F7 | Δ |
+|---|---:|---:|---:|
+| a friction 4step | 4.57e-08 ✅ | **8.92e-10 ✅** | +1 (still converged) |
+| **b friction 8step** | 8.69e+27 | **1.46e+05** | **+22 orders** |
+| c friction 8step | 3.58e+78 | 1.72e+71 | +7 |
+| b frictionless 8step | 1.9e+3 | 5.0e+3 | -0.4 (slight regression) |
+| **c frictionless 8step** | 1.9e+6 | 1.6e+23 | -17 (regression) |
+
+Friction-dominant cases benefit dramatically; pure-frictionless
+curved-master cases can regress because softer early penalty allows
+more initial penetration. F7 is therefore **opt-in** (default 1.0).
+
+#### Full V1 → V2 (Phase 3 complete: F1+F3+F2+F4+F6+F5+F7) headline table
+
+| Case | V1 final res | V2 final res | Δ orders | Converged? |
+|---|---:|---:|---:|:---:|
+| baseline frictionless | 7.3e-13 | 7.3e-13 | identical | ✅ |
+| baseline friction | 4.1e-2 | 4.1e-2 | identical | ✅ |
+| a frictionless 1step | 1.0e-10 | 1.0e-10 | identical | ✅ |
+| a frictionless 4step | 7.1e-10 | 3.9e-10 | +0.3 | ✅ |
+| **a friction 4step** | 1.1e+17 | **8.92e-10** | **+25** | ✅ **NEW** |
+| b frictionless 1step | 3.0e+4 | 6.0e+3 | +0.7 | ❌ |
+| b frictionless 8step | 6.1e+5 | 5.0e+3 | +2 | ❌ |
+| **b friction 8step** | 2.7e+45 | **1.46e+5** | **+40** | ❌ (close) |
+| c frictionless 1step | 5.8e+22 | 3.1e+22 | +0.3 | ❌ |
+| c frictionless 8step | 5.2e+54 | 1.6e+23 | +31 | ❌ |
+| c friction 8step | 5.8e+79 | 1.72e+71 | +8 | ❌ |
+
+**Net: 1 of 11 hard variants now converges to `nr_tol=1e-3`.** The next
+gain frontier is the curved-master frictionless 1-step and case_c
+two-finger grasp — both bottlenecked by the *frictionless* curved-master
+issue, which F1+F3 partially addressed but the iterating-on-the-fly
+projection in F2 still leaves room.
 
 ### Step 9 / Phase 4 — F8: SDF backend (OPTIONAL)
