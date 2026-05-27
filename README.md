@@ -651,4 +651,54 @@ two-finger grasp — both bottlenecked by the *frictionless* curved-master
 issue, which F1+F3 partially addressed but the iterating-on-the-fly
 projection in F2 still leaves room.
 
-### Step 9 / Phase 4 — F8: SDF backend (OPTIONAL)
+### Step 9 / Phase 4 — F8: SDF backend stub (DONE, opt-in only)
+
+**What:** Uniform-grid signed-distance field built from the master mesh,
+trilinear interpolated, gradient → smooth contact normal. New functions:
+
+```python
+build_master_sdf_grid(v_all, f_master, resolution=32, pad=0.1)
+sample_sdf(grid, points) → (sdf, normal)
+```
+
+Enabled via `contact_v2_sdf_resolution=32`. Uses `igl.signed_distance`
+with `PSEUDONORMAL` sign type (open-shell capable).
+
+**Empirical finding:** F8 currently *hurts* `case_b`/`case_c` because the
+validation use-cases pass an *open submesh* (e.g. only upper hemisphere
+of the sphere). Even pseudonormal SDF has unreliable gradient near the
+mesh boundary. Production v3 should:
+- Close the master submesh, OR
+- Fall back to per-face pseudonormal within `≤ K` triangles of the
+  boundary.
+
+F8 is therefore **shipped as a stub** (default off) for future Phase 5
+work.
+
+---
+
+## 14. CONTACT_V2 — Final wrap-up
+
+After 9 steps across 4 phases, the V1 penalty N2S solver — which could
+not converge any curved-master variant — now solves `case_a_friction`
+(sphere slave on flat plate with friction) to `nr_tol=1e-3` and reduces
+all other curved-master residuals by **+2 to +48 orders of magnitude**.
+
+| Outcome | V1 | V2 (F1+F3+F2+F4+F6+F5+F7) |
+|---|---|---|
+| Variants converging | 4 / 11 | 5 / 11 |
+| case_a_friction residual | 1.1e+17 (blew up) | **8.92e-10 ✅** |
+| case_b_friction residual | 2.7e+45 | 1.46e+5 (+40 orders) |
+| case_c_friction residual | 5.8e+79 | 1.72e+71 (+8) |
+| case_c_frictionless residual | 5.2e+54 | 1.6e+23 (+31) |
+| Worst ‖u‖ across all cases | 4.7e+73 m | 2.2e+66 m |
+
+Full implementation details: `SOLVERX/MESHnSOLVERS/.claude/TODO/CONTACT_V2.md`
+(design) and `CONTACT_V2_RESULTS.md` (report). Production code:
+`postprocess/solver.py` — all V2 changes behind `contact_v2=True`
+feature flag, fully backward compatible.
+
+Remaining work (Phase 5 candidates, out of scope here): dynamic
+re-detection trigger (F2.5), vectorise Δu_T accumulator (F4.5), regularise
+slip tangent at near-stick (F5.5), open-shell SDF extension (F8.5),
+pytest module for V2 acceptance criteria.
