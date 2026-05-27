@@ -922,3 +922,70 @@ mortar) is required for production trust.
 The user's robot-grasp data-generation use case can ship today on
 case-A-style geometry. case-B/C use cases must wait for v3 architecture
 work. This concludes the V2 program.
+
+---
+
+## 18. CONTACT_V3 — Augmented Lagrangian (relay 2)
+
+Same 10-hour relay format, now implementing Alart-Curnier AL on top of
+V2 final. Design doc: `SOLVERX/MESHnSOLVERS/.claude/TODO/CONTACT_V3.md`.
+Implementation results: `CONTACT_V3_RESULTS.md` in same folder.
+
+### Headline result
+
+V3 collapsed `case_b_friction_8step` residual another 1.8 orders on top
+of V2's already-massive +40-order improvement:
+
+```
+V1:         5.756e+45  (||u|| 4.7e+73 m, blown up)
+V2 final:   7.103e+04  (||u|| 7.5e+11 m)
+V3:         1.095e+03  (||u|| 7.5e+11 m, 5 orders from nr_tol)
+```
+
+5/11 converged (same count as V2 final). 6 hard variants — all
+bottlenecked by penalty / cumulative-slip interactions that need
+canonical AL or mortar-contact architecture (Phase 7+).
+
+### What worked (Steps 1-5)
+
+- **lambda_N** per-slave normal-pressure multiplier stored in cache
+- **`f_aug = max(0, lambda_N + ε_N · gap)`** force formula
+- **Uzawa update** `λ ← max(0, λ + α·ε·g)` post-NR-step
+- **Adaptive engagement** — only fires when `res ≥ 0.5·res_prev`
+  (chattering plateau). Smooth NR (case_a) stays V2-equivalent.
+
+### What hit walls
+
+| Step | Idea | Outcome |
+|---|---|---|
+| 6 | Active-set extension (keep λ>0 slaves "AL-active" when separated) | Hurt case_c_friction; disabled |
+| 7 | Carry λ across load steps | Broke baseline_friction; reverted |
+| 9+10 | Friction λ_T Uzawa | Incompatible with V2's F4 cumulative-slip accumulator — double-history degraded case_c_friction. Disabled. Proper fix is Phase 7. |
+
+### Final V3 numbers (default config)
+
+| Case | V1 | V2 Phase 5 | V3 default |
+|---|---:|---:|---:|
+| baseline frictionless | 7.3e-13 ✓ | 7.3e-13 ✓ | 7.3e-13 ✓ |
+| baseline friction | 4.1e-2 ✓ | 4.1e-2 ✓ | 4.1e-2 ✓ |
+| a frictionless 1step | 1.0e-10 ✓ | 1.0e-10 ✓ | 1.0e-10 ✓ |
+| a frictionless 4step | 7.1e-10 ✓ | 3.9e-10 ✓ | 3.9e-10 ✓ |
+| a friction 4step | 1.1e+17 ❌ | 8.92e-10 ✓ | 8.92e-10 ✓ |
+| **b friction 8step** | 2.7e+45 | 7.1e+04 | **1.1e+03** 🚀 |
+| **c friction 8step** | 5.8e+79 | 3.2e+22 | **1.5e+19** |
+| (b/c frictionless cases) | unchanged from V2 (V3 dormant by design) |
+
+### Phase 7+ candidates (out of scope)
+
+1. Canonical Alart-Curnier friction (replaces F4 cumulative-slip with
+   per-iter slip increment, gated on `contact_v3=True`) → ~700 LOC.
+   Likely brings case_b_friction across `nr_tol = 1e-3`.
+2. Mortar / segment-to-segment contact → ~2000 LOC v4 architecture jump.
+   Required for case_b/c frictionless to converge — penalty N2S
+   fundamentally cannot enforce the constraint on a discrete slave/face
+   pair with curved master.
+3. Per-slave chatter tracking for smart V3-active-set extension.
+
+V3 ships as opt-in (`contact_v3=True`), safe to enable on any geometry —
+it's dormant on smoothly-converging cases and only engages where V2
+penalty stalls.
