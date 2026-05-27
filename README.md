@@ -738,6 +738,18 @@ reset already provides "re-detection". Adding intra-step eviction at
 threshold=0.5 creates additional flicker that doesn't help. Future work:
 make threshold load-step-aware (looser when many small steps).
 
-Next: F5.5 to regularise the slip tangent at near-stick. With residuals
-now in the 10²-10⁶ range, the slip-tangent singularity at ‖Δu_T‖ → 0
-is likely the next bottleneck.
+Next: F5.5 to regularise the slip tangent at near-stick.
+
+### Step 2 — F5.5 slip-tangent regularisation (DONE, NO-OP)
+
+`contact_v2_slip_reg_ratio` parameter caps the `1 / ‖Δu_T‖` factor in
+the F5 consistent slip tangent. In all current validation cases, slip
+nodes have trial-force magnitude well above the stick threshold (`mu_s
+* f_N`), so the floor never engages and **F5.5 is a no-op** on this set.
+Kept in API for future near-stick scenarios. Residuals identical to
+Step 1; converged count remains **5/11**.
+
+**This rules out "slip-tangent singularity" as the cause of remaining
+oscillation.** The bottleneck is elsewhere — most likely H5
+(open-shell master submesh has corrupt vertex normals at the boundary
+→ contact pushes slave the wrong direction). F8.5 next addresses this.
