@@ -556,7 +556,52 @@ Phase 2 effectively closes here. The headline V1→V2 (F1+F3+F2+F4+F6)
 table is unchanged from Step 5 — see §13.5 for the full picture.
 Phase 3 (F5 consistent slip tangent + F7 penalty ramp) is next.
 
-### Step 7 / Phase 3 — F5: consistent slip tangent + GMRES (PENDING)
+### Step 7 / Phase 3 — F5: consistent (non-symmetric) slip tangent (DONE) 🎉
+
+**What:** For slip nodes, replace `ε_T · P` with the Wriggers-ch.6 consistent
+tangent linearization:
+
+```
+K_slip = (μ_d · f_N / ‖Δu_T‖) · (P − t̂ ⊗ t̂)   ← symmetric part
+       + μ_d · ε_N · t̂ ⊗ n                      ← non-symmetric part
+```
+
+The non-symmetric `t̂ ⊗ n` term breaks the CG fallback path, but the
+SciPy/CuPy `spsolve` (LU) path handles it fine. Gated behind
+`contact_v2_consistent_slip=False`.
+
+#### 🚀 HEADLINE: case_a_friction CONVERGED
+
+| Stage | final residual | max ‖u‖ (m) | Converged? |
+|---|---:|---:|:---:|
+| V1 (legacy) | 1.114e+17 | 1.74e+14 | ❌ blew up |
+| V2 (F1+F3+F2+F4) | 2.003e+15 | 3.09e+14 | ❌ blew up |
+| **V2 + F5** | **4.570e-08** | **0.20** | ✅ **PHYSICAL** |
+
+This is the **first** variant from the validation set to hit `nr_tol = 1e-3`.
+case A (sphere slave on flat plate + friction) was the canonical
+"curved-slave-flat-master-with-friction" failure called out in the
+original FINDINGS.md. The simplified slip tangent was its proximate cause.
+
+#### Full V2 (now F1+F3+F2+F4+F6+F5) vs V1
+
+| Case | V1 | V2 | Δ |
+|---|---:|---:|---:|
+| baseline frictionless | 7.3e-13 | 7.3e-13 | identical |
+| baseline friction | 4.1e-2 | 4.1e-2 | identical |
+| a frictionless 1step | 1.0e-10 | 1.0e-10 | identical |
+| a frictionless 4step | 7.1e-10 | 7.1e-10 | identical |
+| **a friction 4step** | 1.1e+17 | **4.57e-08** ✅ | **+25 orders — CONVERGED** |
+| b frictionless 1step | 3.0e+4 | 6.0e+3 | +0.7 |
+| b frictionless 8step | 6.1e+5 | 1.9e+3 | **+3** |
+| **b friction 8step** | 2.7e+45 | **8.69e+27** | **+18** |
+| c frictionless 1step | 5.8e+22 | 3.1e+22 | +0.3 |
+| c frictionless 8step | 5.2e+54 | 1.9e+6 | **+48** |
+| c friction 8step | 5.8e+79 | 3.58e+78 | +1 |
+
+Phase 3 step 1: 1 of 11 variants now hits `nr_tol`. Curved-master friction
+cases (b, c) still need work — probably F7 (penalty ramp) and possibly
+F2-style cache extended to the friction state.
 
 ### Step 8 / Phase 3 — F7: adaptive penalty ramp (PENDING)
 
