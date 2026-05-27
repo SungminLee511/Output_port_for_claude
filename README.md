@@ -798,3 +798,33 @@ truly converging baseline — out of scope for the relay.
 Convergence count: still **5/11**. Phase 5 has exhausted the
 straightforward residual-shaving wins. Continuing with **adaptive Step
 5+** ideas: NR step damping / line search, finer mesh, friction-ramp.
+
+### Step 5 — F9 adaptive NR step damping 🚀
+
+`contact_v2_nr_adaptive_damping=True` enables Marquardt-style step
+adaptation. After each NR step:
+- residual grew → damping *= 0.5 (clamped at 0.05)
+- residual shrank → damping *= 1.25 (clamped at 1.0)
+The NR update becomes `u += damping × Δu`.
+
+**Result vs Step 1 F2.5 baseline:**
+
+| Case | F2.5 | F9 | Δ |
+|---|---:|---:|---:|
+| **c friction 8step** | 2.88e+70 | **3.15e+22** | **+48 orders** 🚀 |
+| **b frictionless 8step** | 9.77e+04 | **2.44e+02** | **+2.6** |
+| c frictionless 1step | 4.03e+06 | 3.38e+05 | +1 |
+| b frictionless 1step | 3.98e+02 | 4.16e+02 | ~equal |
+| c frictionless 8step | 2.36e+24 | 1.20e+25 | -0.7 |
+| b friction 8step | 3.86e+03 | 7.10e+04 | -1.3 |
+
+**+48-order plunge on case_c_friction** is the single biggest Phase 5
+win. Combined with V1 baseline:
+
+```
+case_c_friction_8step:  V1 5.76e+79  →  V2(F9) 3.15e+22  =  +57 orders
+case_b_frictionless_8step: V1 6.09e+05 → V2(F9) 2.44e+02 = +3.4 orders
+```
+
+Convergence count still **5/11** — case_b_frictionless_8step is the
+closest near-miss yet (244, target 1e-3, gap = 5 orders).
