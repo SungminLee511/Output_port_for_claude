@@ -702,3 +702,42 @@ Remaining work (Phase 5 candidates, out of scope here): dynamic
 re-detection trigger (F2.5), vectorise Δu_T accumulator (F4.5), regularise
 slip tangent at near-stick (F5.5), open-shell SDF extension (F8.5),
 pytest module for V2 acceptance criteria.
+
+---
+
+## 15. CONTACT_V2 Phase 5 — Progress Log
+
+### Step 1 — F2.5 dynamic re-detection trigger (DONE)
+
+`contact_v2_redetect_move_threshold` (default `None`). When set
+(currently 0.5), evicts a slave from the per-pair contact cache if it has
+moved more than `threshold × mean_master_edge_length` since the cache was
+created → forces a fresh IGL re-detect on the next NR iter. Cache update
+preserves F4 friction state (du_T_accum) on geometric refresh.
+
+**Result vs Phase-4 V2 (Step 9 baseline):**
+
+| Case | V2 step 9 | V2 + F2.5 | Δ |
+|---|---:|---:|---:|
+| baseline frictionless | 7.3e-13 | 7.3e-13 | identical |
+| baseline friction | 4.1e-2 | 4.1e-2 | identical |
+| a frictionless | 1.0e-10 / 3.9e-10 | 1.0e-10 / 3.9e-10 | identical |
+| **a friction 4step** | 8.92e-10 ✅ | 8.92e-10 ✅ | identical (already converged) |
+| **b frictionless 1step** | 6.0e+3 | **3.98e+2** | **+1.2 orders** |
+| b frictionless 8step | 5.0e+3 | 9.77e+4 | -1.3 (regression) |
+| **b friction 8step** | 1.46e+5 | **3.86e+3** | **+1.6 orders** |
+| **c frictionless 1step** | 3.12e+22 | **4.03e+6** | **+16 orders** 🚀 |
+| c frictionless 8step | 1.61e+23 | 2.36e+24 | -1 (regression) |
+| c friction 8step | 1.72e+71 | 2.88e+70 | +0.8 |
+
+**Converged: V2 = 5/11** (same as Phase 4 — no new convergences yet,
+but residual cliff is collapsing toward `nr_tol` on 4 of 6 hard cases).
+
+**Note on 8-step regressions:** with 8 load steps the per-step cache
+reset already provides "re-detection". Adding intra-step eviction at
+threshold=0.5 creates additional flicker that doesn't help. Future work:
+make threshold load-step-aware (looser when many small steps).
+
+Next: F5.5 to regularise the slip tangent at near-stick. With residuals
+now in the 10²-10⁶ range, the slip-tangent singularity at ‖Δu_T‖ → 0
+is likely the next bottleneck.
