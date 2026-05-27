@@ -537,7 +537,24 @@ frictionless cases are now within 3-6 orders of it (vs 50+ orders gap
 in V1). Friction cases still stuck >10⁴² — likely the next bottleneck
 is **F5 (consistent slip tangent + GMRES)**.
 
-### Step 6 / Phase 2 — F6: gap_tol hysteresis (PENDING)
+### Step 6 / Phase 2 — F6: gap_tol hysteresis + element-size scale (DONE)
+
+**What:** Expose two tuning knobs in the solver signature:
+
+- `contact_v2_release_gap_mult` (default 5.0) — a slave stays in contact
+  until its gap exceeds `release_gap_mult * gap_tol`.  This was already
+  *implemented* in F2; this step makes it a user-visible parameter.
+- `contact_v2_auto_gap_tol_scale` (default None) — when set, replaces
+  `gap_tol` with `max(gap_tol, auto_gap_tol_scale * mean_master_edge_length)`.
+  Opt-in because aggressive scaling (1e-4) was found to over-classify
+  contacts and make friction *worse* on case_b/c.
+
+**Result with the safe default (hysteresis-only):** identical to Step 5
+(F4 baseline). F6's contribution is purely a tuning surface.
+
+Phase 2 effectively closes here. The headline V1→V2 (F1+F3+F2+F4+F6)
+table is unchanged from Step 5 — see §13.5 for the full picture.
+Phase 3 (F5 consistent slip tangent + F7 penalty ramp) is next.
 
 ### Step 7 / Phase 3 — F5: consistent slip tangent + GMRES (PENDING)
 
