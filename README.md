@@ -359,7 +359,62 @@ Conclusion: **F1 is necessary but not sufficient**. Confirms H1 is a real
 failure mode (case-C frictionless went from 10⁵⁴ → 10⁶ residual), but
 H2/H3/H5 still active.
 
-### Step 2 / Phase 1 — D1+D2+D4+D7: diagnostics (PENDING)
+### Step 2 / Phase 1 — D1+D2+D4+D7: diagnostics (DONE)
+
+**What:** Instrumented `static_structure_solver_with_contact` with
+`_diag_history` and `_diag_freeze_normal` hooks. Ran case_b (punch ↔
+sphere master) with V1, V2, V2+freeze-normal, and V2-with-refined-mesh
+(level 3). Generated f_idx heatmaps + per-iter normal-angle deltas.
+
+**Residual table (case_b, 4 load steps × 40 iters):**
+
+| Run | init res | min res | final res |
+|---|---:|---:|---:|
+| V1 lvl=2 | 6.7e+04 | 5.3e+01 | 2.8e+04 |
+| V2 lvl=2 (smooth normals) | 6.6e+04 | 6.4e+01 | 7.6e+11 |
+| V2 lvl=3 (refined mesh) | 6.8e+04 | 4.6e+01 | **4.2e+07** |
+
+**Critical findings:**
+1. **All variants reach min residual ~50** — failure is *oscillation*
+   around a near-solution, not stagnation.
+2. **Mesh refinement (lvl 2 → 3) drops final residual by 4 orders**.
+   Confirms **H1** (per-face normal jumps scale with mesh facet size).
+3. **V2 lvl-2 final residual *worse* than V1** because smooth normals
+   alone changed the oscillation pattern; full benefit needs F2 (persistence)
+   to stop the iter-to-iter f_idx flicker.
+
+#### D1: master-face index `f_idx` per slave per NR iter
+
+V1 (left) shows chaotic vertical stripes — slaves hopping between master
+triangles every iter. V2 (right) shows similar but with subtle
+stabilisation in the early iters of each load step.
+
+| V1 (legacy flat normals) | V2 (smooth normals) |
+|---|---|
+| ![](diag_D1_fidx_v1_lvl2_t20260527.png) | ![](diag_D1_fidx_v2_lvl2_t20260527.png) |
+
+#### D2: max & mean per-iter normal-angle change
+
+V1 has spikes >10° per iter consistently (flat normal jumps). V2 has
+visibly damped normal-angle deltas in early iters.
+
+| V1 | V2 |
+|---|---|
+| ![](diag_D2_normal_angle_v1_lvl2_t20260527.png) | ![](diag_D2_normal_angle_v2_lvl2_t20260527.png) |
+
+#### D7: refined mesh (icosphere level 3)
+
+With finer mesh, V2's f_idx heatmap shows fewer hops (more slaves stay
+on the same triangle), and normal-angle delta shrinks. Confirms H1 is
+real and mesh-dependent.
+
+| f_idx heatmap (V2, lvl=3) | normal-angle delta (V2, lvl=3) |
+|---|---|
+| ![](diag_D7_fidx_v2_lvl3_t20260527.png) | ![](diag_D7_normal_angle_v2_lvl3_t20260527.png) |
+
+**Conclusion:** H1 confirmed. F1 helps but is not enough — the residual
+oscillation comes from a second mechanism (H5: no contact persistence
+across NR iters). Step 4 (F2) will address that.
 
 ### Step 3 / Phase 1 — F3: drop barycentric weight clamp (PENDING)
 
