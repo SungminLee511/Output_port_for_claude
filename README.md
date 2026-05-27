@@ -8,6 +8,10 @@
 
 Older bracket-generation output lives in [`archive_bracket_gen/`](archive_bracket_gen/).
 
+> **CONTACT_V2 progress log appended at the bottom (§13).** This top section
+> is the original v1 failure analysis; §13 tracks each Phase / Step of the
+> fix as it lands.
+
 ---
 
 ## 1. Background
@@ -309,3 +313,64 @@ than X triangles away) would smooth this out.
 
 **If only one fix is implemented, #1 (smooth normals) has the highest
 impact-per-effort.**
+
+---
+
+## 13. CONTACT_V2 Progress Log
+
+Plan: 9 steps across 4 phases. See
+`SOLVERX/MESHnSOLVERS/.claude/TODO/CONTACT_V2.md` for full design doc.
+
+### Step 1 / Phase 1 — F1: vertex-averaged smooth normals (DONE)
+
+**What:** Replace per-face flat normal at the closest master triangle with a
+per-vertex normal field, interpolated by barycentric weights at the closest
+point. Behind `contact_v2=True` feature flag.
+
+**Targets:** hypothesis H1 (discrete normal jumps on curved master).
+
+**Side-by-side V1 vs V2 (run with smooth normals via run_v2_compare.py):**
+
+| Case | V1 final res | V1 ‖u‖ (m) | V1 OK | V2 final res | V2 ‖u‖ (m) | V2 OK | Δ orders |
+|---|---:|---:|:---:|---:|---:|:---:|---:|
+| baseline_frictionless | 7.3e-13 | 1.2e-4 | ✅ | 7.3e-13 | 1.2e-4 | ✅ | identical |
+| baseline_friction | 4.1e-2 | 1.2e-4 | ✅ | 4.1e-2 | 1.2e-4 | ✅ | identical |
+| a_frictionless_1step | 1.0e-10 | 4.4e-3 | ✅ | 1.0e-10 | 4.4e-3 | ✅ | identical |
+| a_frictionless_4step | 7.1e-10 | 3.1e-2 | ✅ | 7.1e-10 | 3.1e-2 | ✅ | identical |
+| a_friction_4step | 1.1e+17 | 1.7e+14 | ❌ | 1.1e+17 | 1.7e+14 | ❌ | identical (H3 not fixed) |
+| **b_frictionless_1step** | 3.0e+4 | 2.6e+13 | ❌ | 3.6e+6 | 2.1e+15 | ❌ | -2 (slightly worse) |
+| **b_frictionless_8step** | 6.1e+5 | 1.0e+14 | ❌ | **3.4e+2** | 4.6e+11 | ❌ | **+3 (1800× better)** |
+| **b_friction_8step** | 2.7e+45 | 1.9e+39 | ❌ | 6.5e+40 | 3.6e+34 | ❌ | +5 |
+| **c_frictionless_1step** | 5.8e+22 | 1.8e+18 | ❌ | 6.0e+6 | 1.4e+16 | ❌ | **+16** |
+| **c_frictionless_8step** | 5.2e+54 | 7.6e+35 | ❌ | 5.3e+6 | 2.0e+16 | ❌ | **+48** |
+| **c_friction_8step** | 5.8e+79 | 4.7e+73 | ❌ | 1.1e+78 | 5.8e+72 | ❌ | +1 |
+
+Findings:
+- **Flat-master cases byte-identical** — no regression. (As expected;
+  vertex normals on a flat plate equal face normals.)
+- **Curved-master frictionless improved dramatically** — case_c_8step
+  improved by **48 orders of magnitude**. case_b_8step almost converges
+  (residual 3.4e2 vs target 1e-3).
+- **Curved-master friction improved 1-5 orders** but still diverges. This
+  is expected: H3 (friction Δu_T no-history) and H4 (slip tangent) are
+  unfixed.
+
+Conclusion: **F1 is necessary but not sufficient**. Confirms H1 is a real
+failure mode (case-C frictionless went from 10⁵⁴ → 10⁶ residual), but
+H2/H3/H5 still active.
+
+### Step 2 / Phase 1 — D1+D2+D4+D7: diagnostics (PENDING)
+
+### Step 3 / Phase 1 — F3: drop barycentric weight clamp (PENDING)
+
+### Step 4 / Phase 2 — F2: persistent contact history (PENDING)
+
+### Step 5 / Phase 2 — F4: accumulated friction Δu_T (PENDING)
+
+### Step 6 / Phase 2 — F6: gap_tol hysteresis (PENDING)
+
+### Step 7 / Phase 3 — F5: consistent slip tangent + GMRES (PENDING)
+
+### Step 8 / Phase 3 — F7: adaptive penalty ramp (PENDING)
+
+### Step 9 / Phase 4 — F8: SDF backend (OPTIONAL)
