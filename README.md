@@ -416,7 +416,36 @@ real and mesh-dependent.
 oscillation comes from a second mechanism (H5: no contact persistence
 across NR iters). Step 4 (F2) will address that.
 
-### Step 3 / Phase 1 — F3: drop barycentric weight clamp (PENDING)
+### Step 3 / Phase 1 — F3: drop barycentric weight clamp (DONE)
+
+**What:** Replace the legacy `torch.clamp(weights, 0.0, 1.0)` in
+`compute_triangle_barycentric_gpu` with `torch.clamp(min=0.0)` (floor only).
+A barycentric weight ≤ 1 by construction when the point is on the
+triangle; clamping the upper end at 1 introduces spurious 0/1 jumps when
+IGL's tiny FP noise nudges a value just above 1, which then gets snapped
+back. Same change applied in `check_contact_igl_v2`'s numpy barycentric.
+Legacy V1 path explicitly passes `clamp_upper=True` to preserve byte-identical
+regression on flat-master cases.
+
+**Result (V1 vs V2-with-F1+F3 on all 11 variants):**
+
+| Case | V1 | V2 (F1+F3) | Δ vs V1 | Δ vs F1-only |
+|---|---:|---:|---:|---:|
+| baseline_frictionless | 7.3e-13 | 7.3e-13 | identical | identical |
+| baseline_friction | 4.1e-2 | 4.1e-2 | identical | identical |
+| a-frictionless-1step | 1.0e-10 | 1.0e-10 | identical | identical |
+| a-frictionless-4step | 7.1e-10 | 7.1e-10 | identical | identical |
+| a-friction-4step | 1.1e+17 | 1.1e+17 | identical | identical |
+| b-frictionless-1step | 3.0e+4 | 3.6e+6 | -2 | identical |
+| b-frictionless-8step | 6.1e+5 | 3.4e+2 | **+3** | identical |
+| b-friction-8step | 2.7e+45 | 6.5e+40 | +5 | identical |
+| c-frictionless-1step | 5.8e+22 | 6.0e+6 | **+16** | identical |
+| c-frictionless-8step | 5.2e+54 | 5.3e+6 | **+48** | identical |
+| c-friction-8step | 5.8e+79 | **1.5e+70** | **+9** | **+8** |
+
+The case_c_grasp_friction_8step gained **8 more orders of magnitude** beyond
+F1-alone, confirming H2 (clamp creates discontinuity) is a real but
+second-order failure mode behind H1.
 
 ### Step 4 / Phase 2 — F2: persistent contact history (PENDING)
 
