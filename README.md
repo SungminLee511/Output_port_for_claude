@@ -1,13 +1,311 @@
-# Output port for Claude
+# Curved Contact Validation — MESHnSOLVERS
 
-Current item:
+**Date:** 2026-05-27 KST
+**Source code (kept in repo, not pushed here):**
+`SOLVERX/MESHnSOLVERS/tests/curved_contact_validation/`
+**Solver under test:**
+`static_structure_solver_with_contact` in `postprocess/solver.py`
 
-- **`curved_contact_validation_t20260527/`** — Validation of the MESHnSOLVERS
-  penalty N2S contact solver on curved-master and friction cases. Confirms a
-  user report that spheres do not converge while boxes do. See its
-  [`README.md`](curved_contact_validation_t20260527/README.md) and
-  [`FINDINGS.md`](curved_contact_validation_t20260527/FINDINGS.md).
+Older bracket-generation output lives in [`archive_bracket_gen/`](archive_bracket_gen/).
 
-Archive:
+---
 
-- **`archive_bracket_gen/`** — Earlier bracket-generation pipeline outputs.
+## 1. Background
+
+A user reported:
+
+> *"I'm using this solver to produce data for a robot hand grasping various
+> objects. For right-angled objects, contact behaves well if set up correctly.
+> But for things like **spheres**, it does not work well."*
+
+This validation set reproduces the claim with four synthetic geometries,
+captures full Newton-Raphson convergence logs, and diagnoses root causes.
+
+---
+
+## 2. Verdict
+
+**CLAIM CONFIRMED.** The penalty N2S contact solver has severe stability
+problems whenever a curved master surface is involved, and friction breaks it
+even further — including on a curved slave against a *flat* master.
+
+---
+
+## 3. Test cases
+
+| ID | Slave | Master | Loading | Purpose |
+|---|---|---|---|---|
+| baseline | Box bottom face | Flat plate triangles | Box top pushed −Z | Confirm "boxes converge" |
+| a | Sphere lower hem | Flat plate triangles | Sphere top pushed −Z | Curved slave, flat master |
+| b | Punch bottom | Sphere upper hem | Punch top pushed −Z | **Curved master** (suspected failure) |
+| c | Pad inner faces | Sphere left/right hem | Both pads pushed inward | Real robot-grasp scenario |
+
+Each case ran several variants (frictionless 1-step, frictionless N-step,
+friction N-step, softer penalty) to disentangle the failure mode.
+
+Solver settings: `contact_epsilon=1e6`, `nr_tol=1e-3`, `nr_max_iter=40-50`,
+`E=1e7 Pa`, `nu=0.3`. CPU, double precision.
+
+---
+
+## 4. Results summary
+
+| Case | Geometry | Friction | Load steps | Converged | NR iters | Final residual | Max ‖u‖ (m) |
+|---|---|---|---|---|---|---|---|
+| baseline | box ↔ flat plate | — | 1 | ✅ | 2 | 7.3e-13 | 1.2e-4 |
+| baseline | box ↔ flat plate | μs=0.3 | 1 | ✅ | 4 | 4.1e-2 | 1.2e-4 |
+| a-frictionless-1step | sphere(slave) ↔ flat plate | — | 1 | ✅ | 2 | 1.0e-10 | 4.4e-3 |
+| a-frictionless-4step | sphere(slave) ↔ flat plate | — | 4 | ✅ | 8 | 7.1e-10 | 3.1e-2 |
+| **a-friction-4step** | sphere(slave) ↔ flat plate | μs=0.3 | 4 | ❌ blew up | 84 | **1.1e+17** | **1.7e+14** |
+| **b-frictionless-1step** | punch ↔ sphere master | — | 1 | ❌ | 50 | 3.0e+4 | 2.6e+13 |
+| **b-frictionless-8step** | punch ↔ sphere master | — | 8×40 | ❌ | 320 | 6.1e+5 | 1.0e+14 |
+| **b-softer-eps** (ε=1e4) | punch ↔ sphere master | — | 4 | ❌ | 160 | 9.0e+4 | 1.6e+14 |
+| **b-friction-8step** | punch ↔ sphere master | μs=0.3 | 8×40 | ❌ | 320 | 2.7e+45 | 1.9e+39 |
+| **c-frictionless-1step** | two pads ↔ sphere | — | 1 | ❌ | 50 | 5.8e+22 | 1.8e+18 |
+| **c-frictionless-8step** | two pads ↔ sphere | — | 8×40 | ❌ | 320 | 5.2e+54 | 7.6e+35 |
+| **c-friction-8step** | two pads ↔ sphere | μs=0.5 | 8×40 | ❌ | 320 | **5.8e+79** | 4.7e+73 |
+
+Bold rows are the failures of interest.
+
+### What converged
+
+- **Boxes-on-plate**, both frictionless and with friction. Clean: 2-4 NR iters,
+  residual to machine precision, microscopic max penetration (~ε_N⁻¹).
+- **Frictionless sphere-on-flat-plate**. The flat master keeps every slave on
+  one of two coplanar triangles, so the per-face normal is the constant +ẑ.
+  The curved slave reduces to "a bunch of points pushed onto a plane".
+
+### What blew up
+
+- **Friction with a curved slave**, even when master is flat (case A). The
+  first two load steps converged; the third detonated. This is *new*
+  information — not implied by the original review.
+- **Anything with curved master** (cases B and C), regardless of friction
+  setting, load stepping, or penalty stiffness. Even softer penalty
+  (ε_N=1e4) and 8 load steps did not save it.
+
+---
+
+## 5. Baseline — box on plate ✅
+
+Both variants converge cleanly. Box settles into plate, deformations small
+and physical.
+
+### 5.1 Frictionless, 1 step — converged in 2 NR iters
+
+| Geometry (before / after) | NR convergence |
+|---|---|
+| ![](baseline_box_on_plate_frictionless_geometry_t20260527.png) | ![](baseline_box_on_plate_frictionless_convergence_t20260527.png) |
+
+### 5.2 With friction (μs=0.3, μd=0.2), 1 step — converged in 4 NR iters
+
+| Geometry (before / after) | NR convergence |
+|---|---|
+| ![](baseline_box_on_plate_friction_geometry_t20260527.png) | ![](baseline_box_on_plate_friction_convergence_t20260527.png) |
+
+---
+
+## 6. Case A — sphere on flat plate (curved slave, flat master)
+
+Frictionless works. Friction detonates at load step 3.
+
+### 6.1 Frictionless, 1 step — ✅ converged in 2 iters
+
+| Geometry | NR convergence |
+|---|---|
+| ![](case_a_sphere_on_plate_frictionless_1step_geometry_t20260527.png) | ![](case_a_sphere_on_plate_frictionless_1step_convergence_t20260527.png) |
+
+### 6.2 Frictionless, 4 load steps — ✅ converged in 8 iters total
+
+| Geometry | NR convergence |
+|---|---|
+| ![](case_a_sphere_on_plate_frictionless_4step_geometry_t20260527.png) | ![](case_a_sphere_on_plate_frictionless_4step_convergence_t20260527.png) |
+
+### 6.3 With friction (μs=0.3, μd=0.2), 4 load steps — ❌ BLEW UP
+
+Steps 1–2 converged fast; **step 3 jumped from 10² to 10¹⁷ within 2 iters**
+and never recovered. Final ‖u‖ ≈ 1.7×10¹⁴ m (nonsense).
+
+| Geometry (sphere has flown off-screen) | NR convergence |
+|---|---|
+| ![](case_a_sphere_on_plate_friction_4step_geometry_t20260527.png) | ![](case_a_sphere_on_plate_friction_4step_convergence_t20260527.png) |
+
+This is the **first key finding**: even when the master is *flat*, friction on
+a curved slave is unstable — implicating the no-history Δu_T treatment
+(see §9.3).
+
+---
+
+## 7. Case B — punch on top of sphere (curved MASTER)
+
+Every variant fails. Punch passes straight through the sphere.
+
+### 7.1 Frictionless, 1 step — ❌ oscillated, no convergence
+
+| Geometry (punch teleporting through sphere) | NR convergence |
+|---|---|
+| ![](case_b_plate_on_sphere_frictionless_1step_geometry_t20260527.png) | ![](case_b_plate_on_sphere_frictionless_1step_convergence_t20260527.png) |
+
+### 7.2 Frictionless, 8 load steps — ❌ still fails
+
+| Geometry | NR convergence |
+|---|---|
+| ![](case_b_plate_on_sphere_frictionless_8step_geometry_t20260527.png) | ![](case_b_plate_on_sphere_frictionless_8step_convergence_t20260527.png) |
+
+### 7.3 Softer penalty (ε_N = 1e4), 4 steps — ❌ fails differently but still fails
+
+| Geometry | NR convergence |
+|---|---|
+| ![](case_b_plate_on_sphere_softer_eps_geometry_t20260527.png) | ![](case_b_plate_on_sphere_softer_eps_convergence_t20260527.png) |
+
+### 7.4 Friction (μs=0.3, μd=0.2), 8 steps — ❌ residual climbs to 10⁴⁵
+
+| Geometry | NR convergence |
+|---|---|
+| ![](case_b_plate_on_sphere_friction_8step_geometry_t20260527.png) | ![](case_b_plate_on_sphere_friction_8step_convergence_t20260527.png) |
+
+Eight load steps + softer penalty did **not** save it — only soften the
+blow-up rate. Curved master is the **dominant** failure mode (§9.1).
+
+---
+
+## 8. Case C — two-finger grasp on sphere (the real robot-hand scenario)
+
+Catastrophic across the board.
+
+### 8.1 Frictionless, 1 step — ❌ residual to 10²²
+
+| Geometry | NR convergence |
+|---|---|
+| ![](case_c_grasp_frictionless_1step_geometry_t20260527.png) | ![](case_c_grasp_frictionless_1step_convergence_t20260527.png) |
+
+### 8.2 Frictionless, 8 steps — ❌ residual to 10⁵⁴
+
+| Geometry | NR convergence |
+|---|---|
+| ![](case_c_grasp_frictionless_8step_geometry_t20260527.png) | ![](case_c_grasp_frictionless_8step_convergence_t20260527.png) |
+
+### 8.3 Friction (μs=0.5, μd=0.3), 8 steps — ❌ residual to **10⁷⁹**
+
+Worst case in the entire validation set.
+
+| Geometry | NR convergence |
+|---|---|
+| ![](case_c_grasp_friction_8step_geometry_t20260527.png) | ![](case_c_grasp_friction_8step_convergence_t20260527.png) |
+
+This is exactly the user's robot-hand grasping scenario. It does not work
+in any configuration tested.
+
+---
+
+## 9. Why "boxes work"
+
+In the baseline:
+- Master = plate, 18 triangles, **all coplanar**.
+- Every per-face normal is +ẑ.
+- Closest-face index for each slave never changes → `n` is constant →
+  `K_N = ε_N · nnᵀ` is constant → NR's linearization is exact in one step.
+- With friction, `P = I − nnᵀ` is also constant → friction tangent
+  stiffness is constant → no oscillation.
+
+Any curved master breaks this immediately.
+
+---
+
+## 10. Root-cause hypotheses
+
+### 10.1 Per-face flat normals jump face-to-face on a curved master — **STRONGLY SUPPORTED**
+
+`check_contact_igl` calls `igl.per_face_normals` and grabs the normal of the
+single closest face for each slave. Between successive NR iterations the
+closest face flips as `u` updates. The contact direction `n` changes
+discretely → `K_N = ε_N · nnᵀ` changes by an order-one rotation in 3×3
+space → NR's linearization is wrong by a finite amount → next step lands
+nowhere near the solution.
+
+**Evidence:** Cases B and C show `Contact: True/False` flickering between
+iterations (case B step 4: contact-false ×20, contact-true at iter 33 with
+residual 10¹⁵, then contact-false again). Slave nodes get kicked through
+the master surface and bounce back across multiple faces each iter.
+
+### 10.2 `compute_triangle_barycentric_gpu` clamps weights, creating discontinuity at triangle edges — **SUPPORTED**
+
+`solver.py` lines 329–331:
+
+```python
+weights = torch.clamp(torch.stack([u, v, w], dim=1), 0.0, 1.0)
+weights = weights / torch.sum(weights, dim=1, keepdim=True)
+```
+
+When the closest point on a triangle is on an edge or vertex (typical for
+slave nodes contacting a faceted sphere), unclamped barycentric weights
+would be negative outside the triangle. The clamp + renormalize produces a
+*different* set of weights than the true projection onto the next-best
+triangle. Around a triangle edge this creates a 0/1 discontinuity in `N_i`
+across slave-master pairs.
+
+Combined with hypothesis 10.1, both `n` AND `N_i` jump discretely across NR
+iterations near edges. NR was never going to handle that.
+
+### 10.3 Friction Δu_T has no history; the tangent-plane projection `P = I − nnᵀ` itself flips with normals — **NEW & STRONGLY SUPPORTED**
+
+`compute_friction_apply_tensors` uses `delta_u_T = u_s − Σ N_i u_mᵢ`
+projected into the current `P`. If the closest face flips between
+iterations, `P` flips with it, and the *same physical Δu* becomes a
+*different Δu_T*. This causes nodes to oscillate stick↔slip aggressively.
+
+**Evidence:** In case A step 3 the stick/slip counts oscillate wildly:
+`0/7 → 0/2 → 52/56 → 0/33 → 0/18 → …`, while residual swings between 10²
+and 10¹⁷.
+
+Even in case A where the master is FLAT (so hypothesis 10.1 should not
+apply), friction still detonates — this implicates the no-history Δu_T
+treatment as a *second independent failure mode*.
+
+### 10.4 Simplified (stick-only) tangent stiffness underestimates the true Jacobian on slip nodes — **CONSISTENT**
+
+The friction TODO doc itself flags this (§3.2: *"If convergence is poor,
+implement the consistent tangent and switch to GMRES"*). The non-symmetric
+slip term `μ_d · ε_N · t̂ ⊗ n` is missing. On a curved master where many
+nodes are in slip, this is half the Jacobian.
+
+### 10.5 Single-pass contact detection without smoothing — **WEAKLY SUPPORTED**
+
+Each NR iteration recomputes contact from scratch, so contact pairs flicker
+in and out. For curved surfaces a "persistent contact" scheme (keep the
+same master-face index across iters unless the closest-face moves more
+than X triangles away) would smooth this out.
+
+---
+
+## 11. Proposed remediations (priority order)
+
+1. **Smooth/average vertex normals on curved master.** Replace
+   `igl.per_face_normals[f_idx]` with a per-vertex average normal,
+   interpolated by barycentric `N_i` on the closest face. Standard FEA fix
+   for faceted-master N2S contact. ~30 lines. Removes hypothesis 10.1's
+   discrete-jump problem.
+
+2. **Persistent contact history across NR iters.** Cache
+   `(closest_face_idx, barycentric)` per slave from the previous iter;
+   re-detect only if the slave's new position moves more than a few
+   triangle hops. Removes the flicker seen in case B.
+
+3. **Skip clamping in `compute_triangle_barycentric_gpu`** and instead
+   reproject to the actual closest triangle. Or use the IGL closest-point
+   output and recompute weights against the chosen triangle without
+   clamping. Eliminates hypothesis 10.2.
+
+4. **Friction Δu_T with accumulated history.** Store per-slave accumulated
+   tangential displacement across load steps and use that for the trial
+   force. Removes stick/slip oscillation.
+
+5. **Implement the consistent slip tangent + switch to GMRES** (already
+   recommended by the friction TODO doc).
+
+6. **Tighter detection tolerance + smaller initial penalty + ramp ε_N
+   across load steps.** Quick mitigation while proper fixes are being
+   implemented.
+
+**If only one fix is implemented, #1 (smooth normals) has the highest
+impact-per-effort.**
