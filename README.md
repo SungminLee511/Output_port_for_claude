@@ -783,3 +783,18 @@ candidates queued:
 Convergence count: still **5/11**. Phase 5 is yielding big residual
 drops on some variants but no new converges yet. Next: F4.5 (vectorise
 Δu_T) for speed, then back-tracking on case_b/c.
+
+### Step 4 — F4.5 vectorise Δu_T accumulator (DEFERRED)
+
+Attempted: replace the F4 per-slave Python loop with `np.where` +
+batched `proj_tangent`. Mathematically equivalent but uses a different
+floating-point op order (`v - n*(n·v)` vs `(I-nnᵀ) @ v`).
+
+**Result:** case_b_friction_8step residual jumped 3.86e3 → 4.4e6
+(3 orders worse) due to NR oscillation amplifying the tiny round-off
+delta. Reverted. F4.5 needs FP-bit-equivalent reformulation or a
+truly converging baseline — out of scope for the relay.
+
+Convergence count: still **5/11**. Phase 5 has exhausted the
+straightforward residual-shaving wins. Continuing with **adaptive Step
+5+** ideas: NR step damping / line search, finer mesh, friction-ramp.
