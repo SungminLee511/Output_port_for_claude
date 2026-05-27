@@ -753,3 +753,33 @@ Step 1; converged count remains **5/11**.
 oscillation.** The bottleneck is elsewhere — most likely H5
 (open-shell master submesh has corrupt vertex normals at the boundary
 → contact pushes slave the wrong direction). F8.5 next addresses this.
+
+### Step 3 — F8.5 boundary-aware normals (MIXED, default OFF)
+
+`contact_v2_boundary_aware_normals` opt-in flag + helper detecting
+boundary vertices of the master submesh. When enabled, replaces biased
+boundary-vertex normals with the face flat normal during smooth-normal
+interpolation.
+
+**Result with F8.5=ON (case-by-case):**
+
+| Case | F2.5 (Step 1) | F8.5 ON | Verdict |
+|---|---:|---:|---|
+| case_c_frictionless_1step | 4.03e+6 | **4.54e+4** | ✅ +2 orders |
+| case_b_frictionless_1step | 3.98e+2 | 8.69e+3 | ❌ -1.3 |
+| case_b_frictionless_8step | 9.77e+4 | **8.65e+15** | ❌❌ -11 |
+| case_b_friction_8step | 3.86e+3 | 6.11e+5 | ❌ -2 |
+| case_c_friction_8step | 2.88e+70 | 1.39e+83 | ❌ -13 |
+
+**Decision: keep in API, default OFF.** The substitution reintroduces
+H1-style flat-normal jumps for slaves contacting submesh interior faces
+that *share* a boundary vertex but contact away from it. Three Phase 6
+candidates queued:
+
+1. Pre-process: close the master submesh so winding-number / SDF works.
+2. Per-slave (not per-face) boundary-proximity test.
+3. Diffusion-extrapolated boundary vertex normal from interior verts.
+
+Convergence count: still **5/11**. Phase 5 is yielding big residual
+drops on some variants but no new converges yet. Next: F4.5 (vectorise
+Δu_T) for speed, then back-tracking on case_b/c.
