@@ -1,0 +1,385 @@
+{
+  "case": "case_b_plate_on_sphere_frictionless_1step",
+  "converged": false,
+  "failed": false,
+  "error": null,
+  "elapsed_sec": 2.094,
+  "n_nr_iters_total": 50,
+  "final_residual": 29873.0,
+  "final_rel_residual": 448.09,
+  "nr_iters_by_step": {
+    "1": [
+      {
+        "iter": 0,
+        "res": 67221.0,
+        "rel": 1008.3,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 1,
+        "res": 332.64,
+        "rel": 4.9896,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 2,
+        "res": 314.63,
+        "rel": 4.7195,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 3,
+        "res": 666.99,
+        "rel": 10.005,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 4,
+        "res": 1282.4,
+        "rel": 19.236,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 5,
+        "res": 651.47,
+        "rel": 9.7721,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 6,
+        "res": 648.59,
+        "rel": 9.7289,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 7,
+        "res": 551.33,
+        "rel": 8.27,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 8,
+        "res": 1740.6,
+        "rel": 26.109,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 9,
+        "res": 3908.5,
+        "rel": 58.627,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 10,
+        "res": 4416.5,
+        "rel": 66.248,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 11,
+        "res": 4203.5,
+        "rel": 63.052,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 12,
+        "res": 8086.4,
+        "rel": 121.3,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 13,
+        "res": 5435.9,
+        "rel": 81.538,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 14,
+        "res": 5577.6,
+        "rel": 83.664,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 15,
+        "res": 3656.2,
+        "rel": 54.844,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 16,
+        "res": 3609.3,
+        "rel": 54.14,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 17,
+        "res": 2658.2,
+        "rel": 39.873,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 18,
+        "res": 3461.6,
+        "rel": 51.924,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 19,
+        "res": 4479.2,
+        "rel": 67.188,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 20,
+        "res": 1745.5,
+        "rel": 26.182,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 21,
+        "res": 11612.0,
+        "rel": 174.18,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 22,
+        "res": 18411.0,
+        "rel": 276.16,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 23,
+        "res": 5782.9,
+        "rel": 86.744,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 24,
+        "res": 4143.5,
+        "rel": 62.152,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 25,
+        "res": 2601.1,
+        "rel": 39.017,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 26,
+        "res": 2853.7,
+        "rel": 42.806,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 27,
+        "res": 4388.4,
+        "rel": 65.826,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 28,
+        "res": 10655.0,
+        "rel": 159.82,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 29,
+        "res": 14258.0,
+        "rel": 213.87,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 30,
+        "res": 11435.0,
+        "rel": 171.53,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 31,
+        "res": 6.2659e+17,
+        "rel": 9398800000000000.0,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 32,
+        "res": 1.4147e+18,
+        "rel": 2.122e+16,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 33,
+        "res": 29104.0,
+        "rel": 436.56,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 34,
+        "res": 17167.0,
+        "rel": 257.51,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 35,
+        "res": 22188.0,
+        "rel": 332.82,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 36,
+        "res": 33017.0,
+        "rel": 495.25,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 37,
+        "res": 32219.0,
+        "rel": 483.29,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 38,
+        "res": 25097.0,
+        "rel": 376.46,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 39,
+        "res": 14124.0,
+        "rel": 211.86,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 40,
+        "res": 22101.0,
+        "rel": 331.52,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 41,
+        "res": 37925.0,
+        "rel": 568.88,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 42,
+        "res": 32737.0,
+        "rel": 491.06,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 43,
+        "res": 38156.0,
+        "rel": 572.34,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 44,
+        "res": 20010.0,
+        "rel": 300.14,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 45,
+        "res": 13680.0,
+        "rel": 205.19,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 46,
+        "res": 9411.0,
+        "rel": 141.17,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 47,
+        "res": 10899.0,
+        "rel": 163.49,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 48,
+        "res": 12373.0,
+        "rel": 185.59,
+        "stick": null,
+        "slip": null
+      },
+      {
+        "iter": 49,
+        "res": 29873.0,
+        "rel": 448.09,
+        "stick": null,
+        "slip": null
+      }
+    ]
+  },
+  "max_displacement": 25723565341503.844,
+  "mean_displacement": 271520269517.79147,
+  "penetration_metric": {
+    "max_penetration": 179122097792.71924,
+    "mean_penetration": -9714553752160.047,
+    "n_penetrating": 1,
+    "n_slave": 9,
+    "signed_distance_mean": 9714553752160.047
+  },
+  "solver_kwargs": {
+    "contact_epsilon": 1000000.0,
+    "nr_tol": 0.001,
+    "nr_max_iter": 50,
+    "n_load_steps": 1,
+    "mu_s": 0.0,
+    "mu_d": 0.0,
+    "dim": 3,
+    "cg_start": false,
+    "dtype": "torch.float64",
+    "device": "cpu"
+  }
+}

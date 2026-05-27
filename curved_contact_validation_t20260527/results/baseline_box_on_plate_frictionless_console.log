@@ -1,0 +1,6 @@
+Setup complete in 0.08s. Starting 1 load step(s)...
+  NR Iter 00 | Time 0.00s | Res: 1.5000e+02 | Rel: 1.0000e+00 | Contact: True
+  NR Iter 01 | Time 0.00s | Res: 7.2756e-13 | Rel: 4.8504e-15 | Contact: True
+  Newton-Raphson CONVERGED in 1 iterations.
+
+Total solve time: 0.08 seconds.

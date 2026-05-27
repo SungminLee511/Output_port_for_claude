@@ -1,0 +1,31 @@
+Setup complete in 0.24s. Starting 4 load step(s)...
+
+============================================================
+  LOAD STEP 1/4 | Load fraction: 0.250
+============================================================
+  Step 01 | NR Iter 00 | Time 0.00s | Res: 2.8347e+01 | Rel: 1.0000e+00 | Contact: True
+  Step 01 | NR Iter 01 | Time 0.00s | Res: 2.5098e-11 | Rel: 8.8536e-13 | Contact: True
+  Newton-Raphson CONVERGED in 1 iterations.
+
+============================================================
+  LOAD STEP 2/4 | Load fraction: 0.500
+============================================================
+  Step 02 | NR Iter 00 | Time 0.00s | Res: 2.8347e+01 | Rel: 5.0000e-01 | Contact: True
+  Step 02 | NR Iter 01 | Time 0.00s | Res: 4.8875e-11 | Rel: 8.6207e-13 | Contact: True
+  Newton-Raphson CONVERGED in 1 iterations.
+
+============================================================
+  LOAD STEP 3/4 | Load fraction: 0.750
+============================================================
+  Step 03 | NR Iter 00 | Time 0.00s | Res: 2.8347e+01 | Rel: 3.3333e-01 | Contact: True
+  Step 03 | NR Iter 01 | Time 0.00s | Res: 2.5349e-10 | Rel: 2.9807e-12 | Contact: True
+  Newton-Raphson CONVERGED in 1 iterations.
+
+============================================================
+  LOAD STEP 4/4 | Load fraction: 1.000
+============================================================
+  Step 04 | NR Iter 00 | Time 0.00s | Res: 2.8347e+01 | Rel: 2.5000e-01 | Contact: True
+  Step 04 | NR Iter 01 | Time 0.00s | Res: 7.0727e-10 | Rel: 6.2375e-12 | Contact: True
+  Newton-Raphson CONVERGED in 1 iterations.
+
+Total solve time: 0.53 seconds.

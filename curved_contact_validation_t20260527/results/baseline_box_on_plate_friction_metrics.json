@@ -1,0 +1,64 @@
+{
+  "case": "baseline_box_on_plate_friction",
+  "converged": true,
+  "failed": false,
+  "error": null,
+  "elapsed_sec": 0.03,
+  "n_nr_iters_total": 4,
+  "final_residual": 0.041291,
+  "final_rel_residual": 0.00027528,
+  "nr_iters_by_step": {
+    "1": [
+      {
+        "iter": 0,
+        "res": 150.0,
+        "rel": 1.0,
+        "stick": 9,
+        "slip": 0
+      },
+      {
+        "iter": 1,
+        "res": 5.1228,
+        "rel": 0.034152,
+        "stick": 9,
+        "slip": 0
+      },
+      {
+        "iter": 2,
+        "res": 0.43009,
+        "rel": 0.0028673,
+        "stick": 9,
+        "slip": 0
+      },
+      {
+        "iter": 3,
+        "res": 0.041291,
+        "rel": 0.00027528,
+        "stick": 9,
+        "slip": 0
+      }
+    ]
+  },
+  "max_displacement": 0.00011715815727889965,
+  "mean_displacement": 1.8097094197500064e-05,
+  "penetration_metric": {
+    "max_penetration": 5.9191910409000056e-05,
+    "mean_penetration": 5.000000000000009e-05,
+    "n_penetrating": 9,
+    "n_slave": 9,
+    "signed_distance_mean": -5.000000000000009e-05
+  },
+  "solver_kwargs": {
+    "contact_epsilon": 1000000.0,
+    "nr_tol": 0.001,
+    "nr_max_iter": 30,
+    "n_load_steps": 1,
+    "mu_s": 0.3,
+    "mu_d": 0.2,
+    "dim": 3,
+    "cg_start": false,
+    "dtype": "torch.float64",
+    "device": "cpu",
+    "friction_penalty_ratio": 0.1
+  }
+}

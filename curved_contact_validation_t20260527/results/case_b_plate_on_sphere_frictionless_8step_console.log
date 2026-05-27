@@ -1,0 +1,363 @@
+Setup complete in 0.23s. Starting 8 load step(s)...
+
+============================================================
+  LOAD STEP 1/8 | Load fraction: 0.125
+============================================================
+  Step 01 | NR Iter 00 | Time 0.00s | Res: 6.7221e+04 | Rel: 8.0665e+03 | Contact: True
+  Step 01 | NR Iter 01 | Time 0.00s | Res: 4.3894e+01 | Rel: 5.2673e+00 | Contact: False
+  Step 01 | NR Iter 02 | Time 0.00s | Res: 3.6886e+01 | Rel: 4.4263e+00 | Contact: False
+  Step 01 | NR Iter 03 | Time 0.00s | Res: 5.9187e+01 | Rel: 7.1025e+00 | Contact: False
+  Step 01 | NR Iter 04 | Time 0.00s | Res: 2.3167e+02 | Rel: 2.7801e+01 | Contact: False
+  Step 01 | NR Iter 05 | Time 0.00s | Res: 4.8875e+02 | Rel: 5.8650e+01 | Contact: False
+  Step 01 | NR Iter 06 | Time 0.00s | Res: 3.3663e+02 | Rel: 4.0396e+01 | Contact: False
+  Step 01 | NR Iter 07 | Time 0.00s | Res: 6.9564e+02 | Rel: 8.3477e+01 | Contact: False
+  Step 01 | NR Iter 08 | Time 0.00s | Res: 1.4358e+03 | Rel: 1.7229e+02 | Contact: False
+  Step 01 | NR Iter 09 | Time 0.00s | Res: 1.1350e+03 | Rel: 1.3620e+02 | Contact: False
+  Step 01 | NR Iter 10 | Time 0.00s | Res: 2.3744e+03 | Rel: 2.8493e+02 | Contact: False
+  Step 01 | NR Iter 11 | Time 0.00s | Res: 2.7191e+03 | Rel: 3.2629e+02 | Contact: False
+  Step 01 | NR Iter 12 | Time 0.00s | Res: 6.0932e+03 | Rel: 7.3118e+02 | Contact: False
+  Step 01 | NR Iter 13 | Time 0.00s | Res: 1.5575e+04 | Rel: 1.8690e+03 | Contact: False
+  Step 01 | NR Iter 14 | Time 0.00s | Res: 1.9015e+04 | Rel: 2.2819e+03 | Contact: False
+  Step 01 | NR Iter 15 | Time 0.00s | Res: 2.1615e+04 | Rel: 2.5938e+03 | Contact: False
+  Step 01 | NR Iter 16 | Time 0.00s | Res: 2.6981e+04 | Rel: 3.2377e+03 | Contact: False
+  Step 01 | NR Iter 17 | Time 0.00s | Res: 4.6092e+16 | Rel: 5.5310e+15 | Contact: True
+  Step 01 | NR Iter 18 | Time 0.00s | Res: 5.2976e+03 | Rel: 6.3572e+02 | Contact: False
+  Step 01 | NR Iter 19 | Time 0.00s | Res: 5.5414e+03 | Rel: 6.6497e+02 | Contact: False
+  Step 01 | NR Iter 20 | Time 0.00s | Res: 5.6790e+03 | Rel: 6.8148e+02 | Contact: False
+  Step 01 | NR Iter 21 | Time 0.00s | Res: 5.6951e+03 | Rel: 6.8341e+02 | Contact: False
+  Step 01 | NR Iter 22 | Time 0.00s | Res: 6.5265e+03 | Rel: 7.8319e+02 | Contact: False
+  Step 01 | NR Iter 23 | Time 0.00s | Res: 3.7629e+03 | Rel: 4.5154e+02 | Contact: False
+  Step 01 | NR Iter 24 | Time 0.00s | Res: 6.8792e+03 | Rel: 8.2551e+02 | Contact: False
+  Step 01 | NR Iter 25 | Time 0.00s | Res: 5.3531e+03 | Rel: 6.4237e+02 | Contact: False
+  Step 01 | NR Iter 26 | Time 0.00s | Res: 3.2887e+03 | Rel: 3.9464e+02 | Contact: False
+  Step 01 | NR Iter 27 | Time 0.00s | Res: 2.8261e+03 | Rel: 3.3913e+02 | Contact: False
+  Step 01 | NR Iter 28 | Time 0.00s | Res: 1.8463e+03 | Rel: 2.2156e+02 | Contact: False
+  Step 01 | NR Iter 29 | Time 0.00s | Res: 3.4788e+03 | Rel: 4.1746e+02 | Contact: False
+  Step 01 | NR Iter 30 | Time 0.00s | Res: 4.4496e+03 | Rel: 5.3396e+02 | Contact: False
+  Step 01 | NR Iter 31 | Time 0.00s | Res: 1.4753e+03 | Rel: 1.7704e+02 | Contact: False
+  Step 01 | NR Iter 32 | Time 0.00s | Res: 2.8663e+03 | Rel: 3.4396e+02 | Contact: False
+  Step 01 | NR Iter 33 | Time 0.00s | Res: 1.9475e+03 | Rel: 2.3370e+02 | Contact: False
+  Step 01 | NR Iter 34 | Time 0.00s | Res: 9.3705e+02 | Rel: 1.1245e+02 | Contact: False
+  Step 01 | NR Iter 35 | Time 0.00s | Res: 3.7722e+02 | Rel: 4.5267e+01 | Contact: False
+  Step 01 | NR Iter 36 | Time 0.00s | Res: 3.2706e+02 | Rel: 3.9248e+01 | Contact: False
+  Step 01 | NR Iter 37 | Time 0.00s | Res: 2.4617e+02 | Rel: 2.9541e+01 | Contact: False
+  Step 01 | NR Iter 38 | Time 0.00s | Res: 2.4875e+02 | Rel: 2.9850e+01 | Contact: False
+  Step 01 | NR Iter 39 | Time 0.00s | Res: 2.1895e+02 | Rel: 2.6274e+01 | Contact: False
+  WARNING: Newton-Raphson did not converge in load step 1 within 40 iterations.
+
+============================================================
+  LOAD STEP 2/8 | Load fraction: 0.250
+============================================================
+  Step 02 | NR Iter 00 | Time 0.00s | Res: 3.1262e+02 | Rel: 1.8757e+01 | Contact: False
+  Step 02 | NR Iter 01 | Time 0.00s | Res: 3.8069e+02 | Rel: 2.2842e+01 | Contact: False
+  Step 02 | NR Iter 02 | Time 0.00s | Res: 2.0015e+02 | Rel: 1.2009e+01 | Contact: False
+  Step 02 | NR Iter 03 | Time 0.00s | Res: 8.9768e+01 | Rel: 5.3861e+00 | Contact: False
+  Step 02 | NR Iter 04 | Time 0.00s | Res: 1.1463e+02 | Rel: 6.8781e+00 | Contact: False
+  Step 02 | NR Iter 05 | Time 0.00s | Res: 5.2876e+01 | Rel: 3.1726e+00 | Contact: False
+  Step 02 | NR Iter 06 | Time 0.00s | Res: 1.1600e+15 | Rel: 6.9598e+13 | Contact: True
+  Step 02 | NR Iter 07 | Time 0.00s | Res: 5.0112e+03 | Rel: 3.0067e+02 | Contact: False
+  Step 02 | NR Iter 08 | Time 0.00s | Res: 8.6797e+03 | Rel: 5.2078e+02 | Contact: False
+  Step 02 | NR Iter 09 | Time 0.00s | Res: 1.6933e+17 | Rel: 1.0160e+16 | Contact: True
+  Step 02 | NR Iter 10 | Time 0.00s | Res: 2.5129e+04 | Rel: 1.5078e+03 | Contact: False
+  Step 02 | NR Iter 11 | Time 0.00s | Res: 2.0963e+04 | Rel: 1.2578e+03 | Contact: False
+  Step 02 | NR Iter 12 | Time 0.00s | Res: 1.7054e+04 | Rel: 1.0232e+03 | Contact: False
+  Step 02 | NR Iter 13 | Time 0.00s | Res: 1.9469e+04 | Rel: 1.1681e+03 | Contact: False
+  Step 02 | NR Iter 14 | Time 0.00s | Res: 3.1721e+04 | Rel: 1.9033e+03 | Contact: False
+  Step 02 | NR Iter 15 | Time 0.00s | Res: 3.3165e+04 | Rel: 1.9899e+03 | Contact: False
+  Step 02 | NR Iter 16 | Time 0.00s | Res: 1.2033e+04 | Rel: 7.2198e+02 | Contact: False
+  Step 02 | NR Iter 17 | Time 0.00s | Res: 1.8105e+04 | Rel: 1.0863e+03 | Contact: False
+  Step 02 | NR Iter 18 | Time 0.00s | Res: 1.8291e+04 | Rel: 1.0974e+03 | Contact: False
+  Step 02 | NR Iter 19 | Time 0.00s | Res: 1.9102e+04 | Rel: 1.1461e+03 | Contact: False
+  Step 02 | NR Iter 20 | Time 0.00s | Res: 2.3905e+04 | Rel: 1.4343e+03 | Contact: False
+  Step 02 | NR Iter 21 | Time 0.00s | Res: 1.0903e+04 | Rel: 6.5420e+02 | Contact: False
+  Step 02 | NR Iter 22 | Time 0.00s | Res: 1.2119e+04 | Rel: 7.2716e+02 | Contact: False
+  Step 02 | NR Iter 23 | Time 0.00s | Res: 1.0614e+04 | Rel: 6.3686e+02 | Contact: False
+  Step 02 | NR Iter 24 | Time 0.00s | Res: 4.2466e+03 | Rel: 2.5480e+02 | Contact: False
+  Step 02 | NR Iter 25 | Time 0.00s | Res: 9.6358e+03 | Rel: 5.7815e+02 | Contact: False
+  Step 02 | NR Iter 26 | Time 0.00s | Res: 9.2950e+03 | Rel: 5.5770e+02 | Contact: False
+  Step 02 | NR Iter 27 | Time 0.00s | Res: 7.9177e+03 | Rel: 4.7506e+02 | Contact: False
+  Step 02 | NR Iter 28 | Time 0.00s | Res: 3.9353e+03 | Rel: 2.3612e+02 | Contact: False
+  Step 02 | NR Iter 29 | Time 0.00s | Res: 7.4990e+03 | Rel: 4.4994e+02 | Contact: False
+  Step 02 | NR Iter 30 | Time 0.00s | Res: 1.1415e+04 | Rel: 6.8492e+02 | Contact: False
+  Step 02 | NR Iter 31 | Time 0.00s | Res: 9.8903e+03 | Rel: 5.9342e+02 | Contact: False
+  Step 02 | NR Iter 32 | Time 0.00s | Res: 1.3614e+04 | Rel: 8.1682e+02 | Contact: False
+  Step 02 | NR Iter 33 | Time 0.00s | Res: 1.3482e+04 | Rel: 8.0895e+02 | Contact: False
+  Step 02 | NR Iter 34 | Time 0.00s | Res: 7.0834e+03 | Rel: 4.2500e+02 | Contact: False
+  Step 02 | NR Iter 35 | Time 0.00s | Res: 6.1086e+03 | Rel: 3.6652e+02 | Contact: False
+  Step 02 | NR Iter 36 | Time 0.00s | Res: 1.8662e+16 | Rel: 1.1197e+15 | Contact: True
+  Step 02 | NR Iter 37 | Time 0.00s | Res: 1.1022e+04 | Rel: 6.6130e+02 | Contact: False
+  Step 02 | NR Iter 38 | Time 0.00s | Res: 1.8150e+04 | Rel: 1.0890e+03 | Contact: False
+  Step 02 | NR Iter 39 | Time 0.00s | Res: 1.6081e+18 | Rel: 9.6489e+16 | Contact: True
+  WARNING: Newton-Raphson did not converge in load step 2 within 40 iterations.
+
+============================================================
+  LOAD STEP 3/8 | Load fraction: 0.375
+============================================================
+  Step 03 | NR Iter 00 | Time 0.00s | Res: 7.7660e+04 | Rel: 3.1064e+03 | Contact: False
+  Step 03 | NR Iter 01 | Time 0.00s | Res: 1.4763e+05 | Rel: 5.9054e+03 | Contact: False
+  Step 03 | NR Iter 02 | Time 0.00s | Res: 1.5508e+05 | Rel: 6.2033e+03 | Contact: False
+  Step 03 | NR Iter 03 | Time 0.00s | Res: 5.7835e+04 | Rel: 2.3134e+03 | Contact: False
+  Step 03 | NR Iter 04 | Time 0.00s | Res: 1.9801e+18 | Rel: 7.9204e+16 | Contact: True
+  Step 03 | NR Iter 05 | Time 0.00s | Res: 6.9309e+17 | Rel: 2.7724e+16 | Contact: True
+  Step 03 | NR Iter 06 | Time 0.00s | Res: 1.8883e+19 | Rel: 7.5531e+17 | Contact: True
+  Step 03 | NR Iter 07 | Time 0.00s | Res: 4.2252e+19 | Rel: 1.6901e+18 | Contact: True
+  Step 03 | NR Iter 08 | Time 0.00s | Res: 1.5106e+06 | Rel: 6.0424e+04 | Contact: False
+  Step 03 | NR Iter 09 | Time 0.00s | Res: 5.6670e+19 | Rel: 2.2668e+18 | Contact: True
+  Step 03 | NR Iter 10 | Time 0.00s | Res: 4.3844e+06 | Rel: 1.7538e+05 | Contact: False
+  Step 03 | NR Iter 11 | Time 0.00s | Res: 6.4376e+19 | Rel: 2.5751e+18 | Contact: True
+  Step 03 | NR Iter 12 | Time 0.00s | Res: 3.8419e+20 | Rel: 1.5368e+19 | Contact: True
+  Step 03 | NR Iter 13 | Time 0.00s | Res: 1.0735e+22 | Rel: 4.2941e+20 | Contact: True
+  Step 03 | NR Iter 14 | Time 0.00s | Res: 3.2041e+21 | Rel: 1.2817e+20 | Contact: True
+  Step 03 | NR Iter 15 | Time 0.00s | Res: 3.5499e+06 | Rel: 1.4200e+05 | Contact: False
+  Step 03 | NR Iter 16 | Time 0.00s | Res: 1.7667e+06 | Rel: 7.0668e+04 | Contact: False
+  Step 03 | NR Iter 17 | Time 0.00s | Res: 1.7444e+06 | Rel: 6.9778e+04 | Contact: False
+  Step 03 | NR Iter 18 | Time 0.00s | Res: 3.8815e+06 | Rel: 1.5526e+05 | Contact: False
+  Step 03 | NR Iter 19 | Time 0.00s | Res: 1.1663e+22 | Rel: 4.6652e+20 | Contact: True
+  Step 03 | NR Iter 20 | Time 0.00s | Res: 4.5976e+22 | Rel: 1.8390e+21 | Contact: True
+  Step 03 | NR Iter 21 | Time 0.00s | Res: 8.8720e+23 | Rel: 3.5488e+22 | Contact: True
+  Step 03 | NR Iter 22 | Time 0.00s | Res: 5.7024e+12 | Rel: 2.2810e+11 | Contact: True
+  Step 03 | NR Iter 23 | Time 0.00s | Res: 1.9942e+02 | Rel: 7.9767e+00 | Contact: False
+  Step 03 | NR Iter 24 | Time 0.00s | Res: 9.3629e+01 | Rel: 3.7451e+00 | Contact: False
+  Step 03 | NR Iter 25 | Time 0.00s | Res: 1.1685e+02 | Rel: 4.6739e+00 | Contact: False
+  Step 03 | NR Iter 26 | Time 0.00s | Res: 2.1725e+02 | Rel: 8.6899e+00 | Contact: False
+  Step 03 | NR Iter 27 | Time 0.00s | Res: 1.6239e+02 | Rel: 6.4955e+00 | Contact: False
+  Step 03 | NR Iter 28 | Time 0.00s | Res: 3.2108e+02 | Rel: 1.2843e+01 | Contact: False
+  Step 03 | NR Iter 29 | Time 0.00s | Res: 2.6632e+02 | Rel: 1.0653e+01 | Contact: False
+  Step 03 | NR Iter 30 | Time 0.00s | Res: 4.5883e+02 | Rel: 1.8353e+01 | Contact: False
+  Step 03 | NR Iter 31 | Time 0.00s | Res: 1.5686e+03 | Rel: 6.2745e+01 | Contact: False
+  Step 03 | NR Iter 32 | Time 0.00s | Res: 1.0941e+03 | Rel: 4.3763e+01 | Contact: False
+  Step 03 | NR Iter 33 | Time 0.00s | Res: 5.9717e+02 | Rel: 2.3887e+01 | Contact: False
+  Step 03 | NR Iter 34 | Time 0.00s | Res: 4.2022e+02 | Rel: 1.6809e+01 | Contact: False
+  Step 03 | NR Iter 35 | Time 0.00s | Res: 2.6842e+02 | Rel: 1.0737e+01 | Contact: False
+  Step 03 | NR Iter 36 | Time 0.00s | Res: 2.7297e+02 | Rel: 1.0919e+01 | Contact: False
+  Step 03 | NR Iter 37 | Time 0.00s | Res: 2.7516e+02 | Rel: 1.1006e+01 | Contact: False
+  Step 03 | NR Iter 38 | Time 0.00s | Res: 9.7963e+02 | Rel: 3.9185e+01 | Contact: False
+  Step 03 | NR Iter 39 | Time 0.00s | Res: 1.6854e+03 | Rel: 6.7414e+01 | Contact: False
+  WARNING: Newton-Raphson did not converge in load step 3 within 40 iterations.
+
+============================================================
+  LOAD STEP 4/8 | Load fraction: 0.500
+============================================================
+  Step 04 | NR Iter 00 | Time 0.00s | Res: 2.1661e+03 | Rel: 6.4984e+01 | Contact: False
+  Step 04 | NR Iter 01 | Time 0.00s | Res: 6.5836e+03 | Rel: 1.9751e+02 | Contact: False
+  Step 04 | NR Iter 02 | Time 0.00s | Res: 4.0028e+16 | Rel: 1.2008e+15 | Contact: True
+  Step 04 | NR Iter 03 | Time 0.00s | Res: 1.6493e+04 | Rel: 4.9478e+02 | Contact: False
+  Step 04 | NR Iter 04 | Time 0.00s | Res: 1.3161e+04 | Rel: 3.9483e+02 | Contact: False
+  Step 04 | NR Iter 05 | Time 0.00s | Res: 1.2134e+04 | Rel: 3.6401e+02 | Contact: False
+  Step 04 | NR Iter 06 | Time 0.00s | Res: 7.3205e+03 | Rel: 2.1962e+02 | Contact: False
+  Step 04 | NR Iter 07 | Time 0.00s | Res: 8.3227e+03 | Rel: 2.4968e+02 | Contact: False
+  Step 04 | NR Iter 08 | Time 0.00s | Res: 2.0943e+04 | Rel: 6.2829e+02 | Contact: False
+  Step 04 | NR Iter 09 | Time 0.00s | Res: 9.7013e+16 | Rel: 2.9104e+15 | Contact: True
+  Step 04 | NR Iter 10 | Time 0.00s | Res: 1.0353e+04 | Rel: 3.1059e+02 | Contact: False
+  Step 04 | NR Iter 11 | Time 0.00s | Res: 2.1323e+04 | Rel: 6.3968e+02 | Contact: False
+  Step 04 | NR Iter 12 | Time 0.00s | Res: 4.2165e+04 | Rel: 1.2649e+03 | Contact: False
+  Step 04 | NR Iter 13 | Time 0.00s | Res: 4.1376e+04 | Rel: 1.2413e+03 | Contact: False
+  Step 04 | NR Iter 14 | Time 0.00s | Res: 8.2561e+04 | Rel: 2.4768e+03 | Contact: False
+  Step 04 | NR Iter 15 | Time 0.00s | Res: 1.2975e+05 | Rel: 3.8926e+03 | Contact: False
+  Step 04 | NR Iter 16 | Time 0.00s | Res: 1.3973e+05 | Rel: 4.1918e+03 | Contact: False
+  Step 04 | NR Iter 17 | Time 0.00s | Res: 8.7351e+04 | Rel: 2.6205e+03 | Contact: False
+  Step 04 | NR Iter 18 | Time 0.00s | Res: 2.5875e+05 | Rel: 7.7624e+03 | Contact: False
+  Step 04 | NR Iter 19 | Time 0.00s | Res: 2.4135e+05 | Rel: 7.2406e+03 | Contact: False
+  Step 04 | NR Iter 20 | Time 0.00s | Res: 7.9695e+04 | Rel: 2.3909e+03 | Contact: False
+  Step 04 | NR Iter 21 | Time 0.00s | Res: 1.0168e+05 | Rel: 3.0504e+03 | Contact: False
+  Step 04 | NR Iter 22 | Time 0.00s | Res: 8.3740e+04 | Rel: 2.5122e+03 | Contact: False
+  Step 04 | NR Iter 23 | Time 0.00s | Res: 2.1017e+05 | Rel: 6.3051e+03 | Contact: False
+  Step 04 | NR Iter 24 | Time 0.00s | Res: 3.2601e+05 | Rel: 9.7802e+03 | Contact: False
+  Step 04 | NR Iter 25 | Time 0.00s | Res: 2.5507e+05 | Rel: 7.6521e+03 | Contact: False
+  Step 04 | NR Iter 26 | Time 0.00s | Res: 2.2957e+05 | Rel: 6.8872e+03 | Contact: False
+  Step 04 | NR Iter 27 | Time 0.00s | Res: 2.0419e+05 | Rel: 6.1258e+03 | Contact: False
+  Step 04 | NR Iter 28 | Time 0.00s | Res: 2.2189e+05 | Rel: 6.6567e+03 | Contact: False
+  Step 04 | NR Iter 29 | Time 0.00s | Res: 9.9041e+04 | Rel: 2.9712e+03 | Contact: False
+  Step 04 | NR Iter 30 | Time 0.00s | Res: 4.5481e+04 | Rel: 1.3644e+03 | Contact: False
+  Step 04 | NR Iter 31 | Time 0.00s | Res: 1.0254e+05 | Rel: 3.0762e+03 | Contact: False
+  Step 04 | NR Iter 32 | Time 0.00s | Res: 1.5317e+05 | Rel: 4.5952e+03 | Contact: False
+  Step 04 | NR Iter 33 | Time 0.00s | Res: 2.2991e+05 | Rel: 6.8973e+03 | Contact: False
+  Step 04 | NR Iter 34 | Time 0.00s | Res: 1.9682e+05 | Rel: 5.9045e+03 | Contact: False
+  Step 04 | NR Iter 35 | Time 0.00s | Res: 6.4278e+05 | Rel: 1.9283e+04 | Contact: False
+  Step 04 | NR Iter 36 | Time 0.00s | Res: 4.6195e+05 | Rel: 1.3859e+04 | Contact: False
+  Step 04 | NR Iter 37 | Time 0.00s | Res: 2.6718e+05 | Rel: 8.0154e+03 | Contact: False
+  Step 04 | NR Iter 38 | Time 0.00s | Res: 3.0228e+05 | Rel: 9.0683e+03 | Contact: False
+  Step 04 | NR Iter 39 | Time 0.00s | Res: 2.6117e+18 | Rel: 7.8350e+16 | Contact: True
+  WARNING: Newton-Raphson did not converge in load step 4 within 40 iterations.
+
+============================================================
+  LOAD STEP 5/8 | Load fraction: 0.625
+============================================================
+  Step 05 | NR Iter 00 | Time 0.00s | Res: 3.1460e+05 | Rel: 7.5504e+03 | Contact: False
+  Step 05 | NR Iter 01 | Time 0.00s | Res: 7.1917e+05 | Rel: 1.7260e+04 | Contact: False
+  Step 05 | NR Iter 02 | Time 0.00s | Res: 6.4277e+05 | Rel: 1.5426e+04 | Contact: False
+  Step 05 | NR Iter 03 | Time 0.00s | Res: 2.4193e+05 | Rel: 5.8064e+03 | Contact: False
+  Step 05 | NR Iter 04 | Time 0.00s | Res: 1.0565e+05 | Rel: 2.5357e+03 | Contact: False
+  Step 05 | NR Iter 05 | Time 0.00s | Res: 1.3473e+05 | Rel: 3.2335e+03 | Contact: False
+  Step 05 | NR Iter 06 | Time 0.00s | Res: 1.3212e+05 | Rel: 3.1709e+03 | Contact: False
+  Step 05 | NR Iter 07 | Time 0.00s | Res: 6.2150e+04 | Rel: 1.4916e+03 | Contact: False
+  Step 05 | NR Iter 08 | Time 0.00s | Res: 1.1176e+05 | Rel: 2.6821e+03 | Contact: False
+  Step 05 | NR Iter 09 | Time 0.00s | Res: 1.6423e+05 | Rel: 3.9416e+03 | Contact: False
+  Step 05 | NR Iter 10 | Time 0.00s | Res: 9.7134e+18 | Rel: 2.3312e+17 | Contact: True
+  Step 05 | NR Iter 11 | Time 0.00s | Res: 2.4067e+21 | Rel: 5.7760e+19 | Contact: True
+  Step 05 | NR Iter 12 | Time 0.00s | Res: 2.2036e+22 | Rel: 5.2887e+20 | Contact: True
+  Step 05 | NR Iter 13 | Time 0.00s | Res: 4.7034e+08 | Rel: 1.1288e+07 | Contact: True
+  Step 05 | NR Iter 14 | Time 0.00s | Res: 1.5980e+02 | Rel: 3.8353e+00 | Contact: False
+  Step 05 | NR Iter 15 | Time 0.00s | Res: 2.0144e+02 | Rel: 4.8346e+00 | Contact: False
+  Step 05 | NR Iter 16 | Time 0.00s | Res: 2.4957e+02 | Rel: 5.9897e+00 | Contact: False
+  Step 05 | NR Iter 17 | Time 0.00s | Res: 2.6923e+02 | Rel: 6.4615e+00 | Contact: False
+  Step 05 | NR Iter 18 | Time 0.00s | Res: 6.0327e+02 | Rel: 1.4478e+01 | Contact: False
+  Step 05 | NR Iter 19 | Time 0.00s | Res: 5.6655e+02 | Rel: 1.3597e+01 | Contact: False
+  Step 05 | NR Iter 20 | Time 0.00s | Res: 3.1712e+02 | Rel: 7.6108e+00 | Contact: False
+  Step 05 | NR Iter 21 | Time 0.00s | Res: 2.6137e+02 | Rel: 6.2729e+00 | Contact: False
+  Step 05 | NR Iter 22 | Time 0.00s | Res: 3.8716e+02 | Rel: 9.2918e+00 | Contact: False
+  Step 05 | NR Iter 23 | Time 0.00s | Res: 7.0988e+02 | Rel: 1.7037e+01 | Contact: False
+  Step 05 | NR Iter 24 | Time 0.00s | Res: 6.6711e+02 | Rel: 1.6011e+01 | Contact: False
+  Step 05 | NR Iter 25 | Time 0.00s | Res: 5.9501e+02 | Rel: 1.4280e+01 | Contact: False
+  Step 05 | NR Iter 26 | Time 0.00s | Res: 8.3156e+02 | Rel: 1.9957e+01 | Contact: False
+  Step 05 | NR Iter 27 | Time 0.00s | Res: 2.0557e+02 | Rel: 4.9337e+00 | Contact: False
+  Step 05 | NR Iter 28 | Time 0.00s | Res: 3.2002e+02 | Rel: 7.6804e+00 | Contact: False
+  Step 05 | NR Iter 29 | Time 0.00s | Res: 3.1858e+02 | Rel: 7.6459e+00 | Contact: False
+  Step 05 | NR Iter 30 | Time 0.00s | Res: 4.2933e+02 | Rel: 1.0304e+01 | Contact: False
+  Step 05 | NR Iter 31 | Time 0.00s | Res: 4.2382e+02 | Rel: 1.0172e+01 | Contact: False
+  Step 05 | NR Iter 32 | Time 0.00s | Res: 4.4316e+02 | Rel: 1.0636e+01 | Contact: False
+  Step 05 | NR Iter 33 | Time 0.00s | Res: 5.3438e+02 | Rel: 1.2825e+01 | Contact: False
+  Step 05 | NR Iter 34 | Time 0.00s | Res: 2.5604e+02 | Rel: 6.1450e+00 | Contact: False
+  Step 05 | NR Iter 35 | Time 0.00s | Res: 1.4604e+15 | Rel: 3.5049e+13 | Contact: True
+  Step 05 | NR Iter 36 | Time 0.00s | Res: 2.3896e+14 | Rel: 5.7350e+12 | Contact: True
+  Step 05 | NR Iter 37 | Time 0.00s | Res: 7.5519e+02 | Rel: 1.8125e+01 | Contact: False
+  Step 05 | NR Iter 38 | Time 0.00s | Res: 7.8326e+02 | Rel: 1.8798e+01 | Contact: False
+  Step 05 | NR Iter 39 | Time 0.00s | Res: 2.9134e+02 | Rel: 6.9922e+00 | Contact: False
+  WARNING: Newton-Raphson did not converge in load step 5 within 40 iterations.
+
+============================================================
+  LOAD STEP 6/8 | Load fraction: 0.750
+============================================================
+  Step 06 | NR Iter 00 | Time 0.00s | Res: 5.3995e+02 | Rel: 1.0799e+01 | Contact: False
+  Step 06 | NR Iter 01 | Time 0.00s | Res: 5.3174e+02 | Rel: 1.0635e+01 | Contact: False
+  Step 06 | NR Iter 02 | Time 0.00s | Res: 2.8272e+02 | Rel: 5.6544e+00 | Contact: False
+  Step 06 | NR Iter 03 | Time 0.00s | Res: 8.5612e+02 | Rel: 1.7122e+01 | Contact: False
+  Step 06 | NR Iter 04 | Time 0.00s | Res: 2.4847e+03 | Rel: 4.9695e+01 | Contact: False
+  Step 06 | NR Iter 05 | Time 0.00s | Res: 1.0663e+17 | Rel: 2.1327e+15 | Contact: True
+  Step 06 | NR Iter 06 | Time 0.00s | Res: 6.6443e+03 | Rel: 1.3289e+02 | Contact: False
+  Step 06 | NR Iter 07 | Time 0.00s | Res: 6.5461e+03 | Rel: 1.3092e+02 | Contact: False
+  Step 06 | NR Iter 08 | Time 0.00s | Res: 1.6222e+04 | Rel: 3.2445e+02 | Contact: False
+  Step 06 | NR Iter 09 | Time 0.00s | Res: 1.7255e+04 | Rel: 3.4510e+02 | Contact: False
+  Step 06 | NR Iter 10 | Time 0.00s | Res: 1.7010e+04 | Rel: 3.4020e+02 | Contact: False
+  Step 06 | NR Iter 11 | Time 0.00s | Res: 1.7126e+17 | Rel: 3.4251e+15 | Contact: True
+  Step 06 | NR Iter 12 | Time 0.00s | Res: 2.4076e+04 | Rel: 4.8152e+02 | Contact: False
+  Step 06 | NR Iter 13 | Time 0.00s | Res: 5.1029e+04 | Rel: 1.0206e+03 | Contact: False
+  Step 06 | NR Iter 14 | Time 0.00s | Res: 7.0932e+04 | Rel: 1.4186e+03 | Contact: False
+  Step 06 | NR Iter 15 | Time 0.00s | Res: 7.0779e+04 | Rel: 1.4156e+03 | Contact: False
+  Step 06 | NR Iter 16 | Time 0.00s | Res: 1.2956e+18 | Rel: 2.5912e+16 | Contact: True
+  Step 06 | NR Iter 17 | Time 0.00s | Res: 1.6639e+05 | Rel: 3.3278e+03 | Contact: False
+  Step 06 | NR Iter 18 | Time 0.00s | Res: 5.3626e+05 | Rel: 1.0725e+04 | Contact: False
+  Step 06 | NR Iter 19 | Time 0.00s | Res: 8.5781e+05 | Rel: 1.7156e+04 | Contact: False
+  Step 06 | NR Iter 20 | Time 0.00s | Res: 1.3876e+06 | Rel: 2.7752e+04 | Contact: False
+  Step 06 | NR Iter 21 | Time 0.00s | Res: 1.1113e+06 | Rel: 2.2225e+04 | Contact: False
+  Step 06 | NR Iter 22 | Time 0.00s | Res: 1.3539e+06 | Rel: 2.7079e+04 | Contact: False
+  Step 06 | NR Iter 23 | Time 0.00s | Res: 4.2431e+19 | Rel: 8.4862e+17 | Contact: True
+  Step 06 | NR Iter 24 | Time 0.00s | Res: 4.2188e+06 | Rel: 8.4377e+04 | Contact: False
+  Step 06 | NR Iter 25 | Time 0.00s | Res: 1.8457e+20 | Rel: 3.6914e+18 | Contact: True
+  Step 06 | NR Iter 26 | Time 0.00s | Res: 1.8233e+20 | Rel: 3.6466e+18 | Contact: True
+  Step 06 | NR Iter 27 | Time 0.00s | Res: 1.3056e+21 | Rel: 2.6112e+19 | Contact: True
+  Step 06 | NR Iter 28 | Time 0.00s | Res: 4.1641e+21 | Rel: 8.3282e+19 | Contact: True
+  Step 06 | NR Iter 29 | Time 0.00s | Res: 1.4682e+22 | Rel: 2.9364e+20 | Contact: True
+  Step 06 | NR Iter 30 | Time 0.00s | Res: 5.6378e+07 | Rel: 1.1276e+06 | Contact: False
+  Step 06 | NR Iter 31 | Time 0.00s | Res: 3.1468e+07 | Rel: 6.2937e+05 | Contact: False
+  Step 06 | NR Iter 32 | Time 0.00s | Res: 2.4586e+07 | Rel: 4.9171e+05 | Contact: False
+  Step 06 | NR Iter 33 | Time 0.00s | Res: 3.8414e+21 | Rel: 7.6827e+19 | Contact: True
+  Step 06 | NR Iter 34 | Time 0.00s | Res: 3.1344e+22 | Rel: 6.2688e+20 | Contact: True
+  Step 06 | NR Iter 35 | Time 0.00s | Res: 2.7497e+22 | Rel: 5.4993e+20 | Contact: True
+  Step 06 | NR Iter 36 | Time 0.00s | Res: 4.1749e+08 | Rel: 8.3498e+06 | Contact: True
+  Step 06 | NR Iter 37 | Time 0.00s | Res: 1.2564e+04 | Rel: 2.5129e+02 | Contact: False
+  Step 06 | NR Iter 38 | Time 0.00s | Res: 2.1945e+02 | Rel: 4.3890e+00 | Contact: False
+  Step 06 | NR Iter 39 | Time 0.00s | Res: 1.5040e+02 | Rel: 3.0080e+00 | Contact: False
+  WARNING: Newton-Raphson did not converge in load step 6 within 40 iterations.
+
+============================================================
+  LOAD STEP 7/8 | Load fraction: 0.875
+============================================================
+  Step 07 | NR Iter 00 | Time 0.00s | Res: 3.3835e+02 | Rel: 5.8003e+00 | Contact: False
+  Step 07 | NR Iter 01 | Time 0.00s | Res: 9.9506e+02 | Rel: 1.7058e+01 | Contact: False
+  Step 07 | NR Iter 02 | Time 0.00s | Res: 4.1345e+15 | Rel: 7.0878e+13 | Contact: True
+  Step 07 | NR Iter 03 | Time 0.00s | Res: 6.2421e+02 | Rel: 1.0701e+01 | Contact: False
+  Step 07 | NR Iter 04 | Time 0.00s | Res: 5.6873e+02 | Rel: 9.7497e+00 | Contact: False
+  Step 07 | NR Iter 05 | Time 0.00s | Res: 4.2538e+02 | Rel: 7.2923e+00 | Contact: False
+  Step 07 | NR Iter 06 | Time 0.00s | Res: 3.7258e+02 | Rel: 6.3871e+00 | Contact: False
+  Step 07 | NR Iter 07 | Time 0.00s | Res: 3.4636e+02 | Rel: 5.9375e+00 | Contact: False
+  Step 07 | NR Iter 08 | Time 0.00s | Res: 4.1246e+02 | Rel: 7.0708e+00 | Contact: False
+  Step 07 | NR Iter 09 | Time 0.00s | Res: 3.4143e+02 | Rel: 5.8531e+00 | Contact: False
+  Step 07 | NR Iter 10 | Time 0.00s | Res: 2.4539e+02 | Rel: 4.2066e+00 | Contact: False
+  Step 07 | NR Iter 11 | Time 0.00s | Res: 2.1019e+02 | Rel: 3.6033e+00 | Contact: False
+  Step 07 | NR Iter 12 | Time 0.00s | Res: 1.0957e+03 | Rel: 1.8783e+01 | Contact: False
+  Step 07 | NR Iter 13 | Time 0.00s | Res: 1.0397e+03 | Rel: 1.7823e+01 | Contact: False
+  Step 07 | NR Iter 14 | Time 0.00s | Res: 6.6067e+02 | Rel: 1.1326e+01 | Contact: False
+  Step 07 | NR Iter 15 | Time 0.00s | Res: 8.0416e+02 | Rel: 1.3786e+01 | Contact: False
+  Step 07 | NR Iter 16 | Time 0.00s | Res: 1.0769e+03 | Rel: 1.8462e+01 | Contact: False
+  Step 07 | NR Iter 17 | Time 0.00s | Res: 2.0857e+03 | Rel: 3.5754e+01 | Contact: False
+  Step 07 | NR Iter 18 | Time 0.00s | Res: 8.6673e+02 | Rel: 1.4858e+01 | Contact: False
+  Step 07 | NR Iter 19 | Time 0.00s | Res: 1.2068e+03 | Rel: 2.0688e+01 | Contact: False
+  Step 07 | NR Iter 20 | Time 0.00s | Res: 8.9429e+02 | Rel: 1.5331e+01 | Contact: False
+  Step 07 | NR Iter 21 | Time 0.00s | Res: 4.1154e+15 | Rel: 7.0550e+13 | Contact: True
+  Step 07 | NR Iter 22 | Time 0.00s | Res: 7.0398e+02 | Rel: 1.2068e+01 | Contact: False
+  Step 07 | NR Iter 23 | Time 0.00s | Res: 2.0580e+16 | Rel: 3.5280e+14 | Contact: True
+  Step 07 | NR Iter 24 | Time 0.00s | Res: 7.0692e+03 | Rel: 1.2119e+02 | Contact: False
+  Step 07 | NR Iter 25 | Time 0.00s | Res: 5.1364e+03 | Rel: 8.8053e+01 | Contact: False
+  Step 07 | NR Iter 26 | Time 0.00s | Res: 1.3974e+17 | Rel: 2.3956e+15 | Contact: True
+  Step 07 | NR Iter 27 | Time 0.00s | Res: 8.8423e+03 | Rel: 1.5158e+02 | Contact: False
+  Step 07 | NR Iter 28 | Time 0.00s | Res: 4.6371e+17 | Rel: 7.9494e+15 | Contact: True
+  Step 07 | NR Iter 29 | Time 0.00s | Res: 9.3634e+03 | Rel: 1.6052e+02 | Contact: False
+  Step 07 | NR Iter 30 | Time 0.00s | Res: 1.0452e+04 | Rel: 1.7917e+02 | Contact: False
+  Step 07 | NR Iter 31 | Time 0.00s | Res: 1.2059e+18 | Rel: 2.0673e+16 | Contact: True
+  Step 07 | NR Iter 32 | Time 0.00s | Res: 8.8190e+16 | Rel: 1.5118e+15 | Contact: True
+  Step 07 | NR Iter 33 | Time 0.00s | Res: 8.6943e+04 | Rel: 1.4905e+03 | Contact: False
+  Step 07 | NR Iter 34 | Time 0.00s | Res: 3.1821e+17 | Rel: 5.4550e+15 | Contact: True
+  Step 07 | NR Iter 35 | Time 0.00s | Res: 2.4491e+05 | Rel: 4.1985e+03 | Contact: False
+  Step 07 | NR Iter 36 | Time 0.00s | Res: 5.2691e+05 | Rel: 9.0327e+03 | Contact: False
+  Step 07 | NR Iter 37 | Time 0.00s | Res: 4.4559e+05 | Rel: 7.6387e+03 | Contact: False
+  Step 07 | NR Iter 38 | Time 0.00s | Res: 7.5852e+05 | Rel: 1.3003e+04 | Contact: False
+  Step 07 | NR Iter 39 | Time 0.00s | Res: 2.6321e+05 | Rel: 4.5122e+03 | Contact: False
+  WARNING: Newton-Raphson did not converge in load step 7 within 40 iterations.
+
+============================================================
+  LOAD STEP 8/8 | Load fraction: 1.000
+============================================================
+  Step 08 | NR Iter 00 | Time 0.00s | Res: 2.9183e+05 | Rel: 4.3774e+03 | Contact: False
+  Step 08 | NR Iter 01 | Time 0.00s | Res: 1.6685e+05 | Rel: 2.5027e+03 | Contact: False
+  Step 08 | NR Iter 02 | Time 0.00s | Res: 3.0357e+17 | Rel: 4.5536e+15 | Contact: True
+  Step 08 | NR Iter 03 | Time 0.00s | Res: 3.0062e+05 | Rel: 4.5093e+03 | Contact: False
+  Step 08 | NR Iter 04 | Time 0.00s | Res: 4.9905e+05 | Rel: 7.4857e+03 | Contact: False
+  Step 08 | NR Iter 05 | Time 0.00s | Res: 9.2377e+05 | Rel: 1.3857e+04 | Contact: False
+  Step 08 | NR Iter 06 | Time 0.00s | Res: 1.9545e+06 | Rel: 2.9317e+04 | Contact: False
+  Step 08 | NR Iter 07 | Time 0.00s | Res: 1.9716e+06 | Rel: 2.9575e+04 | Contact: False
+  Step 08 | NR Iter 08 | Time 0.00s | Res: 1.5439e+06 | Rel: 2.3158e+04 | Contact: False
+  Step 08 | NR Iter 09 | Time 0.00s | Res: 1.3359e+06 | Rel: 2.0038e+04 | Contact: False
+  Step 08 | NR Iter 10 | Time 0.00s | Res: 2.1311e+06 | Rel: 3.1967e+04 | Contact: False
+  Step 08 | NR Iter 11 | Time 0.00s | Res: 6.1218e+18 | Rel: 9.1827e+16 | Contact: True
+  Step 08 | NR Iter 12 | Time 0.00s | Res: 3.9896e+20 | Rel: 5.9845e+18 | Contact: True
+  Step 08 | NR Iter 13 | Time 0.00s | Res: 5.7837e+21 | Rel: 8.6755e+19 | Contact: True
+  Step 08 | NR Iter 14 | Time 0.00s | Res: 7.4088e+21 | Rel: 1.1113e+20 | Contact: True
+  Step 08 | NR Iter 15 | Time 0.00s | Res: 2.1191e+23 | Rel: 3.1786e+21 | Contact: True
+  Step 08 | NR Iter 16 | Time 0.00s | Res: 1.1262e+11 | Rel: 1.6893e+09 | Contact: False
+  Step 08 | NR Iter 17 | Time 0.00s | Res: 4.2461e+15 | Rel: 6.3692e+13 | Contact: True
+  Step 08 | NR Iter 18 | Time 0.00s | Res: 5.8278e+13 | Rel: 8.7418e+11 | Contact: True
+  Step 08 | NR Iter 19 | Time 0.00s | Res: 1.4164e+03 | Rel: 2.1246e+01 | Contact: False
+  Step 08 | NR Iter 20 | Time 0.00s | Res: 1.5939e+03 | Rel: 2.3909e+01 | Contact: False
+  Step 08 | NR Iter 21 | Time 0.00s | Res: 1.6894e+03 | Rel: 2.5341e+01 | Contact: False
+  Step 08 | NR Iter 22 | Time 0.00s | Res: 1.5961e+03 | Rel: 2.3941e+01 | Contact: False
+  Step 08 | NR Iter 23 | Time 0.00s | Res: 1.7592e+03 | Rel: 2.6388e+01 | Contact: False
+  Step 08 | NR Iter 24 | Time 0.00s | Res: 3.1935e+03 | Rel: 4.7902e+01 | Contact: False
+  Step 08 | NR Iter 25 | Time 0.00s | Res: 4.0044e+15 | Rel: 6.0066e+13 | Contact: True
+  Step 08 | NR Iter 26 | Time 0.00s | Res: 5.0248e+17 | Rel: 7.5372e+15 | Contact: True
+  Step 08 | NR Iter 27 | Time 0.00s | Res: 1.8061e+05 | Rel: 2.7092e+03 | Contact: False
+  Step 08 | NR Iter 28 | Time 0.00s | Res: 1.3131e+05 | Rel: 1.9696e+03 | Contact: False
+  Step 08 | NR Iter 29 | Time 0.00s | Res: 4.2363e+05 | Rel: 6.3544e+03 | Contact: False
+  Step 08 | NR Iter 30 | Time 0.00s | Res: 1.2858e+06 | Rel: 1.9287e+04 | Contact: False
+  Step 08 | NR Iter 31 | Time 0.00s | Res: 2.0210e+06 | Rel: 3.0315e+04 | Contact: False
+  Step 08 | NR Iter 32 | Time 0.00s | Res: 3.2509e+06 | Rel: 4.8763e+04 | Contact: False
+  Step 08 | NR Iter 33 | Time 0.00s | Res: 3.4204e+20 | Rel: 5.1305e+18 | Contact: True
+  Step 08 | NR Iter 34 | Time 0.00s | Res: 4.2737e+20 | Rel: 6.4105e+18 | Contact: True
+  Step 08 | NR Iter 35 | Time 0.00s | Res: 3.5040e+19 | Rel: 5.2560e+17 | Contact: True
+  Step 08 | NR Iter 36 | Time 0.00s | Res: 5.6983e+05 | Rel: 8.5474e+03 | Contact: False
+  Step 08 | NR Iter 37 | Time 0.00s | Res: 5.2440e+05 | Rel: 7.8659e+03 | Contact: False
+  Step 08 | NR Iter 38 | Time 0.00s | Res: 6.0947e+05 | Rel: 9.1420e+03 | Contact: False
+  Step 08 | NR Iter 39 | Time 0.00s | Res: 6.0892e+05 | Rel: 9.1338e+03 | Contact: False
+  WARNING: Newton-Raphson did not converge in load step 8 within 40 iterations.
+
+Total solve time: 13.43 seconds.

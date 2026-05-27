@@ -1,0 +1,9 @@
+Friction enabled: mu_s=0.3, mu_d=0.2, epsilon_T=1.00e+05
+Setup complete in 0.02s. Starting 1 load step(s)...
+  NR Iter 00 | Time 0.00s | Res: 1.5000e+02 | Rel: 1.0000e+00 | Contact: True | Stick: 9/9 | Slip: 0/9
+  NR Iter 01 | Time 0.00s | Res: 5.1228e+00 | Rel: 3.4152e-02 | Contact: True | Stick: 9/9 | Slip: 0/9
+  NR Iter 02 | Time 0.00s | Res: 4.3009e-01 | Rel: 2.8673e-03 | Contact: True | Stick: 9/9 | Slip: 0/9
+  NR Iter 03 | Time 0.00s | Res: 4.1291e-02 | Rel: 2.7528e-04 | Contact: True | Stick: 9/9 | Slip: 0/9
+  Newton-Raphson CONVERGED in 3 iterations.
+
+Total solve time: 0.03 seconds.

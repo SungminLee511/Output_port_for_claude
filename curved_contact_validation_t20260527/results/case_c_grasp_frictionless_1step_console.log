@@ -1,0 +1,54 @@
+Setup complete in 0.26s. Starting 1 load step(s)...
+  NR Iter 00 | Time 0.00s | Res: 7.0711e+01 | Rel: 1.0000e+00 | Contact: False
+  NR Iter 01 | Time 0.00s | Res: 1.1174e+03 | Rel: 1.5803e+01 | Contact: False
+  NR Iter 02 | Time 0.00s | Res: 3.4977e+03 | Rel: 4.9464e+01 | Contact: False
+  NR Iter 03 | Time 0.00s | Res: 3.4774e+04 | Rel: 4.9178e+02 | Contact: False
+  NR Iter 04 | Time 0.00s | Res: 2.0439e+05 | Rel: 2.8905e+03 | Contact: False
+  NR Iter 05 | Time 0.00s | Res: 6.7370e+05 | Rel: 9.5275e+03 | Contact: False
+  NR Iter 06 | Time 0.00s | Res: 6.7927e+06 | Rel: 9.6064e+04 | Contact: False
+  NR Iter 07 | Time 0.00s | Res: 6.4661e+21 | Rel: 9.1444e+19 | Contact: True
+  NR Iter 08 | Time 0.00s | Res: 1.4751e+22 | Rel: 2.0861e+20 | Contact: True
+  NR Iter 09 | Time 0.00s | Res: 5.0642e+22 | Rel: 7.1619e+20 | Contact: True
+  NR Iter 10 | Time 0.00s | Res: 4.6921e+22 | Rel: 6.6357e+20 | Contact: True
+  NR Iter 11 | Time 0.00s | Res: 3.6844e+12 | Rel: 5.2106e+10 | Contact: True
+  NR Iter 12 | Time 0.00s | Res: 5.5475e+02 | Rel: 7.8454e+00 | Contact: False
+  NR Iter 13 | Time 0.00s | Res: 8.1295e+02 | Rel: 1.1497e+01 | Contact: False
+  NR Iter 14 | Time 0.00s | Res: 6.1192e+03 | Rel: 8.6538e+01 | Contact: False
+  NR Iter 15 | Time 0.00s | Res: 1.2806e+04 | Rel: 1.8111e+02 | Contact: False
+  NR Iter 16 | Time 0.00s | Res: 4.0490e+04 | Rel: 5.7261e+02 | Contact: False
+  NR Iter 17 | Time 0.00s | Res: 3.0330e+05 | Rel: 4.2893e+03 | Contact: False
+  NR Iter 18 | Time 0.00s | Res: 1.7482e+06 | Rel: 2.4724e+04 | Contact: False
+  NR Iter 19 | Time 0.00s | Res: 5.8532e+06 | Rel: 8.2776e+04 | Contact: False
+  NR Iter 20 | Time 0.00s | Res: 1.2338e+22 | Rel: 1.7448e+20 | Contact: True
+  NR Iter 21 | Time 0.00s | Res: 7.7511e+21 | Rel: 1.0962e+20 | Contact: True
+  NR Iter 22 | Time 0.00s | Res: 9.6930e+22 | Rel: 1.3708e+21 | Contact: True
+  NR Iter 23 | Time 0.00s | Res: 8.1392e+22 | Rel: 1.1511e+21 | Contact: True
+  NR Iter 24 | Time 0.00s | Res: 7.2284e+23 | Rel: 1.0222e+22 | Contact: True
+  NR Iter 25 | Time 0.00s | Res: 8.4941e+22 | Rel: 1.2013e+21 | Contact: True
+  NR Iter 26 | Time 0.00s | Res: 1.2502e+24 | Rel: 1.7680e+22 | Contact: True
+  NR Iter 27 | Time 0.00s | Res: 3.7358e+24 | Rel: 5.2832e+22 | Contact: True
+  NR Iter 28 | Time 0.00s | Res: 3.2124e+24 | Rel: 4.5430e+22 | Contact: True
+  NR Iter 29 | Time 0.00s | Res: 4.9255e+24 | Rel: 6.9657e+22 | Contact: True
+  NR Iter 30 | Time 0.00s | Res: 2.2173e+25 | Rel: 3.1357e+23 | Contact: True
+  NR Iter 31 | Time 0.00s | Res: 5.9265e+24 | Rel: 8.3813e+22 | Contact: True
+  NR Iter 32 | Time 0.00s | Res: 1.9405e+19 | Rel: 2.7443e+17 | Contact: True
+  NR Iter 33 | Time 0.00s | Res: 7.6631e+04 | Rel: 1.0837e+03 | Contact: False
+  NR Iter 34 | Time 0.00s | Res: 2.7619e+05 | Rel: 3.9060e+03 | Contact: False
+  NR Iter 35 | Time 0.00s | Res: 2.5832e+06 | Rel: 3.6533e+04 | Contact: False
+  NR Iter 36 | Time 0.00s | Res: 2.3145e+22 | Rel: 3.2732e+20 | Contact: True
+  NR Iter 37 | Time 0.00s | Res: 5.4043e+22 | Rel: 7.6428e+20 | Contact: True
+  NR Iter 38 | Time 0.00s | Res: 6.3958e+19 | Rel: 9.0450e+17 | Contact: True
+  NR Iter 39 | Time 0.00s | Res: 9.9844e+17 | Rel: 1.4120e+16 | Contact: True
+  NR Iter 40 | Time 0.00s | Res: 2.8624e+05 | Rel: 4.0480e+03 | Contact: True
+  NR Iter 41 | Time 0.00s | Res: 7.9280e+16 | Rel: 1.1212e+15 | Contact: True
+  NR Iter 42 | Time 0.00s | Res: 5.0566e+04 | Rel: 7.1512e+02 | Contact: False
+  NR Iter 43 | Time 0.00s | Res: 2.0227e+05 | Rel: 2.8605e+03 | Contact: False
+  NR Iter 44 | Time 0.00s | Res: 1.1241e+06 | Rel: 1.5897e+04 | Contact: False
+  NR Iter 45 | Time 0.00s | Res: 8.5533e+06 | Rel: 1.2096e+05 | Contact: False
+  NR Iter 46 | Time 0.00s | Res: 2.6915e+22 | Rel: 3.8063e+20 | Contact: True
+  NR Iter 47 | Time 0.00s | Res: 6.5150e+22 | Rel: 9.2136e+20 | Contact: True
+  NR Iter 48 | Time 0.00s | Res: 2.4589e+21 | Rel: 3.4774e+19 | Contact: True
+  NR Iter 49 | Time 0.00s | Res: 5.7621e+22 | Rel: 8.1488e+20 | Contact: True
+  WARNING: Newton-Raphson did not converge in load step 1 within 50 iterations.
+
+Total solve time: 2.75 seconds.
