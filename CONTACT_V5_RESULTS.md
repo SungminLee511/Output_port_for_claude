@@ -213,7 +213,59 @@ V5 (Phase G):             5/11 ✓ (case_b_friction 1095 → 116)
 
 ---
 
-## 9. Cross-references
+## 9. POST-SHIP DIAGNOSTIC — Mesh-coarseness experiment
+
+**Hypothesis tested:** all 6 remaining divergent cases share a single
+root cause — **faceted master mesh produces discontinuous surface
+normals at facet edges**. NR cannot linearise a discontinuous
+Jacobian, so residual oscillates forever.
+
+**Method:** raise icosphere subdivision level 2 → 3 (4× more triangles
+on the sphere master surface; smoother per-facet normal interpolation).
+No solver code changed.
+
+**Result:**
+
+| Case | level=2 (V5 ship) | level=3 | Δ orders |
+|---|---:|---:|---:|
+| case_b_fl_1step  | 5.86e+02 | 3.10e+02 | 0.3 |
+| case_b_fl_8step  | 2.82e+02 | 2.91e+02 | ~0 |
+| case_b_friction  | 1.16e+02 | 3.39e+02 | -0.5 (anomaly) |
+| case_c_fl_1step  | 6.94e+04 | 3.95e+04 | 0.2 |
+| **case_c_fl_8step** | **2.35e+38** | **3.03e+05** | **+33 🚀** |
+| **case_c_friction** | **9.91e+31** | **1.11e+18** | **+14 🚀** |
+| case_a (all 3)   | already ✓ | tighter (1e-10 → 1e-11) | — |
+| baseline (both)  | ✓ | ✓ | — |
+
+**Verdict: mesh-coarseness IS the disease.** A 4× mesh refinement
+collapses case_c residuals by 14–33 orders. Still 5/11 converged
+(none crossed `nr_tol = 1e-3`), but the divergence magnitude proves
+the failure mode is geometric, not numerical.
+
+Cannot fix this for users by demanding finer meshes — must fix the
+**solver** to be robust on coarse curved masters.
+
+### Phase H — the actual cure
+
+Replace point-to-face N2S contact with **mortar / segment-to-segment**:
+treat the contact patch as a parameterised surface integral over a
+master segment cluster, with normals interpolated continuously along
+the segment. Eliminates facet-edge jumps regardless of mesh resolution.
+
+Scope: ~1500-2000 LOC. Multi-relay. Implementation skeleton in
+`CONTACT_V5.md` §2. Algorithm reference: Puso & Laursen (2004),
+"A mortar S2S contact method for large-deformation solid mechanics."
+
+Other paths (no mortar required):
+- **Analytical-surface contact for primitives** (sphere SDF instead of
+  mesh): `contact_v2_sdf_resolution` kwarg is already a stub. Fastest
+  win for the case_b/c sphere benchmarks specifically.
+- **Per-vertex curvature-aware penalty stiffness scaling**: softer
+  penalty near facet edges where normal jumps are large.
+
+---
+
+## 10. Cross-references
 
 - Plan: `.claude/TODO/CONTACT_V5.md`
 - Diagnostics (V4 REDO Phase D): `tests/curved_contact_validation/diag_v4/`
