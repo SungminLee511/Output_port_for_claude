@@ -152,22 +152,60 @@ What this fix DOES NOT BUY:
 
 ---
 
-## 6. What's still needed (deferred)
+## 6. Post-fix diagnostic update — T2 visualization
 
-Roughly in order of effort vs payoff:
+**T2 finding (the prior diagnostics missed this)**: for the 4 cases
+with non-physical `‖u‖` (b_fl_1, b_fl_8, c_fl_1, c_fl_8,
+c_friction_8) — the top-10 displaced nodes per case are **the
+entire punch/pad body translating coherently** by 1e+11 m to 1e+14 m.
+NOT chatter; NOT one escaped node. The whole rigid body is flying off
+in a unified direction.
 
-1. **AL anchoring (V3-style done right)** ~100 LOC. Add a normal-pressure
+| Case | top-10 disp range | Pattern |
+|---|---|---|
+| b_fl_1 | 1.7e+11 to 5.1e+11 m | punch top + bot translating coherently in +Z |
+| b_fl_8 | 1.1e+11 to 2.1e+11 m | same |
+| c_fl_1 | 3.6e+11 to 5.7e+11 m | both finger pads, coherent rigid motion |
+| c_fl_8 | 7.9e+13 to 1.3e+14 m | both finger pads, much further |
+| c_friction_8 | (identical to c_fl_8) | same body translating |
+
+**Mechanism (revised)**: these test cases are **force-loaded with no
+displacement BC**. When contact engagement fails for even one NR iter
+(e.g. slave lifts off the master surface), the system has rigid-body
+null modes. K_tan becomes singular; `spsolve` returns a numerically
+huge pseudo-solution; the punch/pad accelerates to "infinity" trying
+to satisfy the unbalanced applied force.
+
+**Conclusion**: these are NOT contact-solver bugs. They are
+ill-posed static-FEA problems (a force-loaded free body in 3D has no
+static equilibrium without a contact constraint that the solver can
+always trust). F-α + F-β cannot fix them — and shouldn't.
+
+Real use cases should use displacement BCs (e.g. prescribe the robot
+finger position, measure reaction force) or a quasi-static dynamic
+solver with mass+damping.
+
+## 7. What's still possible (in priority order)
+
+1. **Free-body stabilization** ~30 LOC. Auto-detect bodies that are
+   force-loaded (no displacement BC on any node, no rigid_blob) and add
+   a tiny ground spring `k_stab = 1e-4 × E_avg × V_avg` to each such
+   body's first node. K_tan never goes singular; in-physical-regime
+   solutions stay where they should. Conservative — no impact on
+   properly-constrained cases.
+
+2. **AL anchoring (V3-style done right)** ~100 LOC. Add a normal-pressure
    Uzawa multiplier with **gap-magnitude gate** (skip update when
    `gap < 1e-2 × gap_tol_pair`) so it only fires on real chatter, not
    FP noise. Avoids the D2 baseline_friction regression that killed V3.
+   Targets the remaining chatter cases (a_friction, b_friction).
 
-2. **SDF analytical contact for primitive masters** ~300 LOC.
-   case_c is sphere-on-sphere; just use `‖x − c‖ − r`. Eliminates
-   the master-mesh discretization entirely for this geometry.
+3. **SDF analytical contact for primitive masters** ~300 LOC. Lower
+   priority now — the diagnostic shows case_c divergence is rigid-body
+   escape, not facet-edge geometry, so SDF wouldn't help directly.
 
-3. **Mortar / segment-to-segment contact** ~1500 LOC. The general
-   solution. Lower priority than (1) and (2) because case-by-case
-   diagnostics indicate it isn't the bottleneck.
+4. **Test definition cleanup** — change case_b/c BCs from force to
+   displacement, or add a single fixed reference node per body. Trivial.
 
 ---
 
