@@ -8,14 +8,26 @@
 
 ## 0. Headline
 
-The solver now ships with **3 canonical fixes** (F-α gap_tol scaling,
-F-β NR back-track rewind, F-γ Tikhonov K-regularization) and zero
+The solver now ships with **5 canonical fixes** (F-α gap_tol scaling,
+F-β NR back-track rewind, F-γ Tikhonov K-regularization, F-δ smart
+per-body inertia relief, F-ε friction direction guard) and zero
 per-case tuning kwargs.  Applied to a **19-variant diversified test
 suite** (11 original + 8 new geometries):
 
 ```
-CONVERGED: 12 / 19
+CONVERGED: 13 / 19
 ```
+
+### F-δ smart inertia relief (~80 LOC)
+Detect connected bodies via element connectivity graph. For each body:
+build 6 RB modes, SVD against the body's fixed DOFs, **stabilize ONLY
+the residual null-mode subspace**. `k_RB = max(|K_diag|) · 1e-10`,
+auto-derived.
+
+### F-ε friction direction guard (~30 LOC)
+Per active slave per iter: if the slave's free-DOF subspace aligns
+with the contact normal within 5°, skip friction assembly. Tangent
+plane is fully inside fixed DOFs → friction can't physically act.
 
 Up from the original 5/11 honest baseline.  Every additional convergence
 came from either (a) the 3 solver fixes or (b) fixing **test definitions**
