@@ -1,0 +1,8 @@
+{
+  "intent": "Design a U-channel mounting bracket: 180x100 mm main plate with two flanges folding up off the left and right long edges, each flange 60 mm wide. Mountain folds on both sides. Add a single circular bolt hole on the main plate.",
+  "success": true,
+  "error": null,
+  "elapsed_sec": 75.52,
+  "case_name": "u_channel_mount",
+  "source_chars": 3903
+}

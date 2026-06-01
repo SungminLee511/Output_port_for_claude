@@ -1,743 +1,434 @@
-# Origami_Gen v3-gen — Recipe library + Generation API
+# Origami_Gen — Gemini-emits-Python bracket generator (v3-gen)
 
-**Run date:** 2026-06-01 16:26 KST
-**Branch:** `v3-gen` (off `v3` off `main`) —
-GENERATION_PLAN.md complete (10/10 phases).
+A code-generation pipeline for the [Origami_Gen](https://github.com/voltwin-dev/Origami_Gen)
+v3 toolchain. Gemini 2.5 Pro is given a complete pixel + drawing
+contract plus reference corpus cases (Python source + rendered
+PNGs), and emits a `make_bracket()` Python module whose three
+RGB layers (main / bump / hole) feed the v3 folding pipeline.
 
-## Codebase separation
+The code is sandbox-execed (no filesystem, no subprocess, no
+arbitrary imports), then the returned `CaseBundle(name,
+main_rgb, bump_rgb, hole_rgb)` is saved as 3 PNGs alongside the
+source `.py` file.
 
-The generation work (Phases 1–10) is **cleanly separated** from the
-original v3 audit pipeline. One-way module dependency:
+This page is the project's output port — all live Gemini runs
+land here as artifacts (.py + .png + summary.json) so you can
+audit what the model actually emitted.
 
-- **Original v3 pipeline**: `parser`, `topology`, `folder`, `mesher`,
-  `stitcher`, `mapper`, `dihedral`, `fillet`, `bumper`, `export`,
-  shared `types/`, `constants.py`, `errors.py`, `pipeline/`, etc.
-- **Generation code**: `recipe/`, `gemini/`, `corpus/generated/`.
-
-`recipe/` and `gemini/` **import** the pipeline; the pipeline never
-imports them. You can delete `gemini/` and P1→P10 still passes 42/42
-corpus cases.
-
-The only integration point: `corpus/__init__.py` auto-loads
-`corpus/generated/*.yaml` so the batch sampler's keepers flow into
-`audit.py --full`. Directory is empty by default — opt-in additive.
+Branch: <https://github.com/voltwin-dev/Origami_Gen/tree/v3-gen>
+PR-ready: <https://github.com/voltwin-dev/Origami_Gen/pull/new/v3-gen>
 
 ---
 
-# API — how to use the generation code
+## Why a code generator instead of a schema?
 
-The system supports five surfaces. Pick whichever matches your input
-modality.
+The previous YAML-recipe generator (kept as an API description
+at the bottom of this page) let Gemini emit
+`outline_carves` / `corner_fillets` that chipped the panel
+silhouette into non-rectangles. The downstream parser tolerated
+those, but the visual output didn't match the user's "strictly
+rectangular panels" requirement.
 
-## 0. Setup
+The new approach: take the existing `corpus/` hand-coded Python
+bracket files as the source of truth (panels are literally
+`d.rectangle(...)` calls — there's no way to draw a
+non-rectangle), and have Gemini emit a new `.py` file in the
+same style. The pipeline contract — palette, fold thickness,
+drawable shapes — is enforced by the **system prompt** and by
+the **sandbox**, not by a downstream schema.
 
-```bash
-cp .env.example .env
-# Add to .env:
-#   GEMINI_API_KEY=<your_key_here>
-#   GEMINI_TEXT_MODEL=gemini-2.5-pro
-#   GEMINI_IMAGE_MODEL=imagen-4.0-generate-001
+Net effect:
+- Panel silhouette is forced rectangular at the API level.
+- Bumps / holes / carves remain free-form (they're drawn into
+  `bump_rgb` / `hole_rgb` overlays, not the panel rect itself).
+- Schema parse errors disappear — either the code runs or
+  it doesn't.
 
-pip install -e ".[dev]"     # Pydantic v2, google-genai, PIL, numpy
-```
+---
 
-## 1. Render an existing YAML recipe → 3 PNGs
+## Live Gemini results
 
-Use this when you already have (or hand-author) a recipe.
+All four runs below used `gemini-2.5-pro`, `n_references=5`,
+sandbox timeout 30 s. The model returns one Python module text;
+we exec it; we save the resulting `CaseBundle` and the source.
+No retries.
 
-**CLI:**
-```bash
-python scripts/generate_bracket.py from-yaml \
-    src/origami_gen/recipe/library/simple_l_bracket.yaml \
-    -o /tmp/out/
-# Writes: /tmp/out/simple_l_bracket_{main,bump,hole}.png
-```
+### Run 1 — simple L-bracket (`code-from-intent`)
 
-**Python:**
+Intent (`code_api/run1_l_bracket_intent.txt`):
+
+> Design a simple L-bracket: 120x100 mm main plate with one
+> flange folding up off the right edge, single mountain fold.
+> No bumps or holes — just panels + fold.
+
+Result: case `simple_l_bracket_basic`, 28.7 s wall-clock,
+source 2,821 chars.
+
+main | bump | hole
+:--:|:--:|:--:
+![](./code_api/run1_l_bracket_main_t20260601_2300.png) | ![](./code_api/run1_l_bracket_bump_t20260601_2300.png) | ![](./code_api/run1_l_bracket_hole_t20260601_2300.png)
+
+Emitted source: [`code_api/run1_l_bracket.py`](./code_api/run1_l_bracket.py).
+
+### Run 2 — U-channel mounting bracket
+
+Intent (`code_api/run2_u_bracket_intent.txt`):
+
+> Design a U-channel mounting bracket: 180x100 mm main plate
+> with two flanges folding up off the left and right long
+> edges, each flange 60 mm wide. Mountain folds on both sides.
+> Add a single circular bolt hole on the main plate.
+
+Result: case `u_channel_mount`, 75.5 s wall-clock, source
+larger (3 panels + drawing helpers + bolt hole on hole.png).
+
+main | bump | hole
+:--:|:--:|:--:
+![](./code_api/run2_u_bracket_main_t20260601_2300.png) | ![](./code_api/run2_u_bracket_bump_t20260601_2300.png) | ![](./code_api/run2_u_bracket_hole_t20260601_2300.png)
+
+Emitted source: [`code_api/run2_u_bracket.py`](./code_api/run2_u_bracket.py).
+
+### Run 3 — feature-rich automotive L-bracket
+
+Intent (`code_api/run3_auto_intent.txt`):
+
+> Design a feature-rich automotive L-bracket modeled after the
+> HD Mobis style: main plate 140x230 mm, right flange 50x172
+> mm folding up via mountain fold, plus a small cap on top of
+> the flange via valley fold. Add 4 yellow boss-stiffener
+> bumps with bolt holes on the main plate, one yellow long
+> stiffener bead on the right flange, and 2 purple bolt
+> circles plus a purple rounded-rect cutout on the main plate.
+
+Result: case `automotive_l_bracket_simple`, 54.9 s wall-clock,
+source 5,168 chars. Three panels, two fold colors (mountain +
+valley), yellow bumps on bump.png, purple bolt holes + pocket
+cutout on hole.png — all features the intent asked for, panels
+stay strictly rectangular.
+
+main | bump | hole
+:--:|:--:|:--:
+![](./code_api/run3_auto_main_t20260601_2300.png) | ![](./code_api/run3_auto_bump_t20260601_2300.png) | ![](./code_api/run3_auto_hole_t20260601_2300.png)
+
+Emitted source: [`code_api/run3_auto.py`](./code_api/run3_auto.py).
+
+### Run 4 — `code-batch 3` (deterministic random intents)
+
+`code-batch N` walks N intents from a parametric template + seed
+(`scripts/generate_bracket.py code-batch`). Run 4 used `--seed 0
+--n-references 5`. **3 / 3 keepers**, total wall-clock 154.9 s.
+
+| seed | case_name                  | wall  |
+|------|----------------------------|-------|
+| 0    | channel_bracket_simple     | 61.9s |
+| 1    | l_bracket_3_panel_simple   | 54.7s |
+| 2    | simple_hinge_100x100       | 38.2s |
+
+#### seed 0 — channel bracket
+main | bump | hole
+:--:|:--:|:--:
+![](./code_api/run4_seed0_main_t20260601_2300.png) | ![](./code_api/run4_seed0_bump_t20260601_2300.png) | ![](./code_api/run4_seed0_hole_t20260601_2300.png)
+
+Source: [`code_api/run4_seed0.py`](./code_api/run4_seed0.py).
+
+#### seed 1 — 3-panel L-bracket
+main | bump | hole
+:--:|:--:|:--:
+![](./code_api/run4_seed1_main_t20260601_2300.png) | ![](./code_api/run4_seed1_bump_t20260601_2300.png) | ![](./code_api/run4_seed1_hole_t20260601_2300.png)
+
+Source: [`code_api/run4_seed1.py`](./code_api/run4_seed1.py).
+
+#### seed 2 — 2-panel hinge
+main | bump | hole
+:--:|:--:|:--:
+![](./code_api/run4_seed2_main_t20260601_2300.png) | ![](./code_api/run4_seed2_bump_t20260601_2300.png) | ![](./code_api/run4_seed2_hole_t20260601_2300.png)
+
+Source: [`code_api/run4_seed2.py`](./code_api/run4_seed2.py).
+
+Batch summary CSV: [`code_api/run4_batch_summary.csv`](./code_api/run4_batch_summary.csv).
+
+---
+
+## API surface (code-gen)
+
+### Top-level: `GeminiCodeAuthor`
+
 ```python
-from origami_gen.recipe import load_recipe_yaml
-from origami_gen.recipe.render import render_recipe
-from origami_gen.recipe.validate import validate_recipe
+from origami_gen.code_gen.author import GeminiCodeAuthor
 
-recipe = load_recipe_yaml("path/to/recipe.yaml")
-validate_recipe(recipe)         # raises on C1..C11 failure
-bundle = render_recipe(recipe)  # CaseBundle(main_rgb, bump_rgb, hole_rgb)
-# bundle.main_rgb is uint8 [H, W, 3]; save with PIL.
-```
-
-## 2. Natural-language prompt → recipe (Gemini Track B)
-
-User types an English design intent; Gemini emits a valid YAML.
-
-**Python:**
-```python
-from origami_gen.gemini.recipe_author import GeminiRecipeAuthor
-
-author = GeminiRecipeAuthor(few_shot_n=3)
-result = author.design(
-    intent="Design a 5-panel L-bracket for an automotive sensor "
-            "mount. Main plate 120x150 mm with two bosses and a "
-            "fold-spanning bead.",
+author = GeminiCodeAuthor(
+    n_references=5,          # few-shot corpus cases per call
+    sandbox_timeout_sec=30.0, # SIGALRM kill at this wall-clock
 )
-print(result.recipe.case_name)   # e.g. 'sensor_mount_l_bracket'
-print(result.cached)             # True on second call → free
-```
 
-`design()` returns `DesignResult(recipe, raw_response, prompt_hash,
-cached)`. Caching is keyed on the SHA-256 of `(model, prompt)`; same
-intent on second call returns instantly without billing.
-
-## 3. Prompt → recipe with self-correction (Gemini Track B + Phase 4)
-
-Gemini sometimes emits recipes that violate C1..C11. The
-self-correction loop catches the violation and re-prompts with the
-specific error code (up to `GEMINI_MAX_RETRIES`, default 3).
-
-**Python:**
-```python
-from origami_gen.gemini.self_correct import GeminiSelfCorrectingAuthor
-
-corrector = GeminiSelfCorrectingAuthor(max_retries=3)
-result = corrector.design(intent="Design a U-bracket with 4 panels.")
+result = author.design(
+    intent="Design a U-bracket: 180x100 mm main plate with two flanges…",
+)
+# result is a CodeDesignResult:
+#   bundle: CaseBundle | None   (name, main_rgb, bump_rgb, hole_rgb)
+#   source_code: str            (Gemini's emitted module text)
+#   success: bool
+#   error: str | None           (sandbox or SDK failure)
+#   elapsed_sec: float
 
 if result.success:
-    print(f"valid recipe after {len(result.attempts)} attempts")
-else:
-    last = result.last_violations
-    print(f"failed; final violations: {[v.code for v in last]}")
+    bundle = result.bundle
+    # bundle.main_rgb is a uint8 [H, W, 3] numpy array — feed
+    # straight to the v3 parser, or save with PIL:
+    from PIL import Image
+    Image.fromarray(bundle.main_rgb, mode="RGB").save("main.png")
+    Image.fromarray(bundle.bump_rgb, mode="RGB").save("bump.png")
+    Image.fromarray(bundle.hole_rgb, mode="RGB").save("hole.png")
 ```
 
-`CorrectionResult` carries the full `attempts` history — useful for
-batch-generation logs.
+The refine-turn helper:
 
-## 4. Conversational agent (Phase 7 — multi-turn)
-
-Stateful agent: propose → refine → refine → accept → save to corpus.
-
-**Python:**
 ```python
-from origami_gen.gemini.agent import BracketDesignerAgent
-
-agent = BracketDesignerAgent(few_shot_n=3)
-
-t1 = agent.propose("Design a U-bracket for a 30 mm tube clamp.")
-# t1.recipe is the first proposal; t1.n_violations == 0 means it's
-# already C-floor clean.
-
-t2 = agent.refine("Move the bolt holes closer to the corners and "
-                   "add a stiffener bead across the front fold.")
-# t2.recipe has the edit applied; pipeline-validates internally.
-
-agent.accept()
-yaml_path = agent.save_to_corpus()
-# Writes corpus/generated/<case>.yaml + a <case>/ dir with 3 PNGs;
-# the case auto-registers into `audit.py --full` on next import.
+result2 = author.refine(
+    prior_source=result.source_code,
+    instruction="Add two more bolt holes on the flange.",
+    # Optional multimodal context — pass the previous PNGs so
+    # Gemini can SEE what it just produced.
+    prior_main_png=open("main.png", "rb").read(),
+    prior_bump_png=open("bump.png", "rb").read(),
+    prior_hole_png=open("hole.png", "rb").read(),
+)
 ```
 
-**Or via REPL** (terminal, no GUI):
-```bash
-python scripts/agent_repl.py
->>> design a small L-bracket for a sensor mount
-— turn 1 (propose) — case: sensor_mount, panels: 4, violations: 0
->>> add 2 more bolt holes on the flange
-— turn 2 (refine) — case: sensor_mount, violations: 0
->>> :accept
-accepted.
->>> :save
-saved to .../corpus/generated/sensor_mount.yaml
-```
+### The sandbox contract
 
-## 5. Batch corpus expansion (Phase 6)
+`src/origami_gen/code_gen/sandbox.py` is the security perimeter.
+Every Gemini-emitted module runs through `exec_bracket_module(source)`:
 
-Sample N random design intents → Gemini → render → validate → save
-keepers. Used to grow the corpus from 25 → hundreds.
-
-```bash
-python scripts/generate_bracket.py sample-batch 50 -o /tmp/batch \
-    --seed 0 --max-retries 3 --few-shot-n 3
-# /tmp/batch/keepers/<case>/{<case>.yaml, *_main.png, ...}
-# /tmp/batch/batch_summary.csv  (per-intent outcome)
-# /tmp/batch/generation_attempts.jsonl  (per-call audit log)
-```
-
-## 6. Photo → recipe (Phase 9 — multimodal)
-
-Reverse-engineer a real bracket photograph into a YAML recipe.
-
-```bash
-python scripts/generate_bracket.py from-photo ~/photos/real.jpg \
-    -o /tmp/p9 --scale-mm 180 --note "steering-column mount"
-# Writes recipe.yaml + 3 reconstructed PNG layers.
-```
-
-**Python:**
 ```python
+from origami_gen.code_gen.sandbox import exec_bracket_module
+
+result = exec_bracket_module(source_text, timeout_sec=30.0)
+# result.bundle: CaseBundle | None
+# result.error:  str | None     (None ⇒ success)
+# result.elapsed_sec: float
+```
+
+Restrictions enforced inside the sandbox:
+
+| Restriction               | Mechanism                                            |
+|---------------------------|------------------------------------------------------|
+| Whitelisted imports       | `__import__` replaced; whitelist = `numpy`, `PIL.Image`, `PIL.ImageDraw`, `math`, `dataclasses`, `typing`, `collections`, `itertools`, `functools`, `__future__`. Everything else raises `CodeGenSandboxError`. |
+| No `open` / `eval` / `exec` / `compile` / `__import__` | Stripped from builtins. |
+| Wall-clock timeout        | `signal.SIGALRM` at `timeout_sec` seconds.            |
+| Validated return value    | Must be a `CaseBundle` (namedtuple injected as a global) with `name ∈ [a-z0-9_]{1..64}`, 3 `uint8 [H, W, 3]` arrays, `H, W ∈ [64, 4096]`, matching shape across layers. |
+| Duck-typed objects        | Any object with attributes `name / main_rgb / bump_rgb / hole_rgb` is coerced into the strict `CaseBundle`. |
+
+The sandbox does **not** pre-validate the pixel palette — the v3
+parser does that downstream. We trust the model on shape +
+structure, then let the pipeline reject anything pixel-illegal
+at parse time.
+
+### Reference pack
+
+`src/origami_gen/code_gen/references.py` builds the few-shot
+material every Gemini call sees:
+
+```python
+from origami_gen.code_gen.references import build_reference_pack
+
+pack = build_reference_pack(n=5)
+# pack is a list of ReferenceCase:
+#   name: str               (e.g. "hd_mobis_bracket")
+#   source_path: str        ("mobis_bracket/bracket.py")
+#   source_code: str        (the .py file verbatim)
+#   main_png, bump_png, hole_png: bytes
+```
+
+Default 5 cases (simple → complex):
+
+| #  | case               | source file                             |
+|----|--------------------|-----------------------------------------|
+| 1  | `single_fold`      | `simple_examples/simple.py`             |
+| 2  | `corner_3panel`    | `simple_examples/simple.py`             |
+| 3  | `l_shape`          | `simple_examples/chains.py`             |
+| 4  | `simple_l_bracket` | `mobis_bracket/bracket_examples.py`     |
+| 5  | `hd_mobis_bracket` | `mobis_bracket/bracket.py`              |
+
+`cached_reference_pack(n)` is the LRU-cached version used by the
+prompt builder, so multiple `design()` calls share the same
+PNG-encoded reference bytes.
+
+### Prompts module
+
+`src/origami_gen/code_gen/prompts.py` builds two pieces:
+
+```python
+sys_prompt = code_author_system_prompt(n_references=5)
+# str — 6 sections: ROLE, PIXEL CONTRACT, DRAWING TOOLKIT,
+# OUTPUT CONTRACT, STYLE GUIDE, REFERENCE CASES (with full
+# corpus .py source code inline), then EMIT-ONLY reminder.
+
+user_parts = code_author_user_contents(
+    intent="design intent here",
+    n_references=5,
+)
+# list[str | google.genai.types.Part] — text intro + (text label
+# + 3 image Parts) per reference + final text with the user's
+# intent.
+```
+
+Key contract excerpts the system prompt enforces (the model is
+told these are HARD rules — violation crashes the pipeline):
+
+- Only 7 RGB triples are legal across all 3 layers: white,
+  black, mountain red, valley blue, bump yellow, bump green,
+  hole/carve purple.
+- Fold lines are exactly 4 px wide, axis-aligned, on `main.png`
+  only.
+- Panels are axis-aligned rectangles. NO outline carves on the
+  panel rect itself. If the user asks for a "diagonal cut at
+  the corner", that's a PURPLE feature on `hole.png`, not
+  geometry that breaks the panel rectangle.
+- The emitted module must define `make_bracket() -> CaseBundle`
+  and return three matching-shape `uint8 [H, W, 3]` arrays.
+
+### CLI
+
+`scripts/generate_bracket.py` exposes the two surfaces:
+
+```bash
+# Single design from an intent string.
+conda run -n SML_env python scripts/generate_bracket.py code-from-intent \
+    "Design an L-bracket with one flange" \
+    -o /tmp/my_bracket \
+    --n-references 5 \
+    --sandbox-timeout 30
+
+# Random-intent batch of N keepers.
+conda run -n SML_env python scripts/generate_bracket.py code-batch 3 \
+    -o /tmp/my_batch \
+    --seed 0 \
+    --n-references 5
+```
+
+`code-from-intent` writes `<name>_main.png`, `<name>_bump.png`,
+`<name>_hole.png`, `<name>.py`, plus `summary.json` (intent +
+success + elapsed_sec + case_name + source_chars). On failure
+it also writes `FAILED_source.py` so you can diagnose Gemini's
+output.
+
+`code-batch` writes one `keepers/seed_NNNN/` per intent and a
+top-level `batch_summary.csv`.
+
+---
+
+## Previous YAML-recipe generator (kept as API description)
+
+The pre-code-gen v3-gen branch shipped a YAML-recipe generator
+(`gemini/recipe_author.py`, `gemini/self_correct.py`, etc.)
+that asked Gemini to emit a Pydantic-validated YAML recipe
+which a separate `recipe/render.py` then drew. That code was
+hard-reverted off v3-gen (commit `7fad18f`) — the rectangular-
+panels-only requirement was easier to enforce in the new code-
+generator approach than to fix the schema escape hatches in the
+YAML path. The API description is retained here for reference:
+
+```python
+# (Historical) GeminiRecipeAuthor.design(intent) returned a
+# BracketRecipe pydantic object, which a Track-A renderer
+# converted to 3 PNGs. The recipe schema let Gemini emit
+# outline_carves / corner_fillets that chipped the panel
+# silhouette into non-rectangles even when the panel rect
+# itself was preserved.
+
 from origami_gen.gemini.recipe_author import GeminiRecipeAuthor
+from origami_gen.gemini.self_correct import GeminiSelfCorrectingAuthor
+from origami_gen.recipe.render import render_recipe
 
-author = GeminiRecipeAuthor()
-result = author.design_from_photo(
-    photo_path="~/photos/real.jpg",
-    scale_anchor_mm=180.0,       # the longest visible dimension
-    intent_note="steering-column mount",
-)
+author = GeminiRecipeAuthor(few_shot_n=3)
+corrector = GeminiSelfCorrectingAuthor(author=author, max_retries=3)
+result = corrector.design(intent="...")     # → CorrectionResult
+bundle = render_recipe(result.recipe)        # → CaseBundle
 ```
 
-## 7. Direct image generation (Phase 8 — experimental)
+It also shipped:
+- `GeminiSequentialAuthor` (3-pass skeleton → bumps → holes
+  pipeline).
+- `BracketDesignerAgent` (propose / refine REPL).
+- `sample-batch N` CLI subcommand.
+- A 25-case YAML library (`recipe/library/`) — 5 hand-authored
+  + 20 parametric variants.
+- Imagen 4 image-gen `experiment_run` (palette-snap on raw
+  Imagen output).
 
-Imagen 4 / Gemini-image direct PNG with palette-snap post-processing.
-Mostly experimental; see `verification/image_gen_experiment.md`.
+All of that lives in `archive_pre_codegen_20260601/` for
+historical reference (PNG outputs from prior runs) and
+`archive_v3_audit_20260531_1916/` (the full v3-audit visualization
+snapshot — 602 files).
+
+---
+
+## Repo layout (v3-gen current)
+
+```
+src/origami_gen/
+├── code_gen/                 ← NEW: code-generator entry points
+│   ├── sandbox.py            ← restricted-exec; CaseBundle injected
+│   ├── references.py         ← few-shot pack (5 corpus cases)
+│   ├── prompts.py            ← system prompt + multimodal user list
+│   ├── client.py             ← thin google.genai wrapper
+│   └── author.py             ← GeminiCodeAuthor (design + refine)
+├── corpus/                   ← KEPT: reference brackets (mobis +
+│   │                            simple_examples). Used both as
+│   │                            corpus fixtures AND as few-shot
+│   │                            references for the code generator.
+│   ├── mobis_bracket/{bracket,bracket_examples,bracket_variants}.py
+│   └── simple_examples/{simple,chains,cascades,junctions,…}.py
+├── parser/  topology/  folder/  mesher/  fillet/  bumper/
+│   stitcher/  dihedral/  mapper/  pipeline/  …
+│                              (v3 folding pipeline — unchanged)
+└── viz/ export/ io/ logging_config.py …
+
+scripts/
+├── generate_bracket.py       ← code-from-intent + code-batch
+├── audit.py                  ← v3 pipeline audit
+├── perf_measure.py
+├── regen_corpus.py
+├── verify_visualize.py
+└── check_determinism.sh
+
+tests/code_gen/                ← 43 tests
+├── test_sandbox.py           (20 sandbox guard tests)
+├── test_references.py        (7 reference-pack tests)
+├── test_prompts.py           (8 prompt-builder tests)
+└── test_author_mock.py       (8 author tests w/ fake SDK)
+```
+
+---
+
+## Build & test
 
 ```bash
-python scripts/image_gen_experiment.py --num 5 --out /tmp/imgexp
+# Run the code-gen test suite (no API key needed — every test
+# uses a fake SDK).
+PYTHONHASHSEED=0 conda run -n SML_env pytest tests/code_gen/ -q
+# Expected: 43 passed.
+
+# Smoke test the CLI without burning API credits — uses a
+# fake client. (TODO: add an --offline flag.)
+```
+
+A real run needs `GEMINI_API_KEY` in `.env`:
+
+```
+GEMINI_API_KEY=AIza...
+GEMINI_TEXT_MODEL=gemini-2.5-pro
+GEMINI_IMAGE_MODEL=imagen-4.0-generate-001
+GEMINI_TEMPERATURE=0.0
 ```
 
 ---
 
-## Quick-start scripts
-
-| Want to… | Run |
-|---|---|
-| Test the recipe schema | `make recipe-tests` |
-| Test the Gemini layer (mocked) | `make gemini-tests` |
-| End-to-end smoke (no API key) | `make generation-smoke` |
-| Lint the new modules | `make ruff` |
-| Live API test | `pytest -m gemini_live` |
-
----
-
-# Reference recipe library — 25 cases (rendered below)
-
-Every case has 3 PNG layers:
-
-| Layer | Colours | Purpose |
-|---|---|---|
-| `_main.png` | WHITE bg + BLACK panels + RED/BLUE fold bands | structural input (panels + fold lines) |
-| `_bump.png` | panel mask + YELLOW/GREEN | stamped-up / stamped-down regions |
-| `_hole.png` | panel mask + PURPLE | outline carves + bolt holes + cuts |
-
-All 75 PNGs use only the legal RGB triples per SKILL.md §1.3 — strict
-palette, zero anti-aliasing.
-
----
-
-## Hand-authored (Phase 1) — 5 cases
-
-### `simple_l_bracket` — L-bracket + 2-cap stack (4 panels, 3 folds)
-
-main | bump | hole
-:--:|:--:|:--:
-![](./simple_l_bracket_main_t20260601_1626.png) | ![](./simple_l_bracket_bump_t20260601_1626.png) | ![](./simple_l_bracket_hole_t20260601_1626.png)
-
-### `u_bracket` — main + 2 flanges, caps on both (5 panels, 4 folds)
-
-main | bump | hole
-:--:|:--:|:--:
-![](./u_bracket_main_t20260601_1626.png) | ![](./u_bracket_bump_t20260601_1626.png) | ![](./u_bracket_hole_t20260601_1626.png)
-
-### `channel_bracket` — main + 3 flanges + cap (6 panels, 5 folds)
-
-main | bump | hole
-:--:|:--:|:--:
-![](./channel_bracket_main_t20260601_1626.png) | ![](./channel_bracket_bump_t20260601_1626.png) | ![](./channel_bracket_hole_t20260601_1626.png)
-
-### `accessory_l_bracket` — L + 3-cap stack (5 panels, 4 folds)
-
-main | bump | hole
-:--:|:--:|:--:
-![](./accessory_l_bracket_main_t20260601_1626.png) | ![](./accessory_l_bracket_bump_t20260601_1626.png) | ![](./accessory_l_bracket_hole_t20260601_1626.png)
-
-### `tab_plate_4` — main + 3 tabs + cap (5 panels, 4 folds)
-
-main | bump | hole
-:--:|:--:|:--:
-![](./tab_plate_4_main_t20260601_1626.png) | ![](./tab_plate_4_bump_t20260601_1626.png) | ![](./tab_plate_4_hole_t20260601_1626.png)
-
----
-
-## Auto-generated (Phase 2) — 20 cases
-
-### L_right archetype (v01–v05) — main + right flange + 3-cap stack
-
-#### `bracket_v01`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v01_main_t20260601_1626.png) | ![](./bracket_v01_bump_t20260601_1626.png) | ![](./bracket_v01_hole_t20260601_1626.png)
-
-#### `bracket_v02`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v02_main_t20260601_1626.png) | ![](./bracket_v02_bump_t20260601_1626.png) | ![](./bracket_v02_hole_t20260601_1626.png)
-
-#### `bracket_v03`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v03_main_t20260601_1626.png) | ![](./bracket_v03_bump_t20260601_1626.png) | ![](./bracket_v03_hole_t20260601_1626.png)
-
-#### `bracket_v04`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v04_main_t20260601_1626.png) | ![](./bracket_v04_bump_t20260601_1626.png) | ![](./bracket_v04_hole_t20260601_1626.png)
-
-#### `bracket_v05`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v05_main_t20260601_1626.png) | ![](./bracket_v05_bump_t20260601_1626.png) | ![](./bracket_v05_hole_t20260601_1626.png)
-
-### L_bottom archetype (v06–v10) — main + bottom flange + 3-cap stack
-
-#### `bracket_v06`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v06_main_t20260601_1626.png) | ![](./bracket_v06_bump_t20260601_1626.png) | ![](./bracket_v06_hole_t20260601_1626.png)
-
-#### `bracket_v07`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v07_main_t20260601_1626.png) | ![](./bracket_v07_bump_t20260601_1626.png) | ![](./bracket_v07_hole_t20260601_1626.png)
-
-#### `bracket_v08`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v08_main_t20260601_1626.png) | ![](./bracket_v08_bump_t20260601_1626.png) | ![](./bracket_v08_hole_t20260601_1626.png)
-
-#### `bracket_v09`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v09_main_t20260601_1626.png) | ![](./bracket_v09_bump_t20260601_1626.png) | ![](./bracket_v09_hole_t20260601_1626.png)
-
-#### `bracket_v10`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v10_main_t20260601_1626.png) | ![](./bracket_v10_bump_t20260601_1626.png) | ![](./bracket_v10_hole_t20260601_1626.png)
-
-### U_caps archetype (v11–v15) — main + 2 flanges + caps on each
-
-#### `bracket_v11`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v11_main_t20260601_1626.png) | ![](./bracket_v11_bump_t20260601_1626.png) | ![](./bracket_v11_hole_t20260601_1626.png)
-
-#### `bracket_v12`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v12_main_t20260601_1626.png) | ![](./bracket_v12_bump_t20260601_1626.png) | ![](./bracket_v12_hole_t20260601_1626.png)
-
-#### `bracket_v13`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v13_main_t20260601_1626.png) | ![](./bracket_v13_bump_t20260601_1626.png) | ![](./bracket_v13_hole_t20260601_1626.png)
-
-#### `bracket_v14`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v14_main_t20260601_1626.png) | ![](./bracket_v14_bump_t20260601_1626.png) | ![](./bracket_v14_hole_t20260601_1626.png)
-
-#### `bracket_v15`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v15_main_t20260601_1626.png) | ![](./bracket_v15_bump_t20260601_1626.png) | ![](./bracket_v15_hole_t20260601_1626.png)
-
-### cross_caps archetype (v16–v20) — main + 4 flanges + wider cap
-
-#### `bracket_v16`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v16_main_t20260601_1626.png) | ![](./bracket_v16_bump_t20260601_1626.png) | ![](./bracket_v16_hole_t20260601_1626.png)
-
-#### `bracket_v17`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v17_main_t20260601_1626.png) | ![](./bracket_v17_bump_t20260601_1626.png) | ![](./bracket_v17_hole_t20260601_1626.png)
-
-#### `bracket_v18`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v18_main_t20260601_1626.png) | ![](./bracket_v18_bump_t20260601_1626.png) | ![](./bracket_v18_hole_t20260601_1626.png)
-
-#### `bracket_v19`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v19_main_t20260601_1626.png) | ![](./bracket_v19_bump_t20260601_1626.png) | ![](./bracket_v19_hole_t20260601_1626.png)
-
-#### `bracket_v20`
-main | bump | hole
-:--:|:--:|:--:
-![](./bracket_v20_main_t20260601_1626.png) | ![](./bracket_v20_bump_t20260601_1626.png) | ![](./bracket_v20_hole_t20260601_1626.png)
-
----
-
-## Acceptance gate (all 25 cases)
-
-- 0 schema-validation violations.
-- 0 C1..C11 complexity-floor violations.
-- 0 fold-edge clearance violations.
-- All 3 PNG layers contain ONLY legal RGB triples (no AA).
-- Full P1→P5 pipeline at res 2.0 passes all §3 hard gates:
-  `nm=0 orph=0 comp=1 inv=0 sliver=0`.
-
-(See `tests/recipe/test_reference_library_passes.py` for the
-automated acceptance test that parametrises over every YAML.)
-
----
-
-# Live-API example outputs
-
-Real end-to-end runs against the live Gemini 2.5 Pro + Imagen 4
-endpoints (no mocks, no cache hits — `use_cache=False`). Each
-sub-section corresponds to one of the 7 surfaces documented
-above. All artifacts (YAMLs, intents, attempt logs, PNGs) live in
-`live_api/` next to this README; the inline images below are the
-rendered output of each call.
-
-Note: `s2_*` was the one case that still had 1 fold-clearance
-violation when the validator ran — the renderer still produces
-valid PNGs, but the recipe would not pass `acceptance gate`. This
-is exactly the kind of case the Phase-4 self-correction loop is
-designed to repair (see surface 3 below for a clean run, and
-surface 5 batch where seed-0 needed 3 attempts to converge).
-
-## S2 — `GeminiRecipeAuthor.design` (one shot)
-
-Intent (`live_api/s2_intent.txt`):
-> Design a 5-panel L-bracket for an automotive ECU mount: main
-> plate 130x150 mm with three M6 bolt holes near the corners on
-> the front, plus one rounded pocket bump for a boss feature in
-> the centre. Add a flat flange on the right side with two more
-> bolt holes.
-
-Result: `ecu_mount_l_bracket`, 5 panels, 4 folds, **1 violation
-(`FOLD_CLEARANCE_HOLE`)**, 42.5 s wall.
-
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api/s2_ecu_mount_l_bracket_main_t20260601_2100.png) | ![](./live_api/s2_ecu_mount_l_bracket_bump_t20260601_2100.png) | ![](./live_api/s2_ecu_mount_l_bracket_hole_t20260601_2100.png)
-
-Full recipe + raw response JSON: `live_api/s2_ecu_mount_l_bracket.yaml`,
-`live_api/s2_summary.json`.
-
-## S3 — `GeminiSelfCorrectingAuthor.design` (validator-aware retry loop)
-
-Intent (`live_api/s3_intent.txt`):
-> Design a 4-panel U-channel mounting bracket: main plate
-> 180x100 mm, two folded flanges (each 60 mm wide) running down
-> the long edges, each flange having two M5 bolt holes. Add a
-> rounded bump in the centre of the main plate.
-
-Result: `u_channel_mount`, **succeeded on attempt 1** (0
-violations), 35.0 s wall. Attempt log:
-`live_api/s3_generation_attempts.jsonl`.
-
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api/s3_u_channel_mount_main_t20260601_2100.png) | ![](./live_api/s3_u_channel_mount_bump_t20260601_2100.png) | ![](./live_api/s3_u_channel_mount_hole_t20260601_2100.png)
-
-## S4 — `BracketDesignerAgent` (propose → refine)
-
-Propose intent (`live_api/s4_propose_intent.txt`):
-> Design a simple L-bracket: 120x100 mm main plate with a single
-> 50 mm flange on the right side. Add two M4 bolt holes on the
-> main plate.
-
-Refine instruction (`live_api/s4_refine_instruction.txt`):
-> Add two more M4 bolt holes on the right flange, spaced 30 mm
-> apart vertically.
-
-Both turns succeeded with 0 violations; case `l_bracket_complex_v1`,
-97.4 s wall total. Diff between turn 1 and turn 2 should show
-the two added flange bolt holes.
-
-### Turn 1 — propose
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api/s4_turn1_main_t20260601_2100.png) | ![](./live_api/s4_turn1_bump_t20260601_2100.png) | ![](./live_api/s4_turn1_hole_t20260601_2100.png)
-
-### Turn 2 — refine ("add two more bolt holes")
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api/s4_turn2_main_t20260601_2100.png) | ![](./live_api/s4_turn2_bump_t20260601_2100.png) | ![](./live_api/s4_turn2_hole_t20260601_2100.png)
-
-YAML diff inputs: `live_api/s4_turn1.yaml` vs.
-`live_api/s4_turn2.yaml`. Session JSONL is in
-`live_api/s4_summary.json`.
-
-## S5 — `sample-batch 2` (Gemini-driven corpus expansion)
-
-`scripts/generate_bracket.py sample-batch` runs random design
-intents through the self-correction loop; keepers get persisted.
-This live run used N=2 with `--seed 0 --max-retries 2
---few-shot-n 3`. **2 / 2 kept**, 160 s wall.
-
-| seed | case_name              | attempts | viols | kept |
-|------|------------------------|----------|-------|------|
-| 0    | hvac_cross_support     | 3        | 0     | ✓    |
-| 1    | u_bracket_trim_mount   | 1        | 0     | ✓    |
-
-Seed-0 needed 3 attempts (self-correction loop fired twice on
-intermediate violations) before converging. Seed-1 was one-shot.
-
-### `hvac_cross_support`
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api/s5_hvac_cross_support_main_t20260601_2100.png) | ![](./live_api/s5_hvac_cross_support_bump_t20260601_2100.png) | ![](./live_api/s5_hvac_cross_support_hole_t20260601_2100.png)
-
-### `u_bracket_trim_mount`
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api/s5_u_bracket_trim_mount_main_t20260601_2100.png) | ![](./live_api/s5_u_bracket_trim_mount_bump_t20260601_2100.png) | ![](./live_api/s5_u_bracket_trim_mount_hole_t20260601_2100.png)
-
-Batch CSV: `live_api/s5_batch_summary.csv`. Per-attempt JSONL:
-`live_api/s5_generation_attempts.jsonl`. Keeper YAMLs:
-`live_api/s5_hvac_cross_support.yaml`,
-`live_api/s5_u_bracket_trim_mount.yaml`.
-
-## S7 — Imagen 4 `experiment_run` (raw → palette-snap)
-
-The Phase-8 experiment: ask `imagen-4.0-generate-001` for a 2D
-unfolding diagram with **only** 4 legal RGB triples (white /
-black / red / blue), then post-process by snapping every pixel
-to its nearest palette colour by L2 distance.
-
-Intent 0: `A simple L-shape bracket with a flange and 3 bolt
-holes.`
-Intent 1: `A U-channel bracket with 2 flanges on opposite long
-edges.`
-
-Result:
-| intent | raw unique colors | snapped strict? | px changed |
-|--------|-------------------|-----------------|-----------:|
-| 0      | 14,680            | ✓               | 279,602    |
-| 1      | 18,791            | ✓               | 257,004    |
-
-Both raw outputs were heavily anti-aliased (14k–19k colors); the
-snap brought every pixel onto the legal 4-color palette. The
-snapped PNGs are *strict-palette valid* (parser-acceptable in
-principle), but the underlying geometry is freeform and would
-not pass the topology gate — the experiment confirms what
-GENERATION_PLAN §16 predicted: Imagen produces images, not
-schema-valid recipes.
-
-### Intent 0 — L-bracket
-raw (Imagen direct) | snapped (palette-cleaned)
-:--:|:--:
-![](./live_api/s7_intent0_raw_t20260601_2100.png) | ![](./live_api/s7_intent0_snapped_t20260601_2100.png)
-
-### Intent 1 — U-channel
-raw (Imagen direct) | snapped (palette-cleaned)
-:--:|:--:
-![](./live_api/s7_intent1_raw_t20260601_2100.png) | ![](./live_api/s7_intent1_snapped_t20260601_2100.png)
-
-Per-attempt diagnostics: `live_api/s7_summary.csv`. Intents:
-`live_api/s7_intents.txt`.
-
----
-
-## Live-API runtime summary
-
-| surface | wall  | result                                            |
-|---------|------:|---------------------------------------------------|
-| S2      |  42 s | 1 viol (FOLD_CLEARANCE_HOLE), renders valid       |
-| S3      |  35 s | 0 viol on attempt 1                               |
-| S4      |  97 s | propose + refine, both 0 viol                     |
-| S5      | 160 s | 2/2 keepers (seed 0 needed 3 attempts, seed 1 = 1) |
-| S7      | ~30 s | 2/2 strict-palette after snap                     |
-
-Total: 5 surfaces, **9 / 10 recipes clean** (S2 was the lone
-single-shot failure that the self-correction loop in S3/S5 would
-have repaired). All raw responses, YAMLs, JSONLs, PNGs are in
-`live_api/`. Full machine-readable rollup:
-`live_api/ALL_SUMMARIES.json`.
-
----
-
-# Live-API: NEW 3-pass sequential generator (`_t20260601_2200`)
-
-The v1 live-API outputs (S2/S3/S4/S5/S7 above) used the
-single-shot `GeminiRecipeAuthor` + `GeminiSelfCorrectingAuthor`
-path. Some recipes still slipped through with residual violations
-(notably S2's `FOLD_CLEARANCE_HOLE`). The new default is a
-**3-pass sequential generator** (`GeminiSequentialAuthor`):
-
-  - **Stage A — skeleton.** Gemini emits only the rectangular
-    panels + axis-aligned folds + outline carves + corner fillets.
-    Stage-A validator suppresses every C-rule that depends on
-    bumps / holes (C5/C6/C7/C10/C11). Output is forcibly stripped
-    of any features Gemini accidentally emits.
-  - **Stage B — bump layer.** Skeleton is rendered to PNG; the
-    `main.png` and `bump.png` are passed as multimodal `Part`
-    inputs alongside the skeleton YAML. Gemini emits
-    `bumps_by_panel + cross_panel_features`. Stage-B validator
-    runs every gate EXCEPT C6/C11 (which need holes).
-  - **Stage C — hole layer.** Re-render with bumps; pass
-    updated `main.png` + `bump.png` to Gemini. Output:
-    `holes_by_panel`. Full validator runs — every C-rule and
-    clearance gate now applies.
-
-Each stage has its own retry budget (`max_retries`, default 2)
-with focused correction prompts that include the parse error
-and any violations on the previous attempt. Only the failing
-stage retries — Stage A success is never re-run.
-
-Code: `src/origami_gen/gemini/sequential_author.py`,
-`src/origami_gen/recipe/sequential.py`,
-`src/origami_gen/recipe/validate.py` (new
-`validate_skeleton/bump_layer/hole_layer` entries),
-`src/origami_gen/gemini/prompts.py` (new
-`stage_a/b/c_*` builders). CLI: `scripts/generate_bracket.py
-from-intent <intent> -o <dir>` and
-`sample-batch N -o <dir>` (sequential default; legacy via
-`--legacy-one-shot`).
-
-## API additions
-
-```python
-from origami_gen.gemini.sequential_author import (
-    GeminiSequentialAuthor,
-)
-
-author = GeminiSequentialAuthor(
-    few_shot_n=3, max_retries=2, use_cache=False,
-)
-result = author.design(intent="<natural language design intent>")
-# result.recipe              -> BracketRecipe | None
-# result.success             -> bool
-# result.stage_a_attempts    -> tuple[StageAttempt, ...]
-# result.stage_b_attempts    -> tuple[StageAttempt, ...]
-# result.stage_c_attempts    -> tuple[StageAttempt, ...]
-# result.skeleton_recipe     -> BracketRecipe | None  (post Stage A)
-# result.bumped_recipe       -> BracketRecipe | None  (post Stage B)
-
-author.emit_attempts_log(result, Path("attempts.jsonl"))
-```
-
-The agent + sample-batch surfaces now route through the
-sequential generator by default; legacy one-shot can be
-restored via `BracketDesignerAgent(use_sequential=False)` or
-`sample-batch --legacy-one-shot`.
-
-## Side-by-side results vs. v1 (one-shot)
-
-| surface | v1 (one-shot)                                  | v2 (sequential)                                  |
-|---------|------------------------------------------------|--------------------------------------------------|
-| S2      | 1 viol `FOLD_CLEARANCE_HOLE`, 42 s             | **0 viols**, 4 stage attempts (A:2 + B:1 + C:1), 146 s |
-| S4      | propose + refine, both 0 viols, 97 s           | propose + refine, both 0 viols, 166 s           |
-| S5      | 2/2 kept (seed 0 needed 3 retries)             | **2/2 kept, all clean**, 300 s (seed 0: 4 atts, seed 1: 5 atts) |
-| S7      | 2/2 strict-palette after snap                  | 2/2 strict-palette after snap (unchanged)        |
-
-Key delta: **S2 went from 1 violation → 0** with the same intent.
-S5 trades raw time for higher per-recipe quality (each stage
-narrows Gemini's task, so more total LLM round-trips, but the
-final recipes pass `validate_recipe_all` clean).
-
-## S2-seq — `GeminiSequentialAuthor.design` (ECU intent)
-
-Same intent as the v1 S2 (130×150 mm 5-panel L-bracket with
-boss + pocket bump + side flange + bolt holes). Result:
-`ecu_mount_l_bracket`, **0 violations**, 4 total stage attempts.
-Stage A first attempt had a Pydantic schema error (Gemini
-omitted `fold_axis` on child panels); the focused retry prompt
-included the parse error verbatim and the second Stage-A
-attempt parsed cleanly.
-
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api_seq/s2_seq_main_t20260601_2200.png) | ![](./live_api_seq/s2_seq_bump_t20260601_2200.png) | ![](./live_api_seq/s2_seq_hole_t20260601_2200.png)
-
-Per-attempt log: `live_api_seq/s2_seq_attempts.jsonl`. Stage raws:
-`live_api_seq/s2_seq_summary.json` (4 stage raws referenced).
-
-## S4-seq — `BracketDesignerAgent` (sequential propose + refine)
-
-Same intents as v1 S4. Both turns 0 violations. Sequential
-propose ran A→B→C clean on the first try (all stages
-single-attempt).
-
-### Turn 1 — propose
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api_seq/s4_seq_turn1_main_t20260601_2200.png) | ![](./live_api_seq/s4_seq_turn1_bump_t20260601_2200.png) | ![](./live_api_seq/s4_seq_turn1_hole_t20260601_2200.png)
-
-### Turn 2 — refine ("add two more bolt holes")
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api_seq/s4_seq_turn2_main_t20260601_2200.png) | ![](./live_api_seq/s4_seq_turn2_bump_t20260601_2200.png) | ![](./live_api_seq/s4_seq_turn2_hole_t20260601_2200.png)
-
-YAML diff inputs: `live_api_seq/s4_seq_turn1.yaml` vs.
-`live_api_seq/s4_seq_turn2.yaml`. The refine step still uses
-the legacy one-shot path because the existing recipe is already
-fully featured; sequential is only used on the initial propose.
-
-## S5-seq — `sample-batch 2` (sequential)
-
-Same N=2 random intents as v1 S5 with `--seed 0 --max-retries 2
---few-shot-n 3`. **2 / 2 kept, all clean** (`final_n_violations=0`
-on both). Total stage attempts:
-
-| seed | case_name              | total attempts | viols | kept |
-|------|------------------------|----------------|-------|------|
-| 0    | cross_bracket_hvac     | 4              | 0     | ✓    |
-| 1    | u_bracket_trim_mount   | 5              | 0     | ✓    |
-
-### `cross_bracket_hvac`
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api_seq/s5_seq_cross_bracket_hvac_main_t20260601_2200.png) | ![](./live_api_seq/s5_seq_cross_bracket_hvac_bump_t20260601_2200.png) | ![](./live_api_seq/s5_seq_cross_bracket_hvac_hole_t20260601_2200.png)
-
-### `u_bracket_trim_mount`
-main | bump | hole
-:--:|:--:|:--:
-![](./live_api_seq/s5_seq_u_bracket_trim_mount_main_t20260601_2200.png) | ![](./live_api_seq/s5_seq_u_bracket_trim_mount_bump_t20260601_2200.png) | ![](./live_api_seq/s5_seq_u_bracket_trim_mount_hole_t20260601_2200.png)
-
-Batch summary CSV: `live_api_seq/s5_seq_batch_summary.csv`. Per-
-attempt JSONL: `live_api_seq/s5_seq_attempts.jsonl`. Keeper
-YAMLs in `live_api_seq/s5_seq_*.yaml`.
-
-## S7 — Imagen 4 `experiment_run` (unchanged)
-
-The Imagen experiment is independent of the recipe generator and
-behaves identically to v1. Both intents render heavily anti-aliased
-(15k–32k unique colors) raw images that the palette-snap brings
-down to the legal 4 colors. Schema-conforming pixels, freeform
-geometry — same caveat as v1.
-
-| intent | raw unique colors | snapped strict? | px changed |
-|--------|-------------------|-----------------|-----------:|
-| 0      | 14,977            | ✓               | 246,010    |
-| 1      | 31,840            | ✓               | 302,062    |
-
-### Intent 0 — L-bracket
-raw | snapped
-:--:|:--:
-![](./live_api_seq/s7_intent0_raw_t20260601_2200.png) | ![](./live_api_seq/s7_intent0_snapped_t20260601_2200.png)
-
-### Intent 1 — U-channel
-raw | snapped
-:--:|:--:
-![](./live_api_seq/s7_intent1_raw_t20260601_2200.png) | ![](./live_api_seq/s7_intent1_snapped_t20260601_2200.png)
-
----
-
-## Sequential runtime + acceptance summary
-
-| surface | wall  | result (sequential)                              |
-|---------|------:|--------------------------------------------------|
-| S2-seq  | 146 s | 0 viols (was 1 in v1); 4 stage attempts          |
-| S4-seq  | 166 s | propose + refine, both 0 viols                   |
-| S5-seq  | 300 s | 2/2 keepers ALL clean (vs. 2/2 with seed-0 noisy in v1) |
-| S7      | ~30 s | 2/2 strict-palette after snap                    |
-
-**Net: 4/4 recipe-generation surfaces produce clean (zero-violation)
-recipes**, where v1 had 1 stray FOLD_CLEARANCE_HOLE on S2. Stage
-A self-corrects schema errors before Stage B/C ever run, so an
-expensive Stage-C retry on a malformed skeleton is impossible.
-Full machine-readable rollup: `live_api_seq/ALL_SUMMARIES.json`.
-
----
-
-## Prior snapshot
-
-The previous v3-audit snapshot (`_t20260531_1916` suffix, 42-case
-visualization × 3 res) is in `archive_v3_audit_20260531_1916/`
-— 602 files preserved verbatim.
-
-Branch: https://github.com/voltwin-dev/Origami_Gen/tree/v3-gen
-PR-ready at: https://github.com/voltwin-dev/Origami_Gen/pull/new/v3-gen
+## Prior snapshots
+
+- `archive_pre_codegen_20260601/` — every PNG and JSON from the
+  YAML-recipe-generator runs (live API v1 + sequential v2 +
+  the 25 hand-authored / parametric library renders).
+- `archive_v3_audit_20260531_1916/` — full v3 pipeline audit
+  visualization (42 cases × 3 res, 602 files preserved verbatim).
