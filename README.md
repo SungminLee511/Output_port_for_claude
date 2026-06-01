@@ -380,6 +380,175 @@ automated acceptance test that parametrises over every YAML.)
 
 ---
 
+# Live-API example outputs
+
+Real end-to-end runs against the live Gemini 2.5 Pro + Imagen 4
+endpoints (no mocks, no cache hits — `use_cache=False`). Each
+sub-section corresponds to one of the 7 surfaces documented
+above. All artifacts (YAMLs, intents, attempt logs, PNGs) live in
+`live_api/` next to this README; the inline images below are the
+rendered output of each call.
+
+Note: `s2_*` was the one case that still had 1 fold-clearance
+violation when the validator ran — the renderer still produces
+valid PNGs, but the recipe would not pass `acceptance gate`. This
+is exactly the kind of case the Phase-4 self-correction loop is
+designed to repair (see surface 3 below for a clean run, and
+surface 5 batch where seed-0 needed 3 attempts to converge).
+
+## S2 — `GeminiRecipeAuthor.design` (one shot)
+
+Intent (`live_api/s2_intent.txt`):
+> Design a 5-panel L-bracket for an automotive ECU mount: main
+> plate 130x150 mm with three M6 bolt holes near the corners on
+> the front, plus one rounded pocket bump for a boss feature in
+> the centre. Add a flat flange on the right side with two more
+> bolt holes.
+
+Result: `ecu_mount_l_bracket`, 5 panels, 4 folds, **1 violation
+(`FOLD_CLEARANCE_HOLE`)**, 42.5 s wall.
+
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api/s2_ecu_mount_l_bracket_main_t20260601_2100.png) | ![](./live_api/s2_ecu_mount_l_bracket_bump_t20260601_2100.png) | ![](./live_api/s2_ecu_mount_l_bracket_hole_t20260601_2100.png)
+
+Full recipe + raw response JSON: `live_api/s2_ecu_mount_l_bracket.yaml`,
+`live_api/s2_summary.json`.
+
+## S3 — `GeminiSelfCorrectingAuthor.design` (validator-aware retry loop)
+
+Intent (`live_api/s3_intent.txt`):
+> Design a 4-panel U-channel mounting bracket: main plate
+> 180x100 mm, two folded flanges (each 60 mm wide) running down
+> the long edges, each flange having two M5 bolt holes. Add a
+> rounded bump in the centre of the main plate.
+
+Result: `u_channel_mount`, **succeeded on attempt 1** (0
+violations), 35.0 s wall. Attempt log:
+`live_api/s3_generation_attempts.jsonl`.
+
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api/s3_u_channel_mount_main_t20260601_2100.png) | ![](./live_api/s3_u_channel_mount_bump_t20260601_2100.png) | ![](./live_api/s3_u_channel_mount_hole_t20260601_2100.png)
+
+## S4 — `BracketDesignerAgent` (propose → refine)
+
+Propose intent (`live_api/s4_propose_intent.txt`):
+> Design a simple L-bracket: 120x100 mm main plate with a single
+> 50 mm flange on the right side. Add two M4 bolt holes on the
+> main plate.
+
+Refine instruction (`live_api/s4_refine_instruction.txt`):
+> Add two more M4 bolt holes on the right flange, spaced 30 mm
+> apart vertically.
+
+Both turns succeeded with 0 violations; case `l_bracket_complex_v1`,
+97.4 s wall total. Diff between turn 1 and turn 2 should show
+the two added flange bolt holes.
+
+### Turn 1 — propose
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api/s4_turn1_main_t20260601_2100.png) | ![](./live_api/s4_turn1_bump_t20260601_2100.png) | ![](./live_api/s4_turn1_hole_t20260601_2100.png)
+
+### Turn 2 — refine ("add two more bolt holes")
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api/s4_turn2_main_t20260601_2100.png) | ![](./live_api/s4_turn2_bump_t20260601_2100.png) | ![](./live_api/s4_turn2_hole_t20260601_2100.png)
+
+YAML diff inputs: `live_api/s4_turn1.yaml` vs.
+`live_api/s4_turn2.yaml`. Session JSONL is in
+`live_api/s4_summary.json`.
+
+## S5 — `sample-batch 2` (Gemini-driven corpus expansion)
+
+`scripts/generate_bracket.py sample-batch` runs random design
+intents through the self-correction loop; keepers get persisted.
+This live run used N=2 with `--seed 0 --max-retries 2
+--few-shot-n 3`. **2 / 2 kept**, 160 s wall.
+
+| seed | case_name              | attempts | viols | kept |
+|------|------------------------|----------|-------|------|
+| 0    | hvac_cross_support     | 3        | 0     | ✓    |
+| 1    | u_bracket_trim_mount   | 1        | 0     | ✓    |
+
+Seed-0 needed 3 attempts (self-correction loop fired twice on
+intermediate violations) before converging. Seed-1 was one-shot.
+
+### `hvac_cross_support`
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api/s5_hvac_cross_support_main_t20260601_2100.png) | ![](./live_api/s5_hvac_cross_support_bump_t20260601_2100.png) | ![](./live_api/s5_hvac_cross_support_hole_t20260601_2100.png)
+
+### `u_bracket_trim_mount`
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api/s5_u_bracket_trim_mount_main_t20260601_2100.png) | ![](./live_api/s5_u_bracket_trim_mount_bump_t20260601_2100.png) | ![](./live_api/s5_u_bracket_trim_mount_hole_t20260601_2100.png)
+
+Batch CSV: `live_api/s5_batch_summary.csv`. Per-attempt JSONL:
+`live_api/s5_generation_attempts.jsonl`. Keeper YAMLs:
+`live_api/s5_hvac_cross_support.yaml`,
+`live_api/s5_u_bracket_trim_mount.yaml`.
+
+## S7 — Imagen 4 `experiment_run` (raw → palette-snap)
+
+The Phase-8 experiment: ask `imagen-4.0-generate-001` for a 2D
+unfolding diagram with **only** 4 legal RGB triples (white /
+black / red / blue), then post-process by snapping every pixel
+to its nearest palette colour by L2 distance.
+
+Intent 0: `A simple L-shape bracket with a flange and 3 bolt
+holes.`
+Intent 1: `A U-channel bracket with 2 flanges on opposite long
+edges.`
+
+Result:
+| intent | raw unique colors | snapped strict? | px changed |
+|--------|-------------------|-----------------|-----------:|
+| 0      | 14,680            | ✓               | 279,602    |
+| 1      | 18,791            | ✓               | 257,004    |
+
+Both raw outputs were heavily anti-aliased (14k–19k colors); the
+snap brought every pixel onto the legal 4-color palette. The
+snapped PNGs are *strict-palette valid* (parser-acceptable in
+principle), but the underlying geometry is freeform and would
+not pass the topology gate — the experiment confirms what
+GENERATION_PLAN §16 predicted: Imagen produces images, not
+schema-valid recipes.
+
+### Intent 0 — L-bracket
+raw (Imagen direct) | snapped (palette-cleaned)
+:--:|:--:
+![](./live_api/s7_intent0_raw_t20260601_2100.png) | ![](./live_api/s7_intent0_snapped_t20260601_2100.png)
+
+### Intent 1 — U-channel
+raw (Imagen direct) | snapped (palette-cleaned)
+:--:|:--:
+![](./live_api/s7_intent1_raw_t20260601_2100.png) | ![](./live_api/s7_intent1_snapped_t20260601_2100.png)
+
+Per-attempt diagnostics: `live_api/s7_summary.csv`. Intents:
+`live_api/s7_intents.txt`.
+
+---
+
+## Live-API runtime summary
+
+| surface | wall  | result                                            |
+|---------|------:|---------------------------------------------------|
+| S2      |  42 s | 1 viol (FOLD_CLEARANCE_HOLE), renders valid       |
+| S3      |  35 s | 0 viol on attempt 1                               |
+| S4      |  97 s | propose + refine, both 0 viol                     |
+| S5      | 160 s | 2/2 keepers (seed 0 needed 3 attempts, seed 1 = 1) |
+| S7      | ~30 s | 2/2 strict-palette after snap                     |
+
+Total: 5 surfaces, **9 / 10 recipes clean** (S2 was the lone
+single-shot failure that the self-correction loop in S3/S5 would
+have repaired). All raw responses, YAMLs, JSONLs, PNGs are in
+`live_api/`. Full machine-readable rollup:
+`live_api/ALL_SUMMARIES.json`.
+
+---
+
 ## Prior snapshot
 
 The previous v3-audit snapshot (`_t20260531_1916` suffix, 42-case

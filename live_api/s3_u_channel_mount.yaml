@@ -1,0 +1,197 @@
+schema_version: 1
+case_name: u_channel_mount
+scale_mm_per_px: 4
+pad_mm: 25
+intent_note: 'A 4-panel U-channel mounting bracket. The main plate (180x100mm) has
+  two
+
+  60mm wide flanges folded from the long edges. One flange has a wider cap
+
+  panel (80mm vs 60mm) folded with a valley fold. The main plate features
+
+  an irregular outline via a corner diagonal and a bottom tab carve with
+
+  concave fillets. It also includes two boss stiffeners (each with 2 bolts)
+
+  and a central pocket-with-bump feature. A fold-spanning bead reinforces one
+
+  of the main U-folds. All C1-C11 complexity rules are met.
+
+  '
+panels:
+- id: A
+  role: main
+  width_mm: 180.0
+  height_mm: 100.0
+  parent_fold: null
+  fold_axis: null
+  fold_direction: null
+  fold_position_mm: null
+  extends_above_parent_mm: 0.0
+  outline_carves:
+  - kind: corner_diagonal
+    corner: TL
+    inset_mm: 25.0
+  - kind: tab_carve
+    side: bottom
+    tab_width_mm: 50.0
+    tab_height_mm: 15.0
+    inset_from_edge_mm: 10.0
+    concave_fillet_radius_mm: 8.0
+  bumps:
+  - kind: boss_stiffener
+    center_xy_mm:
+    - 45.0
+    - 50.0
+    side_mm: 30.0
+    corner_radius_mm: 6.0
+    color: yellow
+    bolt_holes:
+    - center_xy_mm:
+      - 40.0
+      - 45.0
+      radius_mm: 2.5
+    - center_xy_mm:
+      - 50.0
+      - 55.0
+      radius_mm: 2.5
+  - kind: boss_stiffener
+    center_xy_mm:
+    - 135.0
+    - 50.0
+    side_mm: 30.0
+    corner_radius_mm: 6.0
+    color: yellow
+    bolt_holes:
+    - center_xy_mm:
+      - 130.0
+      - 45.0
+      radius_mm: 2.5
+    - center_xy_mm:
+      - 140.0
+      - 55.0
+      radius_mm: 2.5
+  - kind: pocket_bump
+    center_xy_mm:
+    - 90.0
+    - 25.0
+    width_mm: 60.0
+    height_mm: 30.0
+    corner_radius_mm: 8.0
+    color: yellow
+    paired_hole_offset_mm: 5.0
+  holes:
+  - kind: pocket_hole
+    center_xy_mm:
+    - 90.0
+    - 25.0
+    width_mm: 50.0
+    height_mm: 20.0
+    corner_radius_mm: 6.0
+  corner_fillets:
+  - corner: TR
+    radius_mm: 10.0
+- id: B
+  role: flange
+  width_mm: 60.0
+  height_mm: 100.0
+  parent_fold: AB
+  fold_axis: V
+  fold_direction: mountain
+  fold_position_mm: 0.0
+  extends_above_parent_mm: 0.0
+  outline_carves: []
+  bumps: []
+  holes:
+  - kind: sub_panel_bolt
+    center_xy_mm:
+    - 30.0
+    - 25.0
+    radius_mm: 2.5
+  - kind: sub_panel_bolt
+    center_xy_mm:
+    - 30.0
+    - 75.0
+    radius_mm: 2.5
+  corner_fillets:
+  - corner: TL
+    radius_mm: 8.0
+  - corner: BL
+    radius_mm: 8.0
+  - corner: BR
+    radius_mm: 8.0
+- id: C
+  role: flange
+  width_mm: 60.0
+  height_mm: 100.0
+  parent_fold: AC
+  fold_axis: V
+  fold_direction: mountain
+  fold_position_mm: 0.0
+  extends_above_parent_mm: 0.0
+  outline_carves: []
+  bumps: []
+  holes:
+  - kind: sub_panel_bolt
+    center_xy_mm:
+    - 30.0
+    - 25.0
+    radius_mm: 2.5
+  - kind: sub_panel_bolt
+    center_xy_mm:
+    - 30.0
+    - 75.0
+    radius_mm: 2.5
+  corner_fillets:
+  - corner: TR
+    radius_mm: 8.0
+  - corner: BR
+    radius_mm: 8.0
+  - corner: BL
+    radius_mm: 8.0
+- id: D
+  role: cap
+  width_mm: 80.0
+  height_mm: 15.0
+  parent_fold: CD
+  fold_axis: H
+  fold_direction: valley
+  fold_position_mm: 0.0
+  extends_above_parent_mm: 0.0
+  outline_carves: []
+  bumps: []
+  holes: []
+  corner_fillets:
+  - corner: TL
+    radius_mm: 5.0
+  - corner: TR
+    radius_mm: 5.0
+  - corner: BR
+    radius_mm: 5.0
+cross_panel_folds:
+- id: AB
+  color: mountain
+  parent_panel: A
+  child_panel: B
+  axis: V
+  parent_edge: left
+- id: AC
+  color: mountain
+  parent_panel: A
+  child_panel: C
+  axis: V
+  parent_edge: right
+- id: CD
+  color: valley
+  parent_panel: C
+  child_panel: D
+  axis: H
+  parent_edge: top
+cross_panel_features:
+- kind: fold_spanning_bead
+  anchor_fold: AB
+  length_mm: 50.0
+  width_mm: 8.0
+  corner_radius_mm: 4.0
+  color: yellow
+  center_offset_mm: 25.0

@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "n_attempts": 1,
+  "per_attempt": [
+    {
+      "attempt": 1,
+      "cached": false,
+      "parse_error": null,
+      "n_violations": 0,
+      "violation_codes": []
+    }
+  ],
+  "elapsed_sec": 35.02,
+  "case_name": "u_channel_mount"
+}

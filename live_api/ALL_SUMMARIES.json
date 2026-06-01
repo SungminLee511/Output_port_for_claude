@@ -1,0 +1,55 @@
+[
+  {
+    "surface": 2,
+    "ok": true,
+    "case_name": "ecu_mount_l_bracket",
+    "n_violations": 1
+  },
+  {
+    "surface": 3,
+    "ok": true,
+    "success": true,
+    "n_attempts": 1,
+    "per_attempt": [
+      {
+        "attempt": 1,
+        "cached": false,
+        "parse_error": null,
+        "n_violations": 0,
+        "violation_codes": []
+      }
+    ],
+    "elapsed_sec": 35.02,
+    "case_name": "u_channel_mount"
+  },
+  {
+    "surface": 4,
+    "ok": true,
+    "turn1": {
+      "case_name": "l_bracket_complex_v1",
+      "success": true,
+      "n_violations": 0,
+      "violation_codes": []
+    },
+    "turn2": {
+      "case_name": "l_bracket_complex_v1",
+      "success": true,
+      "n_violations": 0,
+      "violation_codes": []
+    },
+    "elapsed_sec": 97.36
+  },
+  {
+    "surface": 5,
+    "ok": true,
+    "n_kept": 2,
+    "n_total": 2,
+    "elapsed_sec": 159.86
+  },
+  {
+    "surface": 7,
+    "ok": true,
+    "n_results": 2,
+    "n_strict_after_snap": 2
+  }
+]
