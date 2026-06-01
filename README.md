@@ -549,6 +549,190 @@ have repaired). All raw responses, YAMLs, JSONLs, PNGs are in
 
 ---
 
+# Live-API: NEW 3-pass sequential generator (`_t20260601_2200`)
+
+The v1 live-API outputs (S2/S3/S4/S5/S7 above) used the
+single-shot `GeminiRecipeAuthor` + `GeminiSelfCorrectingAuthor`
+path. Some recipes still slipped through with residual violations
+(notably S2's `FOLD_CLEARANCE_HOLE`). The new default is a
+**3-pass sequential generator** (`GeminiSequentialAuthor`):
+
+  - **Stage A — skeleton.** Gemini emits only the rectangular
+    panels + axis-aligned folds + outline carves + corner fillets.
+    Stage-A validator suppresses every C-rule that depends on
+    bumps / holes (C5/C6/C7/C10/C11). Output is forcibly stripped
+    of any features Gemini accidentally emits.
+  - **Stage B — bump layer.** Skeleton is rendered to PNG; the
+    `main.png` and `bump.png` are passed as multimodal `Part`
+    inputs alongside the skeleton YAML. Gemini emits
+    `bumps_by_panel + cross_panel_features`. Stage-B validator
+    runs every gate EXCEPT C6/C11 (which need holes).
+  - **Stage C — hole layer.** Re-render with bumps; pass
+    updated `main.png` + `bump.png` to Gemini. Output:
+    `holes_by_panel`. Full validator runs — every C-rule and
+    clearance gate now applies.
+
+Each stage has its own retry budget (`max_retries`, default 2)
+with focused correction prompts that include the parse error
+and any violations on the previous attempt. Only the failing
+stage retries — Stage A success is never re-run.
+
+Code: `src/origami_gen/gemini/sequential_author.py`,
+`src/origami_gen/recipe/sequential.py`,
+`src/origami_gen/recipe/validate.py` (new
+`validate_skeleton/bump_layer/hole_layer` entries),
+`src/origami_gen/gemini/prompts.py` (new
+`stage_a/b/c_*` builders). CLI: `scripts/generate_bracket.py
+from-intent <intent> -o <dir>` and
+`sample-batch N -o <dir>` (sequential default; legacy via
+`--legacy-one-shot`).
+
+## API additions
+
+```python
+from origami_gen.gemini.sequential_author import (
+    GeminiSequentialAuthor,
+)
+
+author = GeminiSequentialAuthor(
+    few_shot_n=3, max_retries=2, use_cache=False,
+)
+result = author.design(intent="<natural language design intent>")
+# result.recipe              -> BracketRecipe | None
+# result.success             -> bool
+# result.stage_a_attempts    -> tuple[StageAttempt, ...]
+# result.stage_b_attempts    -> tuple[StageAttempt, ...]
+# result.stage_c_attempts    -> tuple[StageAttempt, ...]
+# result.skeleton_recipe     -> BracketRecipe | None  (post Stage A)
+# result.bumped_recipe       -> BracketRecipe | None  (post Stage B)
+
+author.emit_attempts_log(result, Path("attempts.jsonl"))
+```
+
+The agent + sample-batch surfaces now route through the
+sequential generator by default; legacy one-shot can be
+restored via `BracketDesignerAgent(use_sequential=False)` or
+`sample-batch --legacy-one-shot`.
+
+## Side-by-side results vs. v1 (one-shot)
+
+| surface | v1 (one-shot)                                  | v2 (sequential)                                  |
+|---------|------------------------------------------------|--------------------------------------------------|
+| S2      | 1 viol `FOLD_CLEARANCE_HOLE`, 42 s             | **0 viols**, 4 stage attempts (A:2 + B:1 + C:1), 146 s |
+| S4      | propose + refine, both 0 viols, 97 s           | propose + refine, both 0 viols, 166 s           |
+| S5      | 2/2 kept (seed 0 needed 3 retries)             | **2/2 kept, all clean**, 300 s (seed 0: 4 atts, seed 1: 5 atts) |
+| S7      | 2/2 strict-palette after snap                  | 2/2 strict-palette after snap (unchanged)        |
+
+Key delta: **S2 went from 1 violation → 0** with the same intent.
+S5 trades raw time for higher per-recipe quality (each stage
+narrows Gemini's task, so more total LLM round-trips, but the
+final recipes pass `validate_recipe_all` clean).
+
+## S2-seq — `GeminiSequentialAuthor.design` (ECU intent)
+
+Same intent as the v1 S2 (130×150 mm 5-panel L-bracket with
+boss + pocket bump + side flange + bolt holes). Result:
+`ecu_mount_l_bracket`, **0 violations**, 4 total stage attempts.
+Stage A first attempt had a Pydantic schema error (Gemini
+omitted `fold_axis` on child panels); the focused retry prompt
+included the parse error verbatim and the second Stage-A
+attempt parsed cleanly.
+
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api_seq/s2_seq_main_t20260601_2200.png) | ![](./live_api_seq/s2_seq_bump_t20260601_2200.png) | ![](./live_api_seq/s2_seq_hole_t20260601_2200.png)
+
+Per-attempt log: `live_api_seq/s2_seq_attempts.jsonl`. Stage raws:
+`live_api_seq/s2_seq_summary.json` (4 stage raws referenced).
+
+## S4-seq — `BracketDesignerAgent` (sequential propose + refine)
+
+Same intents as v1 S4. Both turns 0 violations. Sequential
+propose ran A→B→C clean on the first try (all stages
+single-attempt).
+
+### Turn 1 — propose
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api_seq/s4_seq_turn1_main_t20260601_2200.png) | ![](./live_api_seq/s4_seq_turn1_bump_t20260601_2200.png) | ![](./live_api_seq/s4_seq_turn1_hole_t20260601_2200.png)
+
+### Turn 2 — refine ("add two more bolt holes")
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api_seq/s4_seq_turn2_main_t20260601_2200.png) | ![](./live_api_seq/s4_seq_turn2_bump_t20260601_2200.png) | ![](./live_api_seq/s4_seq_turn2_hole_t20260601_2200.png)
+
+YAML diff inputs: `live_api_seq/s4_seq_turn1.yaml` vs.
+`live_api_seq/s4_seq_turn2.yaml`. The refine step still uses
+the legacy one-shot path because the existing recipe is already
+fully featured; sequential is only used on the initial propose.
+
+## S5-seq — `sample-batch 2` (sequential)
+
+Same N=2 random intents as v1 S5 with `--seed 0 --max-retries 2
+--few-shot-n 3`. **2 / 2 kept, all clean** (`final_n_violations=0`
+on both). Total stage attempts:
+
+| seed | case_name              | total attempts | viols | kept |
+|------|------------------------|----------------|-------|------|
+| 0    | cross_bracket_hvac     | 4              | 0     | ✓    |
+| 1    | u_bracket_trim_mount   | 5              | 0     | ✓    |
+
+### `cross_bracket_hvac`
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api_seq/s5_seq_cross_bracket_hvac_main_t20260601_2200.png) | ![](./live_api_seq/s5_seq_cross_bracket_hvac_bump_t20260601_2200.png) | ![](./live_api_seq/s5_seq_cross_bracket_hvac_hole_t20260601_2200.png)
+
+### `u_bracket_trim_mount`
+main | bump | hole
+:--:|:--:|:--:
+![](./live_api_seq/s5_seq_u_bracket_trim_mount_main_t20260601_2200.png) | ![](./live_api_seq/s5_seq_u_bracket_trim_mount_bump_t20260601_2200.png) | ![](./live_api_seq/s5_seq_u_bracket_trim_mount_hole_t20260601_2200.png)
+
+Batch summary CSV: `live_api_seq/s5_seq_batch_summary.csv`. Per-
+attempt JSONL: `live_api_seq/s5_seq_attempts.jsonl`. Keeper
+YAMLs in `live_api_seq/s5_seq_*.yaml`.
+
+## S7 — Imagen 4 `experiment_run` (unchanged)
+
+The Imagen experiment is independent of the recipe generator and
+behaves identically to v1. Both intents render heavily anti-aliased
+(15k–32k unique colors) raw images that the palette-snap brings
+down to the legal 4 colors. Schema-conforming pixels, freeform
+geometry — same caveat as v1.
+
+| intent | raw unique colors | snapped strict? | px changed |
+|--------|-------------------|-----------------|-----------:|
+| 0      | 14,977            | ✓               | 246,010    |
+| 1      | 31,840            | ✓               | 302,062    |
+
+### Intent 0 — L-bracket
+raw | snapped
+:--:|:--:
+![](./live_api_seq/s7_intent0_raw_t20260601_2200.png) | ![](./live_api_seq/s7_intent0_snapped_t20260601_2200.png)
+
+### Intent 1 — U-channel
+raw | snapped
+:--:|:--:
+![](./live_api_seq/s7_intent1_raw_t20260601_2200.png) | ![](./live_api_seq/s7_intent1_snapped_t20260601_2200.png)
+
+---
+
+## Sequential runtime + acceptance summary
+
+| surface | wall  | result (sequential)                              |
+|---------|------:|--------------------------------------------------|
+| S2-seq  | 146 s | 0 viols (was 1 in v1); 4 stage attempts          |
+| S4-seq  | 166 s | propose + refine, both 0 viols                   |
+| S5-seq  | 300 s | 2/2 keepers ALL clean (vs. 2/2 with seed-0 noisy in v1) |
+| S7      | ~30 s | 2/2 strict-palette after snap                    |
+
+**Net: 4/4 recipe-generation surfaces produce clean (zero-violation)
+recipes**, where v1 had 1 stray FOLD_CLEARANCE_HOLE on S2. Stage
+A self-corrects schema errors before Stage B/C ever run, so an
+expensive Stage-C retry on a malformed skeleton is impossible.
+Full machine-readable rollup: `live_api_seq/ALL_SUMMARIES.json`.
+
+---
+
 ## Prior snapshot
 
 The previous v3-audit snapshot (`_t20260531_1916` suffix, 42-case

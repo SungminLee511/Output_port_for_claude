@@ -1,0 +1,39 @@
+{
+  "success": true,
+  "stage_a_attempts": 2,
+  "stage_b_attempts": 1,
+  "stage_c_attempts": 1,
+  "per_attempt": [
+    {
+      "stage": "A",
+      "attempt": 1,
+      "parse_error": "Stage-A schema validation failed: 4 validation errors for BracketRecipe\npanels.1\n  Value error, PanelSpec 'B': parent_fold is set but fold_axis is null. [type=value_error, input_value={'id': 'B', 'role': 'flan...bumps': [], 'holes': []}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error\npanels.2\n  Value error, PanelSpec 'C': parent_fold is set but fold_axis is null. [type=value_error, input_value={'id': 'C', 'role': 'cap'...], 'corner_fillets': []}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error\npanels.3\n  Value error, PanelSpec 'D': parent_fold is set but fold_axis is null. [type=value_error, input_value={'id': 'D', 'role': 'cap'...bumps': [], 'holes': []}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error\npanels.4\n  Value error, PanelSpec 'E': parent_fold is set but fold_axis is null. [type=value_error, input_value={'id': 'E', 'role': 'cap'...bumps': [], 'holes': []}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error",
+      "n_violations": 0,
+      "violation_codes": []
+    },
+    {
+      "stage": "A",
+      "attempt": 2,
+      "parse_error": null,
+      "n_violations": 0,
+      "violation_codes": []
+    },
+    {
+      "stage": "B",
+      "attempt": 1,
+      "parse_error": null,
+      "n_violations": 0,
+      "violation_codes": []
+    },
+    {
+      "stage": "C",
+      "attempt": 1,
+      "parse_error": null,
+      "n_violations": 0,
+      "violation_codes": []
+    }
+  ],
+  "elapsed_sec": 145.5,
+  "case_name": "ecu_mount_l_bracket",
+  "final_n_violations": 0
+}
