@@ -1,4 +1,0 @@
-seed,case_name,success,elapsed_sec,error,intent
-0,channel_bracket_simple,True,61.9,"","Design a channel bracket: main plate 160x100 mm with three f"
-1,l_bracket_3_panel_simple,True,54.7,"","Design a 3-panel L-bracket: main plate 180x100 mm with a sin"
-2,simple_hinge_100x100,True,38.2,"","Design a simple 2-panel hinge bracket, main plate 100x100 mm"

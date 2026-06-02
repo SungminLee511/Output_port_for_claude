@@ -1,1 +1,0 @@
-Design a simple L-bracket: 120x100 mm main plate with a single 50 mm flange on the right side. Add two M4 bolt holes on the main plate.

@@ -1,8 +1,0 @@
-{
-  "intent": "Design a simple L-bracket: 120x100 mm main plate with one flange folding up off the right edge, single mountain fold. No bumps or holes \u2014 just panels + fold.",
-  "success": true,
-  "error": null,
-  "elapsed_sec": 28.72,
-  "case_name": "simple_l_bracket_basic",
-  "source_chars": 2821
-}

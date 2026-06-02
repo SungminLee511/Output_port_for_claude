@@ -1,2 +1,0 @@
-A simple L-shape bracket with a flange and 3 bolt holes.
-A U-channel bracket with 2 flanges on opposite long edges.

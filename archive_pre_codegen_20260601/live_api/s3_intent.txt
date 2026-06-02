@@ -1,1 +1,0 @@
-Design a 4-panel U-channel mounting bracket: main plate 180x100 mm, two folded flanges (each 60 mm wide) running down the long edges, each flange having two M5 bolt holes. Add a rounded bump in the centre of the main plate.

@@ -1,3 +1,0 @@
-seed,case_name,success,n_attempts,final_n_violations,kept,intent
-0,cross_bracket_hvac,True,4,0,True,"Design a cross-shaped bracket for a HVAC duct support with f"
-1,u_bracket_trim_mount,True,5,0,True,"Design a U-bracket for an interior trim mount with caps on b"

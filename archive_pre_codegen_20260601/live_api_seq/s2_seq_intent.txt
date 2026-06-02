@@ -1,1 +1,0 @@
-Design a 5-panel L-bracket for an automotive ECU mount: main plate 130x150 mm with three M6 bolt holes near the corners on the front, plus one rounded pocket bump for a boss feature in the centre. Add a flat flange on the right side with two more bolt holes.

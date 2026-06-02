@@ -1,1 +1,0 @@
-Design a U-channel mounting bracket: 180x100 mm main plate with two flanges folding up off the left and right long edges, each flange 60 mm wide. Mountain folds on both sides. Add a single circular bolt hole on the main plate.
