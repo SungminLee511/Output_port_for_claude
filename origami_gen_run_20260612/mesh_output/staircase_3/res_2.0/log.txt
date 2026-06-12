@@ -1,0 +1,3 @@
+audit run @ 1781233599.1493728
+case=staircase_3 resolution=2.0
+OK: done

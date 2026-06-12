@@ -1,0 +1,3 @@
+audit run @ 1781233585.1923704
+case=mismatched_resolution resolution=2.0
+OK: done
