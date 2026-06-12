@@ -1,0 +1,3 @@
+audit run @ 1781257087.3257618
+case=closed_box resolution=4.0
+OK: done

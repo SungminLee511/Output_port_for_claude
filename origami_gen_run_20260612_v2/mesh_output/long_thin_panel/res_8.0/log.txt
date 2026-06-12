@@ -1,0 +1,3 @@
+audit run @ 1781257100.5232553
+case=long_thin_panel resolution=8.0
+OK: done
