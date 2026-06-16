@@ -1,0 +1,377 @@
+/* ==========================================================================
+   Paradise Hotel Busan & Haeundae Area Guide
+   Simple, mobile-first stylesheet.
+   ========================================================================== */
+
+/* ---- Reset & base ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #1f2933;
+  background: #ffffff;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: #0b6bcb;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+/* ---- Layout container ---- */
+.container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ---- Sticky top navigation ---- */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #ffffff;
+  border-bottom: 1px solid #e4e7eb;
+}
+
+.topnav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  gap: 8px;
+}
+
+.brand {
+  font-weight: 700;
+  color: #1f2933;
+  font-size: 1rem;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 1px solid #cbd2d9;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  display: inline-block;
+  padding: 6px 10px;
+  color: #334e68;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  background: #f0f4f8;
+  text-decoration: none;
+}
+
+/* Mobile: collapse nav into a toggleable list */
+@media (max-width: 720px) {
+  .menu-toggle {
+    display: inline-block;
+  }
+  .nav-links {
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 4px;
+    display: none;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+}
+
+/* ---- Hero / header ---- */
+.hero {
+  padding: 28px 0 24px;
+  background: #f7fafc;
+  border-bottom: 1px solid #e4e7eb;
+}
+
+.hero h1 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+.hero .subtitle {
+  margin: 0 0 16px;
+  color: #486581;
+}
+
+.quick-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (min-width: 720px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1f2933;
+  background: #f0f4f8;
+  border: 1px solid #cbd2d9;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  min-height: 44px; /* easy tap target on mobile */
+  line-height: 1.4;
+}
+
+.btn:hover,
+.btn:focus {
+  background: #e4ebf2;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: #0b6bcb;
+  color: #ffffff;
+  border-color: #0b6bcb;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: #095ba9;
+  color: #ffffff;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* ---- Section ---- */
+.section {
+  padding: 28px 0;
+}
+
+.section-alt {
+  background: #f7fafc;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  margin: 0 0 16px;
+  border-left: 4px solid #0b6bcb;
+  padding-left: 10px;
+}
+
+@media (min-width: 720px) {
+  .section h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* ---- Cards ---- */
+.card {
+  background: #f4f6f9;
+  border: 1px solid #e4e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  color: #102a43;
+}
+
+.card p {
+  margin: 6px 0;
+}
+
+.card .meta {
+  color: #486581;
+  font-size: 0.92rem;
+}
+
+.card .btn {
+  margin-top: 8px;
+}
+
+.card.center {
+  text-align: center;
+}
+
+/* ---- Grid layout for cards ---- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---- Search row ---- */
+.search-row {
+  margin-bottom: 12px;
+}
+
+.search-row input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1px solid #cbd2d9;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1f2933;
+}
+
+.search-row input:focus {
+  outline: 2px solid #0b6bcb;
+  outline-offset: 1px;
+}
+
+/* ---- Contact list ---- */
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px;
+}
+
+.contact-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #e4e7eb;
+}
+
+.contact-list li:last-child {
+  border-bottom: 0;
+}
+
+/* ---- QR placeholder ---- */
+.qr-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  margin: 16px auto;
+  border: 2px dashed #9aa5b1;
+  border-radius: 12px;
+  color: #486581;
+  font-weight: 600;
+  background: #ffffff;
+  text-align: center;
+  padding: 8px;
+}
+
+/* ---- Helpers ---- */
+.muted {
+  color: #627d98;
+  font-size: 0.92rem;
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+/* ---- Footer ---- */
+.site-footer {
+  background: #102a43;
+  color: #f0f4f8;
+  padding: 18px 0;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.site-footer a {
+  color: #9fd3ff;
+}
+
+.site-footer .muted {
+  color: #9aa5b1;
+}
+
+/* ---- Back to top button ---- */
+.back-to-top {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: #0b6bcb;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(16, 42, 67, 0.25);
+  z-index: 60;
+}
+
+.back-to-top:hover,
+.back-to-top:focus {
+  background: #095ba9;
+}
+
+/* ---- Focus visibility for accessibility ---- */
+:focus-visible {
+  outline: 2px solid #0b6bcb;
+  outline-offset: 2px;
+}
