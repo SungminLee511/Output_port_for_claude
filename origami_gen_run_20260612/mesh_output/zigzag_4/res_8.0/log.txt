@@ -1,3 +1,0 @@
-audit run @ 1781233651.2351842
-case=zigzag_4 resolution=8.0
-OK: done

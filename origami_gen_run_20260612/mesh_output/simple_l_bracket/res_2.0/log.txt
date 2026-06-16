@@ -1,3 +1,0 @@
-audit run @ 1781233588.2250092
-case=simple_l_bracket resolution=2.0
-OK: done

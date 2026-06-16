@@ -1,3 +1,0 @@
-audit run @ 1781257089.1387706
-case=cross resolution=2.0
-OK: done

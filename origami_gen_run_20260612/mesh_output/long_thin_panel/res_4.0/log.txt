@@ -1,3 +1,0 @@
-audit run @ 1781233584.7479825
-case=long_thin_panel resolution=4.0
-OK: done

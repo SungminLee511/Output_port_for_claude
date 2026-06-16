@@ -1,3 +1,0 @@
-audit run @ 1781257101.0311544
-case=mismatched_resolution resolution=8.0
-OK: done

@@ -1,3 +1,0 @@
-audit run @ 1781233588.1060605
-case=multi_hole_strip resolution=8.0
-OK: done

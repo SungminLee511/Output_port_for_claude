@@ -1,3 +1,0 @@
-audit run @ 1781257108.4215355
-case=tab_plate_4 resolution=8.0
-OK: done

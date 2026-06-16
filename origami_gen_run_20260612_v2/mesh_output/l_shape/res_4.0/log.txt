@@ -1,3 +1,0 @@
-audit run @ 1781257098.8289497
-case=l_shape resolution=4.0
-OK: done

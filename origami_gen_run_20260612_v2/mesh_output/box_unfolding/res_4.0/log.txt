@@ -1,3 +1,0 @@
-audit run @ 1781257015.5207908
-case=box_unfolding resolution=4.0
-OK: done

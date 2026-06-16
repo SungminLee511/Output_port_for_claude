@@ -1,3 +1,0 @@
-audit run @ 1781233075.7285638
-case=bracket_v16 resolution=8.0
-OK: done
