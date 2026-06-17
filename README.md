@@ -12,3 +12,10 @@ Run:
 
 Outputs are written to `results/`.
 
+Per-case pointcloud visualizations:
+
+```bash
+/home/sky/miniconda3/bin/conda run -n SML_env python -u pointcloud_case_visuals.py
+```
+
+Outputs are written to `results/pointclouds/`.
