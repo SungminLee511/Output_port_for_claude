@@ -1,0 +1,36 @@
+{
+  "n_samples": 45,
+  "total_size_gb": 7.300388642586768,
+  "frequency_hz": {
+    "min": 245.04534052876028,
+    "mean": 873.144263170916,
+    "max": 1828.6994661860751
+  },
+  "total_mass_kg": {
+    "min": 4.079871372066084,
+    "mean": 11.498785182126037,
+    "max": 30.62645960533405
+  },
+  "groups": [
+    {
+      "group": "g1",
+      "samples": 20,
+      "frequency_mean_hz": 1025.1629456104013,
+      "frequency_min_hz": 321.12719289859075,
+      "frequency_max_hz": 1784.598470748956,
+      "mass_mean_kg": 11.361933536981384,
+      "nodes_mean": 487642.25,
+      "ctetra_mean": 287580.2
+    },
+    {
+      "group": "g2",
+      "samples": 25,
+      "frequency_mean_hz": 751.5293172193279,
+      "frequency_min_hz": 245.04534052876028,
+      "frequency_max_hz": 1828.6994661860751,
+      "mass_mean_kg": 11.608266498241756,
+      "nodes_mean": 524505.76,
+      "ctetra_mean": 306229.32
+    }
+  ]
+}
