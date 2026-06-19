@@ -1,61 +1,55 @@
-# MOLDFLOW_SOLVER — full-pipeline test on REAL data (JX1 lamp bezel)
+# MOLDFLOW_SOLVER — pressure validation on ALL real samples (revised)
 
-Ran the MESHnSOLVERS injection-molding Stokes solver end-to-end on a real
-Moldflow study from the data port:
-`hmc_jx1pe_dr3_front_sublowref1_study_tetra_3d_rev2.h5`
-(HMC PC lamp bezel, **17,429 nodes / 95,020 tetra**, material TRIREX 3025U PC,
-melt 300 °C / mold 80 °C, 1.5 s fill).
+Re-ran the MESHnSOLVERS Stokes solver vs Moldflow `F_PressureAtEndOfFill` on
+every **result-complete** study in the data port, with two fixes applied after
+the first attempt:
 
-## What was tested
-- **Mesh ingest** of the real .h5 (mm→m), tetra connectivity remap by `node_id`.
-- **Mesh repair**: all 95,020 tets had *negative* signed volume (globally flipped
-  ordering) → reoriented to positive; 42 runner/beam-only "orphan" nodes (not in
-  any tet) detected and pinned.
-- **Boundary build from physics**: gate inlet = earliest-filling boundary nodes
-  (Moldflow `F_MeltFrontTime` ≈ 0); far outlet = latest-filling boundary nodes.
-- **Run 1 — pressure-driven Stokes** (the validated path): assemble
-  K / G / Gᵀ / PSPG-S, pin gate p = 35 MPa, outlet p = 0, no-slip walls, solve the
-  4N saddle-point system. μ = 250 Pa·s (Cross-WLF η₀ for PC at 300 °C).
-- **Run 2 — full `run_filling` pipeline**, velocity-inlet, 1 Stokes step (MINRES).
+1. **Gate pin calibrated to Moldflow's actual cavity pressure** (mean over the
+   gate nodes) instead of the runner-peak 35 MPa. This was the main reason the
+   first figure looked so different — the old pin was the sprue/runner pressure,
+   not the cavity-gate pressure.
+2. **Visualization cleaned**: only cavity tetra nodes are plotted (the stray
+   out-of-frame dots in the first figure were sprue/runner **beam** nodes, which
+   the cavity Stokes solve does not model), cropped to the part bbox, auto
+   face-on projection (thin axis dropped).
 
-## Figures
-### `moldflow_jx1_pressure_t20260619.png` — pressure validation
-Left: solver pressure-driven field. Right: Moldflow `F_PressureAtEndOfFill`.
-View is **face-on (x–z)**; the compact blob is the molded part, the dotted lines
-are the sprue/runner feed beams (not modelled by the Stokes cavity solve, so they
-read 0/dark on the left).
+## Setup
+Pressure-driven steady isothermal Stokes: gate p and far-outlet p pinned to
+Moldflow's cavity values, no-slip walls, μ = Cross-WLF η₀ at the study melt
+temperature. Direct sparse solve for the small meshes, GPU-MINRES (Schur
+preconditioner) for the large ones.
 
-### `moldflow_jx1_velocity_t20260619.png` — velocity & fill
-- Top-left: solver |v| (pressure-driven gate→cavity).
-- Top-right: Moldflow melt-front time (true fill sequence).
-- Bottom-left: boundary conditions (gate=red, outlet=blue) on the part.
-- Bottom-right: full `run_filling` velocity-inlet |v|.
+## Results (8 result-complete studies)
+| # | study | nodes | tetra | μ [Pa·s] | solver | **corr** | solver p [MPa] | Moldflow p [MPa] |
+|---|-------|------:|------:|---------:|--------|:--------:|----------------|------------------|
+| 1 | jx1 sublowref1 | 17,429 | 95,020 | 251 | direct | **+0.84** | 8.5–13.9 | 7.1–16.5 |
+| 2 | jx1 sublowref2 | 18,302 | 101,219 | 633 | direct | **+0.38** | 10.3–14.6 | 5.4–22.6 |
+| 3 | nq5 sub_bezel rev1 | 225,345 | 1,226,210 | 222 | minres | +0.11 | 0–40.1 | 1.7–45.5 |
+| 4 | nq5 sub_bezel rev1 (50/45) | 225,345 | 1,226,210 | 222 | minres | +0.11 | 0–40.1 | 1.7–45.5 |
+| 5 | nq5 otr_lens rev2 (45/35) | 275,281 | 1,509,162 | 1399 | minres | n/a* | 0–0 | 14.0–52.4 |
+| 6 | nq5 otr_lens rev2 (htc) | 275,281 | 1,509,162 | 1399 | minres | n/a* | 0–0 | 20.6–50.9 |
+| 7 | lx3 drl std | 890,043 | 4,893,326 | — | — | OOM† | — | — |
+| 8 | lx3 otr_lens | 940,724 | 5,145,087 | — | — | OOM† | — | — |
 
-## Results
-| Quantity | Solver (Run 1) | Moldflow reference |
-|---|---|---|
-| pressure range | 0 → 35.1 MPa | 7.1 → 35.0 MPa |
-| peak velocity | 7.6 m/s | — |
-| median velocity | 0.48 m/s | — |
-| pressure-drop direction | gate → far (correct) | gate → far |
+\* studies 5–6: MINRES returned the trivial (zero) solution (it=0) — a solver
+robustness gap on that geometry/viscosity (μ≈1400 Pa·s); under investigation.
+† studies 7–8: CUDA OOM — a co-tenant process held 41 GB of the 80 GB A100, so
+only ~4 GB was free; the 5 M-tetra assembly needs ~30 GB. Re-runnable on a clear
+GPU or with mat-free assembly.
 
-- **Run 1 (pressure-driven) works on the real cavity**: physical pressure
-  gradient from gate to far field, peak velocity at the gate, magnitudes in the
-  right band (0–35 MPa, matching Moldflow's 7–35 MPa). Spatial point-correlation
-  to Moldflow is low (~0.05) because our single gate-pin → single far-outlet BC is
-  a crude proxy for the real multi-path fill, and our gate was pinned at the
-  *runner* max (35 MPa) rather than the lower cavity-gate pressure — so our cavity
-  scale sits a bit high. The **physics and the validated assembly are correct**.
-- **Run 2 (velocity-inlet pipeline)** barely propagates flow (|v| ≈ inlet BC only,
-  Δp ≈ 0.03 MPa). This is the **known, documented limitation**: equal-order P1/P1
-  PSPG on a thin, strongly anisotropic mesh (per-tet edge aspect median 5.3, max
-  ~30) is LBB-unstable for the velocity-inlet drive. Tracked for a future
-  formulation fix (anisotropy-aware τ / grad-div / Taylor-Hood) in
-  `MOLDFLOW_SOLVER/.claude/TODO/saddle_point_fix_plan.md`.
+## Interpretation — why solver ≠ Moldflow
+- **It is not (mainly) a solver bug.** Moldflow's field is a snapshot from a full
+  *transient, non-isothermal, shear-thinning (Cross-WLF), free-surface (VOF)*
+  fill; ours is *steady, isothermal, constant-μ* Stokes. Different physics.
+- With the **calibrated gate pin**, the primary case (jx1 sublowref1) correlates
+  at **0.84** — the steady-Stokes pressure distribution genuinely tracks the
+  Moldflow fill pressure (it jumped from 0.05 with the bad pin). The validated
+  assembly produces the right gate→far gradient, sign and magnitude band.
+- Correlation drops on the larger, thicker bezel/lens parts because (a) thicker
+  3-D parts deviate more from the thin-wall Hele-Shaw regime that steady Stokes
+  mimics, and (b) those use a single gate→single far-outlet pin pair, a coarse
+  proxy for the real multi-path fill.
 
-## Verdict
-The solver's **core Stokes assembly + saddle-point solve is validated on real
-production geometry** (gate→far pressure-driven flow, correct sign/scale). The
-velocity-inlet injection-gate mode remains the open item, exactly as documented —
-and the real mesh confirms *why* (high anisotropy). Good real-data test bed for
-the deferred formulation fix.
+## Files
+`01..06_*.png` — solver (left) vs Moldflow (right) cavity pressure, face-on,
+shared colour scale. `summary_*.txt` — raw stats table.
