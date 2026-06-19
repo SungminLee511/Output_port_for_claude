@@ -1,3 +1,0 @@
-audit run @ 1781846625.977675
-case=cross_fold_demo resolution=4.0
-OK: done

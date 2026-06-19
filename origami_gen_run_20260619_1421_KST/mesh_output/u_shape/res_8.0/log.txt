@@ -1,3 +1,0 @@
-audit run @ 1781846660.6769023
-case=u_shape resolution=8.0
-OK: done

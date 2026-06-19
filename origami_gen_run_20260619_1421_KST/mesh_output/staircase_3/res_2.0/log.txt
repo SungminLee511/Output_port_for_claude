@@ -1,3 +1,0 @@
-audit run @ 1781846641.9161873
-case=staircase_3 resolution=2.0
-OK: done

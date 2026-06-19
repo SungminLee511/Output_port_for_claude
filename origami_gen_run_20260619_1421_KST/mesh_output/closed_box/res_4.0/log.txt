@@ -1,3 +1,0 @@
-audit run @ 1781846621.2523725
-case=closed_box resolution=4.0
-OK: done

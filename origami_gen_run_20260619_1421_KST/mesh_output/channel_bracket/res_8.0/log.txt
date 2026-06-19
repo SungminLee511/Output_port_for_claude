@@ -1,3 +1,0 @@
-audit run @ 1781846616.855345
-case=channel_bracket resolution=8.0
-OK: done
