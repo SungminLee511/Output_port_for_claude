@@ -29,3 +29,25 @@ Per-body (best): body1 0.349 / dircos 0.94, body2 0.193 / 0.98, body3 0.447 / 0.
 
 Panels: (1) rel-L2 across the campaign, (2) per-node displacement magnitude vs GT
 (ideal = diagonal), (3) magnitude distribution GT vs solver.
+
+## Generalisation across boundary conditions (R3)
+
+![generalisation](bc_generalisation_t20260623.png)
+
+The BC01 recipe (k=5, eps=5e4, μ=0.07) applied **verbatim** to BC02/05/10:
+
+| BC | rel-L2 | rel-L2 (1 global scale) | scale | dir-cos |
+|---|---|---|---|---|
+| BC01 | 0.282 | 0.27 | 0.95 | 0.957 |
+| BC05 | 0.244 | 0.222 | 0.906 | 0.974 |
+| BC02 | 1.25 | ~0.35 | 0.43 | 0.917 |
+| BC10 | 1.59 | 0.363 | 0.375 | 0.945 |
+
+**Honest verdict:** the **deformation shape generalises** — dir-cos ≥ 0.92 on
+every BC and every body. **Magnitude is overfit to BC01's load level**: k=5 was
+calibrated on BC01, so BC01/BC05 (similar load ratio) hit the rel-L2 ≤ 0.30
+target, while heavier-load BC02/BC10 over-deflect ~2.3–2.7×. Removing one global
+scale collapses all four to rel-L2 ≈ 0.27–0.36 → the residual is almost entirely
+a single scalar. Root cause: the rubber pad was given only as a 0/1 mask with no
+stiffness; the correct fix is the pad's real modulus, not a solver change. The
+contact solver (AL-N2S + AMG-PCG) itself is validated.
