@@ -33,3 +33,19 @@ input construction (separate body + mft/pressure field per shot) — same input-
 theme, deeper refinement, still not a solver bug.
 
 ![nq5](moldflow_inlet_fix_nq5_t20260625.png)
+
+## Overmolding (otr_lens) — per-shot fix
+OM studies are **two shots = two separate connected bodies** (comp0=124811 nodes
+shot1, comp1=150236 shot2). Old single-domain solve → nan. Fix: solve **per shot** —
+pick each shot's body (component where its `F_MeltFrontTime[_OM]` is defined), map
+that shot's gate footprint by proximity, use that shot's `F_PressureAtEndOfFill[_OM]`
+as target. Also dropped degenerate (zero-volume) tets in assembly.
+
+| case | shot | old | NEW |
+|---|---|---|---|
+| otr_lens_htc | shot1 | nan | 0.90 |
+| otr_lens_htc | shot2 (OM) | nan | 0.81 |
+| otr_lens_45_35 | shot1 | nan | 0.81 |
+| otr_lens_45_35 | shot2 (OM) | nan | 0.90 |
+
+![overmolding](moldflow_overmolding_fix_t20260625.png)
