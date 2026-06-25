@@ -1,7 +1,0 @@
-file	N	E	mu	solver	corr	solP_lo	solP_hi	mfP_lo	mfP_hi	vmax	s
-hmc_jx1pe_dr3_front_sublowref1_rev2.h5	17429	95020	251.15	direct	0.84	8.53	13.87	7.08	16.48	0.72	37.22
-hmc_jx1pe_dr3_front_sublowref2_rev3.h5	18302	101219	632.88	direct	0.38	10.3	14.62	5.42	22.58	0.55	68.27
-nq5_fl_rc_os_sub_bezel_ece__opt__rev1.h5	225345	1226210	222.49	minres(it=46,res=9.3e-07)	0.11	-0.0	40.14	1.67	45.47	0.0	5.07
-nq5_fl_rc_os_sub_bezel_ece__opt__rev1__50_45.h	225345	1226210	222.49	minres(it=46,res=9.6e-07)	0.11	-0.0	40.14	1.67	45.47	0.0	5.18
-nq5_fl_rc_os_otr_lens_black2_rev2___45_35___co	275281	1509162	1399.19	minres(it=0,res=0.0e+00)	nan	0.0	0.0	14.03	52.42	0.0	4.76
-nq5_fl_rc_os_otr_lens_black2_rev2__htc.h5	275281	1509162	1399.19	minres(it=0,res=0.0e+00)	nan	0.0	0.0	20.64	50.88	0.0	4.5
