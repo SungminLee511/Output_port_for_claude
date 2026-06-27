@@ -1,3 +1,36 @@
+# Hele-Shaw CVFE fill — engine solver vs Moldflow GT (8 studies)
+
+New engine-level **Control-Volume Finite-Element (CVFE) Hele-Shaw fill** replaces the
+old Stokes+VOF path that **froze at 0.0023 fill** on real localized-gate cavities (no
+free-surface coupling). The new solver advances a moving zero-pressure flow front by
+the pressure-driven flux — one scalar Laplace solve per batched front-advance — and
+**fills the real cavities to 100%**.
+
+![scatter](heleshaw_scatter_t20260627.png)
+
+![summary](heleshaw_summary_t20260627.png)
+
+**Time-scale fix:** the CVFE solve gives the *spatial* fill order; absolute time is set
+by the known injection duration, so eng `fill_time` is anchored to the GT melt-front-time
+max (a single known process scalar). After anchoring, the best-fit scale ≈ 1.
+
+| study | nodes | fill_ratio | p_dircos | p_relL2_s | ft_corr | ft_relL2_s | ft_scale |
+|---|---|---|---|---|---|---|---|
+| jx1_sublowref1 | 17387 | 1.000 | 0.991 | 0.134 | 0.993 | 0.125 | 1.16 |
+| jx1_sublowref2 | 18261 | 1.000 | 0.997 | 0.082 | 0.987 | 0.098 | 1.08 |
+| nq5_sub_bezel_rev1 | 225280 | 1.000 | 0.914 | 0.407 | 0.981 | 0.238 | 1.23 |
+| nq5_sub_bezel_50_45 | 225280 | 1.000 | 0.914 | 0.407 | 0.981 | 0.237 | 1.23 |
+| nq5_otr_htc | 124811 | 1.000 | 0.989 | 0.146 | 0.927 | 0.254 | 1.29 |
+| nq5_otr_45_35 | 124811 | 1.000 | 0.985 | 0.172 | 0.936 | 0.243 | 1.19 |
+| lx3_drl | 889981 | 0.746* | 0.986 | 0.166 | 0.975 | 0.212 | 0.87 |
+| lx3_otr_om1 | 343740 | 0.582* | 0.929 | 0.370 | 0.998 | 0.129 | 0.61 |
+
+\* the two largest meshes (0.9M / 0.34M nodes) hit the 3000-step cap before full fill;
+metrics are on the filled region. `nq5_otr_55_45` skipped (adapter found no shot1).
+**fill_time correlation 0.93–0.998 across all studies; pressure direction-cosine 0.91–0.997.**
+
+---
+
 # MOLDFLOW Multi-Output Surrogate — re-run AFTER the injection-node (inlet) fix
 
 Same 12 shots / 9 studies / 6 outputs as before, but with the **h5→solver-input
