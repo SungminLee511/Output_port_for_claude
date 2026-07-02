@@ -15,7 +15,7 @@ Strategy Code · Run**, plus an isolated draft store and Run gating.
 ![customdata](./bt_customData_t20260702b.png)
 
 ## Strategy Code
-![code](./bt_strategyCode_t20260702b.png)
+![code](./bt_strategyCode_t20260702c.png)
 
 ## Run sub-tab (params + results + History; Run disabled until draft saved)
 ![run](./bt_run_t20260702b.png)
