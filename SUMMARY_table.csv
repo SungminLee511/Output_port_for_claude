@@ -1,0 +1,7 @@
+strategy,mean_sharpe,mean_ret_pct,mean_excess_pct,median_excess_pct,mean_maxdd_pct,mean_turnover_pct,beats_ew
+A1_multifactor,1.06,44.1,19.5,-8.7,20.1,57.0,6/15
+A2_residual_mom,1.28,37.9,13.3,2.4,17.2,17.0,10/15
+A3_vol_regime,0.88,20.8,-3.8,-7.7,16.0,16.0,3/15
+A4_risk_parity,1.39,22.1,-2.6,-2.8,11.8,7.0,3/15
+A5_ic_adaptive,0.56,13.1,-11.5,-10.8,16.1,54.0,1/15
+B1_dual_momentum,0.93,29.3,4.6,2.8,13.8,15.0,8/15
