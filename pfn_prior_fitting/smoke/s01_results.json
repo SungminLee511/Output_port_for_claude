@@ -1,0 +1,48 @@
+{
+  "K": 4,
+  "components": [
+    "linear",
+    "mlp",
+    "tree",
+    "rbf"
+  ],
+  "n_rows": 64,
+  "n_datasets_per_comp": 64,
+  "n_perm": 8,
+  "steps": 30000,
+  "perm_argmax_agree_k0": 0.93359375,
+  "perm_argmax_agree_k1": 0.8828125,
+  "perm_argmax_agree_k2": 0.9375,
+  "perm_argmax_agree_k3": 0.849609375,
+  "confusion": [
+    [
+      57,
+      4,
+      2,
+      1
+    ],
+    [
+      23,
+      25,
+      7,
+      9
+    ],
+    [
+      1,
+      5,
+      49,
+      9
+    ],
+    [
+      1,
+      2,
+      12,
+      49
+    ]
+  ],
+  "accuracy": 0.703125,
+  "sigma_spread_nats_per_row": 0.006077580153942108,
+  "k_spread_nats_per_row": 0.04534286633133888,
+  "top2_gap_nats_per_row": 0.022370949387550354,
+  "ratio_sigma_over_k": 0.13403608209054776
+}

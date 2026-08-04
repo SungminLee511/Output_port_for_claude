@@ -1,0 +1,71 @@
+{
+  "steps": 40000,
+  "N_SCORE": 48,
+  "n_fit": 600,
+  "n_eval": 600,
+  "corpus": "peaked: 70% tree / 30% mlp, c~Beta(5,2), nu~Beta(2,5), s~Beta(5,2)",
+  "by_K": {
+    "4": {
+      "uniform_mix": 0.5327386516978531,
+      "npmle_mix": 0.5276045330663434,
+      "gap_uniform_minus_npmle": 0.005134118631509604,
+      "logK_minus_H_over_nscore": 0.015042944202203942,
+      "best_fixed_atom": 0.5319790244102478,
+      "per_dataset_oracle": 0.5042476654052734,
+      "npmle_vs_bestfixed": -0.004374312076726311,
+      "npmle_beats_bestfixed_frac": 0.425,
+      "npmle_beats_uniform_frac": 0.685,
+      "pi_entropy_nats": 0.6642330394141014,
+      "pi_max": 0.6196544874814187,
+      "pi_eff_support_expH": 1.942999745503542,
+      "pi_top5": [
+        0.6197,
+        0.3803,
+        0.0,
+        0.0
+      ]
+    },
+    "16": {
+      "uniform_mix": 0.5223098991001662,
+      "npmle_mix": 0.5163549055557153,
+      "gap_uniform_minus_npmle": 0.005954993544450929,
+      "logK_minus_H_over_nscore": 0.029207759409821957,
+      "best_fixed_atom": 0.5250409841537476,
+      "per_dataset_oracle": 0.47235727310180664,
+      "npmle_vs_bestfixed": -0.008685984233324635,
+      "npmle_beats_bestfixed_frac": 0.495,
+      "npmle_beats_uniform_frac": 0.59,
+      "pi_entropy_nats": 1.3706162705683271,
+      "pi_max": 0.5484346731887146,
+      "pi_eff_support_expH": 3.9377766837359403,
+      "pi_top5": [
+        0.5484,
+        0.1723,
+        0.1277,
+        0.0656,
+        0.0496
+      ]
+    },
+    "64": {
+      "uniform_mix": 0.5224667799801914,
+      "npmle_mix": 0.5161271466056776,
+      "gap_uniform_minus_npmle": 0.006339633374513924,
+      "logK_minus_H_over_nscore": 0.053427367988934306,
+      "best_fixed_atom": 0.5242533087730408,
+      "per_dataset_oracle": 0.4646608531475067,
+      "npmle_vs_bestfixed": -0.008126139824934679,
+      "npmle_beats_bestfixed_frac": 0.52,
+      "npmle_beats_uniform_frac": 0.585,
+      "pi_entropy_nats": 1.5943694198908245,
+      "pi_max": 0.45291771793448293,
+      "pi_eff_support_expH": 4.925222345457739,
+      "pi_top5": [
+        0.4529,
+        0.2226,
+        0.1546,
+        0.055,
+        0.0377
+      ]
+    }
+  }
+}
