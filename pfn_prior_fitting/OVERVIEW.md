@@ -240,3 +240,16 @@ ladder — useful, not necessary.
 The two things most likely to break it: real tabular data lies **outside** any
 synthetic family, so the NPMLE fits a projection rather than recovering
 anything; and fine-tuning on real data may simply dominate.
+
+---
+
+## 7. Progress log (live)
+
+| step | artefact | verdict |
+|---|---|---|
+| 1–16 | `ideas/01`–`14`, `math/01_setup.md`, `notes/20_plan.md` | formal core + 4 smoke tests; M1 killed by my own pre-registered condition, M2 survives |
+| 17 | `pfnfit/data.py` | 690 unique OpenML tables; `R_eval` 50 (CC-18) / `R_dev` 30 / `R_fit` 610, id- **and** content-hash-disjoint; 5.9% duplicates removed |
+| 18 | `pfnfit/prior.py`, `ideas/15` | θ ∈ [0,1]^12 SCM prior; two design errors caught by a GBDT-vs-majority gate (−0.006 → **+0.091** gain) |
+| 19 | `pfnfit/model.py`, `pfnfit/train.py`, `ideas/16` | 11.21M-param θ-conditional 2D PFN; **leakage test exact (0.000e+00)**; 30k steps, 244 min |
+| 20 | `pfnfit/score.py` | scoring 610 × 256 atoms × 2 orderings; smoke says the model beats `log(1/2)` on real data and θ moves the score by 2.5–94 nats/dataset |
+| 20b | *(running)* | NPMLE fit of `π*`, then the pre-registered **P1** test — a kill condition for the whole lane |
