@@ -1,33 +1,35 @@
-# Nonogram pipeline — results for `input/IMG_3374.jpeg`
+# Nonogram pipeline — results
 
 Repo: private `SungminLee511/Nonogram`.
 
 Read with OpenCV template matching (no OCR engine), solved with CP-SAT.
-Grid detected as 20x20; all 208 clue numbers read correctly (min NCC 0.756),
-68 of them are `?`.
+Both boards 20x20, every clue number read correctly, and each board has
+**exactly one solution** (verified by full enumeration: 400/400 cells forced).
 
-**The board is under-determined**: the clues admit **exactly 654** valid
-pictures — enumerated and proved complete by CP-SAT in 0.95 s.
-316 of 400 cells are provably forced, 84 are genuinely free.
+Amber clue numbers = the ones hidden behind `?` on screen, printed as the
+length they turned out to be.
 
-## All 654 solutions
+## `IMG_3374.jpeg`
 
-`python -m nonogram all input/IMG_3374.jpeg` — every solution as a thumbnail.
-Nearly the same picture each time; amber marks the 84 free cells.
+solved 0.38 s
 
-![all](nonogram_all654_t20260812.png)
+![solved](nonogram_3374_solved_t20260813.png)
 
-## One valid solution
+![overlay](nonogram_3374_overlay_t20260813.png)
 
-![solved](nonogram_solved_t20260813.png)
+## `IMG_3377.jpeg`
 
-## What is provably true
+solved 0.45 s — the harder read: two-digit clues (`10`, `11`, `14`) and the
+only `0`/`7`/`9` glyphs in the set.
 
-dark = filled in every solution, light = empty in every solution,
-amber = the clues cannot decide.
+![solved](nonogram_3377_solved_t20260813.png)
 
-![certain](nonogram_certain_t20260813.png)
+![overlay](nonogram_3377_overlay_t20260813.png)
 
-## Solution painted onto the original screenshot
+## Correction
 
-![overlay](nonogram_overlay_t20260813.png)
+An earlier run reported 654 solutions for `IMG_3374`. That was wrong: one
+template in the glyph bank was labelled `?` but was really a `6`, so two column
+clues lost their digits. A misread digit-to-`?` only widens the search space,
+so nothing downstream could contradict it. Bank rebuilt from both screenshots;
+both boards are now unique.
