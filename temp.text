@@ -1,0 +1,79 @@
+I reviewed most of the repo but not all of it; the tool limit stopped me mid-review. Headline: the demasking results do not test the method as the paper states it, and the zipped code does not run as released. Most other rows are usable after small fixes or floors.
+
+## 1. Implementation issues
+
+**Blocking**
+
+1. **Every demasking run uses MDNS-style importance weights.** All six demasking construction files set `reweight: 1`, so the inner loss is weighted by softmax(−E/τ − log q). That covers fixed composition, free composition, Cu–Au, and Ising/Potts at L=16.
+   - Those are self-normalized path weights, the same ones §4.3 criticizes in MDNS. Algorithm 1 has no weights.
+   - The numbers are consistent estimates, but they test "ratio labels plus WDCE weights", not the weight-free method.
+   - The labels themselves are correct. I checked by enumeration at n=9 (fixed-composition Ising and Potts, free Ising), and the identity E_µ[Λ|x] = |S^c|·φ̃(x^{d←a})/φ̃(x) holds to about 1e-15.
+   - The code comment's reason for the weights ("the counting measure exerts no pressure on W") is wrong. The ratio label already carries the target.
+2. **The zipped code does not run.** `itertools` is used but not imported in `fixed_composition.py`, `occupation.py` and `demasking_fixed_composition.py`.
+   - The uniform source and every exact evaluation for fixed composition and fixed particle number fail with NameError.
+   - So the released files are not exactly what produced the results. With the import patched, all discrete constructions trained, sampled and evaluated in my CPU smoke tests.
+3. **The MDNS comparison is not matched.**
+   - It uses our own architecture (597k parameters vs MDNS's 318k), our own schedule (32k vs 50k steps), restated metrics rather than MDNS's code, and weights on.
+   - Our reference samples are far larger. Our floors are about 5e-4, while MDNS's published errors sit at 1e-3 to 1e-2. Our 10–30× smaller errors at β = 0.28 and 0.6 therefore mostly reflect sample size.
+   - At criticality we are worse on all three columns. Ising: magnetization error 4.1e-3 vs 3.7e-3, correlation error 4.4e-3 vs 2.0e-3, ESS .876 vs .933. Potts: 1.0e-2 vs 4.3e-3, 8.6e-3 vs 2.9e-3, .716 vs .875.
+   - As run, this supports no direct claim.
+
+**Important**
+
+- **Undisclosed evaluation choice.** Annealed runs are scored with `--no-ema`, chosen after comparing against the reference. `results.json` does not record which weights were used.
+- **Cu–Au 4×4×4 references at 680 K look unconverged.** The reference-to-reference MMD² (8.6e-4 fixed composition, 2.8e-4 free) is comparable to or larger than some model values. Variant imbalance between reference blocks is the likely cause. Variant coverage, which we agreed was required, is not implemented.
+- **Fixed particle number regressed.** Old and new code use the same algorithm and hyperparameters (I diffed them), yet results are worse:
+  - m=32 KS_max .082 vs ICLR .038, and MMD² 3.6 vs 1.3 (×1e-4).
+  - m=128 KS_max .103±.045 vs .081±.001.
+  - The new KS(E) of .11–.18 against a floor of .011 shows the energy law is clearly off at m ≥ 32.
+- **Sphere Dirac rows look systematically biased.** KS(E) is .0439 on all three seeds, agreeing to about 1e-4. The 128-step integrator is the likely cause.
+- **Pieces from the spec are missing.** No `tests/`, no requirements.txt, no Mallows target, and `--label-stats` does nothing. `data/baselines.py` (the Swendsen–Wang/Metropolis references) and the cluster-expansion tensors are untracked, so reviewers cannot regenerate any ground truth.
+
+**Checked and fine:** the Stiefel 16-fold augmentation (it fixes E0 and preserves the quadratic energy), the sphere reflection, and the occupation labels and bridge.
+
+## 2. What is worth a place
+
+- **Main text:**
+  - Fixed composition, Ising 4×4 and 5×5. These reproduce the ICLR numbers: TV .0409/.0358 and .0751/.0611.
+  - Fixed particle m=4 exact (TV .0225, control error .123).
+  - Sphere, Haar source ± reflection (KS_z .0151, KS_E .0260, matching ICLR).
+  - Stiefel frame target τ=1 (KS_E .0145, |ΔE| .054, better than ICLR).
+  - Cu–Au 2×2×4 exact after a weight-free rerun. The current weighted numbers: TV .0257 at 1200 K and .0522 at 680 K; C_v is 9.3 against 6.3 at 680 K.
+- **Main text with caveats:** fixed particle m=32/128/512, after the regression is explained.
+- **Appendix:**
+  - Free-composition Cu–Au (TV .011 at 1200 K; this is the MetaDNS ensemble).
+  - Canonical Ising at L=16.
+  - Stiefel quadratic sweep as a limitation: joint-frame MMD² rises about three orders of magnitude between τ=.77 and τ=.5.
+- **Drop:**
+  - Canonical Potts L=16, q=4: KS(E) .37 and ESS .024, a failed run with no diagnosis.
+  - Sphere Dirac rows: redundant with Haar and integrator-limited.
+  - The MDNS table as it stands.
+
+## 3. Additional runs needed
+
+**Required**
+
+1. Rerun demasking with weights off (pure Algorithm 1) for everything §5.6 reports. I launched a tiny CPU version of this (3×3 lattice, weights on/off, two seeds), but I could not read its results in this turn.
+2. Run the planned rows that are missing: demasking Ising 4×4 exact (the "same target, two references" row) and Mallows on S₈. Otherwise, remove S_n from §4.3.
+3. Compute oracle floors for fixed composition and m=4. The code already exists (`--oracle`); this is evaluation only.
+4. Add a variant-coverage metric, plus a symmetrized or parallel-tempering reference for 4×4×4.
+5. Run the sphere label-swap arm P. It is implemented but was never run, and it is the one ablation we kept.
+6. Fix the release: imports, tests, requirements, the reference sampler and cluster-expansion tensors, and recording `use_ema` in results.
+
+**Would strengthen**
+
+- Replace the MDNS table with a matched internal 2×2: one-hot vs ratio label, crossed with weighted vs unweighted, in our code on MDNS's benchmark. One-hot with weights is WDCE; ratio without weights is Algorithm 1. This needs no external code.
+- Diagnose the occupation regression by running one seed with the old and new scripts on the same GPU.
+
+## 4. §5 organization
+
+Per state space, as agreed: one summary table, one distribution figure per space, and Appendix B mirroring it.
+
+- **5.1 Algorithm and protocol.** Algorithm 1, plus a statement of the weighting and EMA rules.
+- **5.2 Fixed composition.** Ising table with floors; oracle bins panel.
+- **5.3 Fixed particle number.** m=4 exact and the m-sweep; maximum-occupancy overlay.
+- **5.4 Sphere.** Haar source, with the label swap once it is run.
+- **5.5 Stiefel.** Frame target against MCMC; ECDF figure.
+- **5.6 Masked state spaces.** Ising 4×4 exact beside the 5.2 row, Cu–Au 2×2×4 exact, Cu–Au 4×4×4 with variant coverage, and S₈ if added.
+
+I can check the reweighting ablation next turn and turn items 1–6 into an agent prompt.
