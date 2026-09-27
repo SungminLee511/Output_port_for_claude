@@ -412,10 +412,83 @@ Cost is 39.1 minutes against 26.9, a factor 1.45 — not the factor 4 the
 pre-refactor tree paid, because the full label matrix is one batched product
 here rather than a precomputed `(steps, M, n_edges)` table.
 
+**All 24 rows retrained.** The 24 superseded run directories were removed and
+every family was retrained under the fix, 8 families x 3 seeds, then rescored
+with `evaluate.py <run> --bins B --samples S --reference exact --calibration
+exact` (`B`, `S` read back from each run's own `config.yaml`; the two `m4`
+families take `--oracle --bins 128` instead, since they are enumerable and are
+scored by the exact `tv` of F6 rather than by sample statistics). 24 / 24
+trained, 24 / 24 scored, no failures. Seed 2 ran on a second machine; seeds 0
+and 1 here.
+
+Mean +- std over the three seeds, old (sampled estimator) beside new (full):
+
+| family | metric | old | new | ratio |
+|---|---|---|---|---|
+| `m32_dirac` | `KS_occ` | 0.016056 ± 0.0039 | **0.0061339 ± 0.00084** | 0.38 |
+| | `KS_max` | 0.082383 ± 0.016 | **0.023133 ± 0.0026** | 0.28 |
+| | `W1_max_frac` | 0.013159 ± 0.0032 | **0.0035656 ± 0.00047** | 0.27 |
+| | `mmd2` | 3.6246e-04 ± 1.5e-04 | **6.3004e-05 ± 1.6e-05** | 0.17 |
+| | `ks_E` | 0.10885 ± 0.023 | **0.042033 ± 0.0023** | 0.39 |
+| `m32_nondirac` | `KS_occ` | 0.016351 ± 0.0049 | **0.0096844 ± 0.0024** | 0.59 |
+| | `KS_max` | 0.10060 ± 0.031 | **0.053267 ± 0.0041** | 0.53 |
+| | `W1_max_frac` | 0.016372 ± 0.0037 | **0.0088854 ± 0.00074** | 0.54 |
+| | `mmd2` | 4.4922e-04 ± 2.4e-04 | **1.3967e-04 ± 2.8e-05** | 0.31 |
+| | `ks_E` | 0.11493 ± 0.038 | **0.068767 ± 0.011** | 0.60 |
+| `m128_dirac` | `KS_occ` | 0.011442 ± 0.0037 | **0.0081151 ± 0.00091** | 0.71 |
+| | `KS_max` | 0.10293 ± 0.045 | **0.057167 ± 0.0063** | 0.56 |
+| | `W1_max_frac` | 0.0050706 ± 0.0022 | **0.0026615 ± 0.00042** | 0.52 |
+| | `mmd2` | 2.4609e-04 ± 1.3e-04 | **9.4333e-05 ± 1.7e-05** | 0.38 |
+| | `ks_E` | 0.15477 ± 0.051 | **0.10427 ± 0.0080** | 0.67 |
+| `m128_nondirac` | `KS_occ` | 0.011897 ± 0.0017 | **0.0097365 ± 0.00086** | 0.82 |
+| | `KS_max` | **0.094400 ± 0.019** | 0.097133 ± 0.020 | 1.03 |
+| | `W1_max_frac` | 0.0046766 ± 0.00068 | **0.0046516 ± 0.00092** | 0.99 |
+| | `mmd2` | 2.6641e-04 ± 6.1e-05 | **1.7736e-04 ± 4.9e-05** | 0.67 |
+| | `ks_E` | 0.17423 ± 0.031 | **0.13607 ± 0.013** | 0.78 |
+| `m512_dirac` | `KS_occ` | 0.0066344 ± 0.0069 | **0.0043410 ± 8.9e-05** | 0.65 |
+| | `KS_max` | 0.11820 ± 0.115 | **0.048067 ± 0.011** | 0.41 |
+| | `W1_max_frac` | 0.0014806 ± 0.0014 | **6.9010e-04 ± 1.7e-04** | 0.47 |
+| | `mmd2` | 1.8188e-04 ± 2.0e-04 | **2.3650e-05 ± 5.0e-06** | 0.13 |
+| | `ks_E` | 0.18473 ± 0.184 | **0.11367 ± 0.0074** | 0.62 |
+| `m512_nondirac` | `KS_occ` | **0.0045259 ± 0.0020** | 0.0051997 ± 0.0012 | 1.15 |
+| | `KS_max` | 0.20870 ± 0.053 | **0.14070 ± 0.013** | 0.67 |
+| | `W1_max_frac` | 0.0024760 ± 0.00056 | **0.0017884 ± 9.8e-05** | 0.72 |
+| | `mmd2` | 1.5860e-04 ± 5.9e-05 | **7.6954e-05 ± 1.9e-05** | 0.49 |
+| | `ks_E` | 0.15993 ± 0.053 | **0.15257 ± 0.031** | 0.95 |
+
+`violations` is 0 in all 48 rows, old and new. `mean_E` moves by at most 2 %
+(`m32_dirac` 13.572 -> 13.344; every other family within 1 %). The `m4`
+families carry no sample statistics — they are enumerable and are reported in
+F6 by the exact `tv` against the oracle floor: Dirac 0.022533 ± 0.0059 ->
+**0.012945 ± 0.0028** (floor 0.009440), uniform 0.017561 ± 0.0049 ->
+**0.011560 ± 0.0023** (floor 0.009362).
+
+`mmd2` falls in **all six** sampled families, by 0.13x to 0.67x, and every new
+value stays above its own `mmd2_floor`, so the rows remain resolved by the
+calibration rather than sitting at it. Two entries out of 30 move the wrong
+way — `m128_nondirac` `KS_max` (1.03x) and `m512_nondirac` `KS_occ` (1.15x) —
+and both are inside one old standard deviation. The variance collapses
+everywhere: `m512_dirac` `ks_E` goes from ± 0.184 to ± 0.0074, which is the
+signature of the variance reduction the fix was for.
+
+**Cost.** Seeds 0 and 1, same machine, old sampled versus new full:
+
+| family | old | new | ratio |
+|---|---|---|---|
+| `m4` | 7.8 / 7.9 | 7.8 / 7.8 | 1.01 / 0.99 |
+| `m32` | 16.2 / 16.1 | 16.1 / 16.2 | 0.99 / 1.01 |
+| `m128` | 26.8 / 26.4 | 33.5 / 29.2 | 1.25 / 1.10 |
+| `m512` | 33.6 / 56.5 | 38.7 / 65.0 | 1.15 / 1.15 |
+
+(minutes, `dirac / nondirac`.) The full estimator is free at m = 4 and m = 32
+and costs 10-25 % at m = 128 and m = 512 — against the factor 4 the
+pre-refactor tree paid for the same sum, because the label matrix is one
+batched product here rather than a precomputed `(steps, M, n_edges)` table.
+Seed 2's times are not comparable (second machine, 1.5-1.9x slower).
+
 **Resolved.** The regression was the dead `estimator` field; with it honoured
-the refactored code is better than the tree it replaced. The remaining 23 rows
-are retraining under the same fix and the 24 superseded run directories were
-removed.
+the refactored code is better than the tree it replaced, on 28 of 30 seed-
+averaged sample statistics and on both enumerable `tv` figures.
 
 ---
 
