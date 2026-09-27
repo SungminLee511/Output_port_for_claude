@@ -1,79 +1,108 @@
-I reviewed most of the repo but not all of it; the tool limit stopped me mid-review. Headline: the demasking results do not test the method as the paper states it, and the zipped code does not run as released. Most other rows are usable after small fixes or floors.
+TASK: Follow-up audit of the iasbs-tmlr repository. A code and results review raised the nine
+findings below. For each one, either RESOLVE it (fix, re-run or re-evaluate, report new numbers)
+or ADMIT it (state why no change is needed, or what the paper must say instead). Change nothing
+that is not listed.
 
-## 1. Implementation issues
+Context. The paper reports every number against an exact law or an internal floor, with no
+external baselines. The masked (demasking) rows intentionally use the importance-weighted buffer
+(reweight=1, W = -E(X1)/tau - log q_theta(X), softmax over the minibatch); keep it. The
+MDNS-comparison rows and the canonical Potts L=16 q=4 rows will not be reported; ignore them.
 
-**Blocking**
+F1  Fixed composition, uniform source: the reference control is wrong.
+    constructions/fixed_composition.py `_value_table` uses log f1 = -E/tau whenever the source
+    is not a Dirac, and `_control_error` and `oracle_law` inherit this. With a uniform source
+    nu0 on Omega_{n,k}, the Schrodinger-bridge potential is f1 = mu / fhat1, where
+    fhat1(z) = sum_x nu0(x) f0(x) P01(x,z) and f0 = 1/(P01 f1); this is not constant. The
+    reported control_rel_err of 0.114 (L=4, uniform source) is therefore invalid. Exact TV is
+    unaffected.
+    Resolve: compute f1 by Sinkhorn on the enumerated L=4 space (12,870 states). Use
+    P01(x,y) = kappa_{0,1}(d(x,y)) from the Johnson orbit kernel, applied through the overlap
+    sums already in `_value_table` (P01 is symmetric). Iterate f0 <- 1/(P01 f1),
+    fhat1 <- P01(nu0 * f0), f1 <- mu/fhat1 until both marginal errors are < 1e-12. Then
+    recompute control_rel_err and oracle_tv for the three L=4 uniform-source seeds.
+    Admit: drop the control error for uniform-source rows.
 
-1. **Every demasking run uses MDNS-style importance weights.** All six demasking construction files set `reweight: 1`, so the inner loss is weighted by softmax(−E/τ − log q). That covers fixed composition, free composition, Cu–Au, and Ising/Potts at L=16.
-   - Those are self-normalized path weights, the same ones §4.3 criticizes in MDNS. Algorithm 1 has no weights.
-   - The numbers are consistent estimates, but they test "ratio labels plus WDCE weights", not the weight-free method.
-   - The labels themselves are correct. I checked by enumeration at n=9 (fixed-composition Ising and Potts, free Ising), and the identity E_µ[Λ|x] = |S^c|·φ̃(x^{d←a})/φ̃(x) holds to about 1e-15.
-   - The code comment's reason for the weights ("the counting measure exerts no pressure on W") is wrong. The ratio label already carries the target.
-2. **The zipped code does not run.** `itertools` is used but not imported in `fixed_composition.py`, `occupation.py` and `demasking_fixed_composition.py`.
-   - The uniform source and every exact evaluation for fixed composition and fixed particle number fail with NameError.
-   - So the released files are not exactly what produced the results. With the import patched, all discrete constructions trained, sampled and evaluated in my CPU smoke tests.
-3. **The MDNS comparison is not matched.**
-   - It uses our own architecture (597k parameters vs MDNS's 318k), our own schedule (32k vs 50k steps), restated metrics rather than MDNS's code, and weights on.
-   - Our reference samples are far larger. Our floors are about 5e-4, while MDNS's published errors sit at 1e-3 to 1e-2. Our 10–30× smaller errors at β = 0.28 and 0.6 therefore mostly reflect sample size.
-   - At criticality we are worse on all three columns. Ising: magnetization error 4.1e-3 vs 3.7e-3, correlation error 4.4e-3 vs 2.0e-3, ESS .876 vs .933. Potts: 1.0e-2 vs 4.3e-3, 8.6e-3 vs 2.9e-3, .716 vs .875.
-   - As run, this supports no direct claim.
+F2  Stiefel, Haar source: the corrector is missing.
+    constructions/stiefel_4_2.py `terminal_grad` and the `build` docstring claim that fhat1 is
+    constant under a Haar source because the reference preserves Haar. This is false:
+    fhat1(Y) = int p^St_{0,1}(Y|X) f0(X) dHaar(X), and f0 = 1/phi0 is not constant unless the
+    reference mixes completely by t = 1. Affected rows: stiefel_st42_frame_haar_tau1 and
+    stiefel_st42_quad_haar_tau{0.769231,0.5,0.2}.
+    Resolve: add a learned corrector h_psi(Y) ~ ambient grad log fhat1(Y), trained exactly like
+    sphere.TerminalScore. Use a squared loss on the kernel score grad_Y log p^St_{r_{0,1}}(Y|X0)
+    of the buffered source point, computed by left invariance:
+    p^St(Y|X0) = p^St(g0^{-1} Y | E0), with g0 = section_lift(X0), then `log_pst` and autograd.
+    Set G = -grad E/tau - h(Y). Rerun the four Haar rows with their original commands, 3 seeds.
+    Admit: remove the Haar Stiefel rows from the reported set.
+    In both cases, correct the docstrings.
 
-**Important**
+F3  Cu-Au 4x4x4 at 680 K: reference reliability and variant coverage.
+    The reference-to-reference MMD^2 floors (8.6e-4 canonical, 2.8e-4 free composition) exceed
+    some model values (for example 2.05e-4, canonical seed 2). This suggests the reference
+    blocks differ in their L1_0 variant populations. The canonical seeds give KS(E) =
+    0.104 / 0.423 / 0.046. No variant-coverage metric exists, although mean LRO is about
+    0.94-0.95, and E, LRO and alpha1 cannot detect variant collapse.
+    Resolve:
+    (a) From ClusterExpansion `positions` and `cell`, build the site permutations for lattice
+        translations and cubic point-group operations. Keep those with
+        |E(gx) - E(x)| < 1e-10 on 1000 random configurations. Symmetrize both reference blocks
+        by applying one uniformly random kept operation to each sample, then recompute every
+        floor.
+    (b) Add a variant-coverage metric for samples with LRO > 0.5. The variant v = (axis, sign)
+        comes from `ClusterExpansion.lro`; K is the number of commensurate variants (6 at
+        4x4x4); coverage TV = 0.5 * sum_v |share_v - 1/K|. Report it for model and reference.
+    (c) Re-evaluate all 4x4x4 rows (1200 K and 680 K, both ensembles) against the symmetrized
+        references.
+    Admit only if the symmetry check fails, and give the reason.
 
-- **Undisclosed evaluation choice.** Annealed runs are scored with `--no-ema`, chosen after comparing against the reference. `results.json` does not record which weights were used.
-- **Cu–Au 4×4×4 references at 680 K look unconverged.** The reference-to-reference MMD² (8.6e-4 fixed composition, 2.8e-4 free) is comparable to or larger than some model values. Variant imbalance between reference blocks is the likely cause. Variant coverage, which we agreed was required, is not implemented.
-- **Fixed particle number regressed.** Old and new code use the same algorithm and hyperparameters (I diffed them), yet results are worse:
-  - m=32 KS_max .082 vs ICLR .038, and MMD² 3.6 vs 1.3 (×1e-4).
-  - m=128 KS_max .103±.045 vs .081±.001.
-  - The new KS(E) of .11–.18 against a floor of .011 shows the energy law is clearly off at m ≥ 32.
-- **Sphere Dirac rows look systematically biased.** KS(E) is .0439 on all three seeds, agreeing to about 1e-4. The 128-step integrator is the likely cause.
-- **Pieces from the spec are missing.** No `tests/`, no requirements.txt, no Mallows target, and `--label-stats` does nothing. `data/baselines.py` (the Swendsen–Wang/Metropolis references) and the cluster-expansion tensors are untracked, so reviewers cannot regenerate any ground truth.
+F4  Sphere, Dirac source: KS(E) = 0.0439 on all three seeds, agreeing to within 1e-4
+    (sphere_dirac_I_refl; 0.0444 without reflection). This points to the 128-step geodesic
+    integrator.
+    Resolve: re-evaluate the six Dirac checkpoints with `evaluate.py <run> --bins 512` and
+    report KS_z, KS_E and north_err. If the controller is unreliable off its training grid,
+    retrain at --bins 500.
+    Admit: drop the Dirac sphere rows.
 
-**Checked and fine:** the Stiefel 16-fold augmentation (it fixes E0 and preserves the quadratic energy), the sphere reflection, and the occupation labels and bridge.
+F5  Annealed runs: EMA versus live weights.
+    Runs trained with --anneal_tau were scored with --no-ema, a choice made after comparing
+    against the reference, and results.json does not record it.
+    Resolve: adopt the rule "annealed runs are evaluated from the final live weights, because
+    the weight average spans controllers trained at hotter temperatures". Record `use_ema` in
+    every results.json. Re-evaluate every run trained with --anneal_tau under this rule:
+    demasking_ising16 (canonical, L=16, tau=2.269185) and the annealed free-composition L=16
+    Ising and Potts rows.
 
-## 2. What is worth a place
+F6  Oracle floors are missing.
+    Run `evaluate.py <run> --oracle` on all seeds of:
+    - fixed_composition_ising4 (Dirac, 256 bins);
+    - fixed_composition_ising5 (Dirac, 512 bins);
+    - fixed_particle_m4_dirac and fixed_particle_m4_nondirac (128 bins; the mixture's analytic
+      corrector makes its oracle valid).
+    Report oracle_tv beside tv.
 
-- **Main text:**
-  - Fixed composition, Ising 4×4 and 5×5. These reproduce the ICLR numbers: TV .0409/.0358 and .0751/.0611.
-  - Fixed particle m=4 exact (TV .0225, control error .123).
-  - Sphere, Haar source ± reflection (KS_z .0151, KS_E .0260, matching ICLR).
-  - Stiefel frame target τ=1 (KS_E .0145, |ΔE| .054, better than ICLR).
-  - Cu–Au 2×2×4 exact after a weight-free rerun. The current weighted numbers: TV .0257 at 1200 K and .0522 at 680 K; C_v is 9.3 against 6.3 at 680 K.
-- **Main text with caveats:** fixed particle m=32/128/512, after the regression is explained.
-- **Appendix:**
-  - Free-composition Cu–Au (TV .011 at 1200 K; this is the MetaDNS ensemble).
-  - Canonical Ising at L=16.
-  - Stiefel quadratic sweep as a limitation: joint-frame MMD² rises about three orders of magnitude between τ=.77 and τ=.5.
-- **Drop:**
-  - Canonical Potts L=16, q=4: KS(E) .37 and ESS .024, a failed run with no diagnosis.
-  - Sphere Dirac rows: redundant with Haar and integrator-limited.
-  - The MDNS table as it stands.
+F7  Fixed particle number: regression against the pre-refactor runs.
+    Settings are identical to the pre-refactor runs (lr 1e-3, 3000 rounds, 4 inner updates,
+    batch 512, minibatch 1024, 128 bins), yet the Dirac rows are worse:
+    m=32 KS_max 0.082 vs 0.038, MMD^2 3.6e-4 vs 1.3e-4; m=128 KS_max 0.103 +- 0.045 vs
+    0.081 +- 0.001.
+    Resolve: look for any behavioral difference from the pre-refactor script (iasbs/occupation.py
+    `run_scale` in the pre-refactor repository) and rerun. If that script is available, run
+    seed 0 of m=128 with both codes on the same GPU.
+    Admit if no difference is found: the refactored numbers become the paper's numbers.
 
-## 3. Additional runs needed
+F8  Missing row: demasking Ising 4x4.
+    Run config/construction/demasking_ising.yaml --L 4 (n=16, k=(8,8), J=1, tau=2) with
+    --outer_rounds 4000, seeds 0, 1, 2. Evaluate exactly: TV, control_rel_err, <E>, C_v, ESS.
+    This is the same target as fixed_composition_ising4, under a second reference.
 
-**Required**
+F9  Optional: S^2 label swap.
+    Run the matched Haar setting with --label P:
+    config/construction/sphere_s2.yaml --source haar --sigma 1.0 --reflect 1 --outer_rounds 600
+    --batch 500 --bins 500 --minibatch 16384 --buffer_rounds 4 --lr 1e-3 --ema 0.9995
+    --eval_samples 100000, seeds 0, 1, 2.
+    Report KS_z, KS_E, north_err and wall time beside the label-I rows.
 
-1. Rerun demasking with weights off (pure Algorithm 1) for everything §5.6 reports. I launched a tiny CPU version of this (3×3 lattice, weights on/off, two seeds), but I could not read its results in this turn.
-2. Run the planned rows that are missing: demasking Ising 4×4 exact (the "same target, two references" row) and Mallows on S₈. Otherwise, remove S_n from §4.3.
-3. Compute oracle floors for fixed composition and m=4. The code already exists (`--oracle`); this is evaluation only.
-4. Add a variant-coverage metric, plus a symmetrized or parallel-tempering reference for 4×4×4.
-5. Run the sphere label-swap arm P. It is implemented but was never run, and it is the one ablation we kept.
-6. Fix the release: imports, tests, requirements, the reference sampler and cluster-expansion tensors, and recording `use_ema` in results.
-
-**Would strengthen**
-
-- Replace the MDNS table with a matched internal 2×2: one-hot vs ratio label, crossed with weighted vs unweighted, in our code on MDNS's benchmark. One-hot with weights is WDCE; ratio without weights is Algorithm 1. This needs no external code.
-- Diagnose the occupation regression by running one seed with the old and new scripts on the same GPU.
-
-## 4. §5 organization
-
-Per state space, as agreed: one summary table, one distribution figure per space, and Appendix B mirroring it.
-
-- **5.1 Algorithm and protocol.** Algorithm 1, plus a statement of the weighting and EMA rules.
-- **5.2 Fixed composition.** Ising table with floors; oracle bins panel.
-- **5.3 Fixed particle number.** m=4 exact and the m-sweep; maximum-occupancy overlay.
-- **5.4 Sphere.** Haar source, with the label swap once it is run.
-- **5.5 Stiefel.** Frame target against MCMC; ECDF figure.
-- **5.6 Masked state spaces.** Ising 4×4 exact beside the 5.2 row, Cu–Au 2×2×4 exact, Cu–Au 4×4×4 with variant coverage, and S₈ if added.
-
-I can check the reweighting ablation next turn and turn items 1–6 into an agent prompt.
+OUTPUT: one markdown report with one section per finding, headed RESOLVED or ADMITTED. Each
+section states what changed (files, commands) and gives the new numbers as mean +- std over
+seeds, beside the old numbers and their floors. Update the results.json files in place. Report
+facts only, no interpretation.
