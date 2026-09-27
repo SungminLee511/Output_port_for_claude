@@ -289,8 +289,19 @@ unblock L = 5. **No `oracle_tv` is reported for `fixed_composition_ising5`.**
 In all three attempts `evaluate.py` caught the error, set `exact: null` and
 rewrote `results.json`, **discarding the existing exact block**. Seeds 0 and 2
 were restored verbatim from `git show HEAD` (`tv` 0.07275122704920275 and
-0.07544414730193741). Noted as a defect in `evaluate.py`: the skip path
-overwrites a good exact block with `null` instead of preserving it.
+0.07544414730193741).
+
+*That defect is now fixed* (commit `0e4feea`). `evaluate.py` rewrites
+`results.json` from scratch on every invocation, so the exact block a row holds
+is the only copy there is; a `--no-exact`, over-budget or `OutOfMemoryError`
+pass overwrote it with `null`. The row is now read back before it is rewritten
+and the previous exact block is carried forward whole, flagged
+`exact_stale: true` beside the existing `exact_skipped` reason so the
+provenance stays auditable. Verified both ways on
+`fixed_particle_m4_dirac_seed0`: with `--no-exact` the block survives
+(`tv` 0.011221752577344563, `exact_stale` `true`, `exact_skipped` `--no-exact`);
+with `--oracle` it is recomputed and no `exact_stale` key is written. No
+reported number changes.
 
 ---
 
