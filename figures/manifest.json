@@ -143,57 +143,56 @@
  "F3": {
   "panels": [
    {
-    "panel": "T1200/exact",
+    "panel": "1200K_exact",
     "checkpoint": null,
     "checkpoint_seed": null,
     "weights": null,
     "sample_rng_seed": null,
-    "selection_rule": "softmax(-E/tau) over all C(16,8)=12870 states; the 4 largest, no sampling"
+    "selection_rule": "softmax(-E/tau) over all C(16,8)=12870 states; the 4 largest"
    },
    {
-    "panel": "T1200/learned",
+    "panel": "1200K_learned",
     "checkpoint": "ckpt/demasking_cuau_2x2x4_T1200_seed0_20260925-060923",
     "checkpoint_seed": 0,
     "weights": "ema",
     "sample_rng_seed": 0,
-    "selection_rule": "empirical frequency of 500000 draws of model.sample at the same 4 states"
+    "selection_rule": "empirical frequency of 500000 draws of model.sample; the 4 largest"
    },
    {
-    "panel": "T680/exact",
+    "panel": "680K_exact",
     "checkpoint": null,
     "checkpoint_seed": null,
     "weights": null,
     "sample_rng_seed": null,
-    "selection_rule": "softmax(-E/tau) over all C(16,8)=12870 states; the 4 largest, no sampling"
+    "selection_rule": "softmax(-E/tau) over all C(16,8)=12870 states; the 4 largest"
    },
    {
-    "panel": "T680/learned",
+    "panel": "680K_learned",
     "checkpoint": "ckpt/demasking_cuau_2x2x4_T680_seed0_20260925-062545",
     "checkpoint_seed": 0,
     "weights": "ema",
     "sample_rng_seed": 0,
-    "selection_rule": "empirical frequency of 500000 draws of model.sample at the same 4 states"
+    "selection_rule": "empirical frequency of 500000 draws of model.sample; the 4 largest"
    }
+  ],
+  "files": [
+   "top4.json",
+   "top4.csv",
+   "law_<T>.npz",
+   "<row>/top{0..3}.extxyz",
+   "F3_cuau_2x2x4_top4_t20260928.png",
+   "F3_cuau_2x2x4_top4.pdf"
   ],
   "atom_colours": {
    "Au": "#F2CB30",
    "Cu": "#A65A2E"
   },
-  "variant_outline_colours": [
-   "#0072B2",
-   "#E69F00",
-   "#009E73",
-   "#CC79A7",
-   "#56B4E9",
-   "#D55E00"
-  ],
-  "bars": "per cell, upper dark-grey bar = p_exact, lower coloured bar = p_learned; bar lengths share one scale within a row",
-  "files": [
-   "top4.json",
-   "top4.csv",
-   "<row>/top{0..3}.extxyz",
-   "F3_cuau_2x2x4_top4_t20260928.png",
-   "F3_cuau_2x2x4_top4.pdf"
+  "bars": "per cell, upper dark-grey bar = p_exact, lower blue bar = p_learned, one common scale for all four rows",
+  "row_order": [
+   "1200K_exact",
+   "1200K_learned",
+   "680K_exact",
+   "680K_learned"
   ]
  },
  "F4": {
@@ -225,97 +224,6 @@
    "haar_no_reflection.csv",
    "F4_sphere_t20260928.png",
    "F4_sphere.pdf"
-  ]
- },
- "F5": {
-  "panels": [
-   {
-    "panel": "1200 K/reference",
-    "checkpoint": null,
-    "checkpoint_seed": null,
-    "weights": null,
-    "sample_rng_seed": null,
-    "reference_file": "data/gt_cuau_4x4x4_T1200_fixed.npz",
-    "selection_rule": "every stored reference sample, no subsetting"
-   },
-   {
-    "panel": "1200 K/learned_seed0",
-    "checkpoint": "ckpt/demasking_cuau_4x4x4_T1200_seed0_20260925-074542",
-    "checkpoint_seed": 0,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "all 20000 draws of model.sample, no filtering"
-   },
-   {
-    "panel": "1200 K/learned_seed1",
-    "checkpoint": "ckpt/demasking_cuau_4x4x4_T1200_seed1_20260925-074546",
-    "checkpoint_seed": 1,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "all 20000 draws of model.sample, no filtering"
-   },
-   {
-    "panel": "1200 K/learned_seed2",
-    "checkpoint": "ckpt/demasking_cuau_4x4x4_T1200_seed2_20260925-074711",
-    "checkpoint_seed": 2,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "all 20000 draws of model.sample, no filtering"
-   },
-   {
-    "panel": "680 K/reference",
-    "checkpoint": null,
-    "checkpoint_seed": null,
-    "weights": null,
-    "sample_rng_seed": null,
-    "reference_file": "data/gt_cuau_4x4x4_T680_fixed.npz",
-    "selection_rule": "every stored reference sample, no subsetting"
-   },
-   {
-    "panel": "680 K/learned_seed0",
-    "checkpoint": "ckpt/demasking_cuau_4x4x4_T680_seed0_20260925-080004",
-    "checkpoint_seed": 0,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "all 20000 draws of model.sample, no filtering"
-   },
-   {
-    "panel": "680 K/learned_seed1",
-    "checkpoint": "ckpt/demasking_cuau_4x4x4_T680_seed1_20260925-080004",
-    "checkpoint_seed": 1,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "all 20000 draws of model.sample, no filtering"
-   },
-   {
-    "panel": "680 K/learned_seed2",
-    "checkpoint": "ckpt/demasking_cuau_4x4x4_T680_seed2_20260925-080004",
-    "checkpoint_seed": 2,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "all 20000 draws of model.sample, no filtering"
-   }
-  ],
-  "variant_colours": [
-   "#0072B2",
-   "#E69F00",
-   "#009E73",
-   "#CC79A7",
-   "#56B4E9",
-   "#D55E00"
-  ],
-  "series_colours": {
-   "reference": "#333333",
-   "seed0": "#0072B2",
-   "seed1": "#D55E00",
-   "seed2": "#009E73"
-  },
-  "notes": "top row: LRO histogram (33 edges on [0,1], log y); bottom row: share of the six L1_0 variants among the ordered samples, dashed line = 1/6; this figure keeps its axes because it is quantitative",
-  "files": [
-   "order_stats.json",
-   "variant_shares.csv",
-   "F5_cuau_4x4x4_order_t20260928.png",
-   "F5_cuau_4x4x4_order.pdf"
   ]
  }
 }

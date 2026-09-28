@@ -14,20 +14,23 @@ C(16,8) = 12870 states, p_exact = softmax(−E/τ) over the whole space. The
 learned law is the empirical frequency of 500 000 draws (seed 0) matched to the
 enumeration by an exact bit code — no binning, no kernel.
 
-Top row 1200 K (τ = 0.1034), bottom row 680 K (τ = 0.0586); columns are the
-four most probable states, which are four of the L1₀ variants and are exactly
-degenerate. Under each cell: dark-grey bar = p_exact, coloured bar = p_learned,
-**one common scale for both rows**, so the 5× mass concentration at 680 K is
-the visible difference.
+Four rows — exact and learned at 1200 K (τ = 0.1034), then exact and learned at
+680 K (τ = 0.0586). **Every row is ranked by its own law**, so the rows agree
+only if the model puts its mass on the same configurations; they do, and in both
+cases the top four are exactly-degenerate L1₀ variants. Under each cell:
+dark-grey bar = p_exact, blue bar = p_learned, one common scale for all four
+rows, so the 5× mass concentration at 680 K is the visible difference.
 
-| row | τ | p_exact (each of 4) | p_learned | TV over all 12870 states |
-|---|---|---|---|---|
-| 1200 K | 0.1034 | 0.02723 | 0.02711 – 0.02774 | 0.0578 |
-| 680 K | 0.0586 | 0.14846 | 0.14672 – 0.15036 | 0.0555 |
+| row | p_exact (each of 4) | p_learned | TV over all 12870 states |
+|---|---|---|---|
+| 1200 K exact | 0.02723 | 0.02697 – 0.02790 | 0.0592 |
+| 1200 K learned | 0.02723 | 0.02708 – 0.02790 | 0.0592 |
+| 680 K exact | 0.14846 | 0.14632 – 0.15032 | 0.0551 |
+| 680 K learned | 0.14846 | 0.14827 – 0.15032 | 0.0551 |
 
-Au gold, Cu copper; cell outline colours the L1₀ variant (6 colours), outline
-centred on the atom set. Raw: `top4.json`, `top4.csv`,
-`<row>/top{0..3}.extxyz` (p_exact, p_learned, LRO, variant in `at.info`).
+Au gold, Cu copper, no cell outline. Raw: `top4.json`, `top4.csv`,
+`law_<T>.npz` (p_exact, p_learned, count, energy, LRO, variant for all 12870
+states), `<row>/top{0..3}.extxyz`.
 
 ## F5 — Cu–Au 4×4×4 order statistics (the non-enumerable companion to F3)
 
