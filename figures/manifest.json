@@ -1,84 +1,4 @@
 {
- "F2": {
-  "panels": [
-   {
-    "panel": "reveal_0",
-    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
-    "checkpoint_seed": 0,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "single trajectory, frames at 0/4/8/12/16 reveals"
-   },
-   {
-    "panel": "reveal_4",
-    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
-    "checkpoint_seed": 0,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "single trajectory, frames at 0/4/8/12/16 reveals"
-   },
-   {
-    "panel": "reveal_8",
-    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
-    "checkpoint_seed": 0,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "single trajectory, frames at 0/4/8/12/16 reveals"
-   },
-   {
-    "panel": "reveal_12",
-    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
-    "checkpoint_seed": 0,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "single trajectory, frames at 0/4/8/12/16 reveals"
-   },
-   {
-    "panel": "reveal_16",
-    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
-    "checkpoint_seed": 0,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "single trajectory, frames at 0/4/8/12/16 reveals"
-   },
-   {
-    "panel": "reveal_8_shaded_by_terminal_operator_label",
-    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
-    "checkpoint_seed": 0,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "same trajectory; Reveal.label on its own terminal sample, P(+1) = lambda_1 / (lambda_0 + lambda_1)"
-   },
-   {
-    "panel": "reveal_8_shaded_by_terminal_one_hot",
-    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
-    "checkpoint_seed": 0,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "selection_rule": "same trajectory; indicator that the terminal symbol at that site is +1"
-   }
-  ],
-  "construction": "demasking_fixed_composition",
-  "params": {
-   "target": "ising",
-   "L": 4,
-   "J": 1.0,
-   "tau": 2.0,
-   "gamma": 1.0,
-   "width": 128,
-   "layers": 3,
-   "arch": "rope",
-   "heads": 4,
-   "observables": []
-  },
-  "notes": "masked = -1 in state_symbol_mask_minus1; symbol 1 = spin +1, symbol 0 = spin -1; urn_remaining are the unrevealed budgets R_a of each spin.  No repo file was written.",
-  "files": [
-   "frames.json",
-   "labels_8reveal.csv",
-   "F2_demasking_filmstrip_t20260928.png",
-   "F2_demasking_filmstrip.pdf"
-  ]
- },
  "F7": {
   "panels": [
    {
@@ -223,49 +143,36 @@
  "F3": {
   "panels": [
    {
-    "panel": "reference_T1200",
+    "panel": "T1200/exact",
     "checkpoint": null,
     "checkpoint_seed": null,
     "weights": null,
-    "sample_rng_seed": 0,
-    "reference_file": "data/gt_cuau_4x4x4_T1200_fixed.npz",
-    "selection_rule": "reference block as stored (symmetrised Monte Carlo); 4 of 20000 drawn by numpy default_rng(0)"
+    "sample_rng_seed": null,
+    "selection_rule": "softmax(-E/tau) over all C(16,8)=12870 states; the 4 largest, no sampling"
    },
    {
-    "panel": "learned_T1200",
-    "checkpoint": "ckpt/demasking_cuau_4x4x4_T1200_seed0_20260925-074542",
+    "panel": "T1200/learned",
+    "checkpoint": "ckpt/demasking_cuau_2x2x4_T1200_seed0_20260925-060923",
     "checkpoint_seed": 0,
     "weights": "ema",
     "sample_rng_seed": 0,
-    "reference_file": null,
-    "selection_rule": "no rule given -> checkpoint seed 0; 4 of 2000 drawn by numpy default_rng(0)"
+    "selection_rule": "empirical frequency of 500000 draws of model.sample at the same 4 states"
    },
    {
-    "panel": "reference_T680",
+    "panel": "T680/exact",
     "checkpoint": null,
     "checkpoint_seed": null,
     "weights": null,
-    "sample_rng_seed": 0,
-    "reference_file": "data/gt_cuau_4x4x4_T680_fixed.npz",
-    "selection_rule": "reference block as stored (symmetrised Monte Carlo); 4 of 20000 drawn by numpy default_rng(0)"
+    "sample_rng_seed": null,
+    "selection_rule": "softmax(-E/tau) over all C(16,8)=12870 states; the 4 largest, no sampling"
    },
    {
-    "panel": "learned_T680_bestcoverage",
-    "checkpoint": "ckpt/demasking_cuau_4x4x4_T680_seed2_20260925-080004",
-    "checkpoint_seed": 2,
+    "panel": "T680/learned",
+    "checkpoint": "ckpt/demasking_cuau_2x2x4_T680_seed0_20260925-062545",
+    "checkpoint_seed": 0,
     "weights": "ema",
     "sample_rng_seed": 0,
-    "reference_file": null,
-    "selection_rule": "seed whose 680 K coverage is closest to 0.014 (seed 2, 0.01395); 4 of 2000 drawn by numpy default_rng(0)"
-   },
-   {
-    "panel": "learned_T680_collapsed",
-    "checkpoint": "ckpt/demasking_cuau_4x4x4_T680_seed1_20260925-080004",
-    "checkpoint_seed": 1,
-    "weights": "ema",
-    "sample_rng_seed": 0,
-    "reference_file": null,
-    "selection_rule": "the collapsed 680 K seed (seed 1, coverage 0.667); 4 of 2000 drawn by numpy default_rng(0)"
+    "selection_rule": "empirical frequency of 500000 draws of model.sample at the same 4 states"
    }
   ],
   "atom_colours": {
@@ -280,13 +187,13 @@
    "#56B4E9",
    "#D55E00"
   ],
-  "variant_code": "2*axis + (sign<0); -1 = disordered, no outline",
+  "bars": "per cell, upper dark-grey bar = p_exact, lower coloured bar = p_learned; bar lengths share one scale within a row",
   "files": [
-   "lro_variants.json",
-   "lro_variants.csv",
-   "<panel>/sample{0..3}.extxyz",
-   "F3_cuau_4x4x4_t20260928.png",
-   "F3_cuau_4x4x4.pdf"
+   "top4.json",
+   "top4.csv",
+   "<row>/top{0..3}.extxyz",
+   "F3_cuau_2x2x4_top4_t20260928.png",
+   "F3_cuau_2x2x4_top4.pdf"
   ]
  },
  "F4": {
