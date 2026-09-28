@@ -187,13 +187,13 @@
    "Au": "#F2CB30",
    "Cu": "#A65A2E"
   },
-  "bars": "per cell, upper dark-grey bar = p_exact, lower blue bar = p_learned, one common scale for all four rows",
   "row_order": [
    "1200K_exact",
    "1200K_learned",
    "680K_exact",
    "680K_learned"
-  ]
+  ],
+  "notes": "structures only; every probability is in top4.json / top4.csv / law_<T>.npz"
  },
  "F4": {
   "panels": [
