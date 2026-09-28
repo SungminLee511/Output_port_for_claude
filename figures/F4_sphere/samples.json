@@ -1,0 +1,40 @@
+{
+ "energy": "E(x) = 6 (1 - x3^2), tau = 1, Haar source",
+ "seed_scan_no_reflection": [
+  {
+   "seed": 0,
+   "run": "sphere_haar_I_seed0_20260925-030248",
+   "north_mass_results_json": 0.50132,
+   "abs_dev": 0.0013199999999999878
+  },
+  {
+   "seed": 1,
+   "run": "sphere_haar_I_seed1_20260925-030321",
+   "north_mass_results_json": 0.51116,
+   "abs_dev": 0.011159999999999948
+  },
+  {
+   "seed": 2,
+   "run": "sphere_haar_I_seed2_20260925-030353",
+   "north_mass_results_json": 0.55149,
+   "abs_dev": 0.051490000000000036
+  }
+ ],
+ "chosen_no_reflection_seed": 2,
+ "panels": [
+  {
+   "panel": "haar_reflection",
+   "n": 5000,
+   "p_x3_positive": 0.5038,
+   "mean_x3": 0.006706109944136907,
+   "max_abs_norm_error": 2.220446049250313e-16
+  },
+  {
+   "panel": "haar_no_reflection",
+   "n": 5000,
+   "p_x3_positive": 0.5574,
+   "mean_x3": 0.1006204184562441,
+   "max_abs_norm_error": 2.220446049250313e-16
+  }
+ ]
+}

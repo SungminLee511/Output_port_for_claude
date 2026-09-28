@@ -1,0 +1,170 @@
+{
+ "definition": "LRO = max_a |(1/64) sum_i s_i (-1)^{layer_a(i)}|, s=+1 Au, -1 Cu; variant = 2*axis + (sign<0) when LRO>0.5; coverage = 0.5 sum_{v=0}^{5} |share_v - 1/6|",
+ "panels": [
+  {
+   "panel": "reference_T1200",
+   "n_pool": 20000,
+   "picked_indices": [
+    5395,
+    10222,
+    17009,
+    12737
+   ],
+   "lro": [
+    0.1875,
+    0.1875,
+    0.25,
+    0.3125
+   ],
+   "variant": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "panel_coverage_tv": 0.06790123456790123,
+   "panel_variant_share": [
+    0.2037037037037037,
+    0.16666666666666666,
+    0.12345679012345678,
+    0.16049382716049382,
+    0.19753086419753085,
+    0.14814814814814814
+   ],
+   "panel_ordered_frac": 0.0081,
+   "source": "data/gt_cuau_4x4x4_T1200_fixed.npz"
+  },
+  {
+   "panel": "learned_T1200",
+   "n_pool": 2000,
+   "picked_indices": [
+    539,
+    1021,
+    1698,
+    1272
+   ],
+   "lro": [
+    0.125,
+    0.25,
+    0.1875,
+    0.125
+   ],
+   "variant": [
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "panel_coverage_tv": 0.3571428571428571,
+   "panel_variant_share": [
+    0.07142857142857142,
+    0.07142857142857142,
+    0.2857142857142857,
+    0.0,
+    0.21428571428571427,
+    0.35714285714285715
+   ],
+   "panel_ordered_frac": 0.007,
+   "source": "ckpt/demasking_cuau_4x4x4_T1200_seed0_20260925-074542"
+  },
+  {
+   "panel": "reference_T680",
+   "n_pool": 20000,
+   "picked_indices": [
+    5395,
+    10222,
+    17009,
+    12737
+   ],
+   "lro": [
+    0.875,
+    0.9375,
+    0.875,
+    1.0
+   ],
+   "variant": [
+    5,
+    2,
+    2,
+    2
+   ],
+   "panel_coverage_tv": 0.00875624506968184,
+   "panel_variant_share": [
+    0.17423087036550092,
+    0.1671838022613726,
+    0.1673415724428083,
+    0.16239810675782276,
+    0.16308177754404418,
+    0.16576387062845122
+   ],
+   "panel_ordered_frac": 0.95075,
+   "source": "data/gt_cuau_4x4x4_T680_fixed.npz"
+  },
+  {
+   "panel": "learned_T680_bestcoverage",
+   "n_pool": 2000,
+   "picked_indices": [
+    539,
+    1021,
+    1698,
+    1272
+   ],
+   "lro": [
+    0.875,
+    0.9375,
+    1.0,
+    1.0
+   ],
+   "variant": [
+    2,
+    1,
+    3,
+    2
+   ],
+   "panel_coverage_tv": 0.02405063291139241,
+   "panel_variant_share": [
+    0.17620253164556962,
+    0.1569620253164557,
+    0.15544303797468353,
+    0.16354430379746834,
+    0.17265822784810125,
+    0.17518987341772152
+   ],
+   "panel_ordered_frac": 0.9875,
+   "source": "ckpt/demasking_cuau_4x4x4_T680_seed2_20260925-080004"
+  },
+  {
+   "panel": "learned_T680_collapsed",
+   "n_pool": 2000,
+   "picked_indices": [
+    539,
+    1021,
+    1698,
+    1272
+   ],
+   "lro": [
+    1.0,
+    1.0,
+    0.9375,
+    1.0
+   ],
+   "variant": [
+    3,
+    3,
+    3,
+    3
+   ],
+   "panel_coverage_tv": 0.6666666666666667,
+   "panel_variant_share": [
+    0.0,
+    0.0,
+    0.48932676518883417,
+    0.5106732348111659,
+    0.0,
+    0.0
+   ],
+   "panel_ordered_frac": 0.9135,
+   "source": "ckpt/demasking_cuau_4x4x4_T680_seed1_20260925-080004"
+  }
+ ]
+}

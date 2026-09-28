@@ -1,0 +1,323 @@
+{
+ "F2": {
+  "panels": [
+   {
+    "panel": "reveal_0",
+    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "selection_rule": "single trajectory, frames at 0/4/8/12/16 reveals"
+   },
+   {
+    "panel": "reveal_4",
+    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "selection_rule": "single trajectory, frames at 0/4/8/12/16 reveals"
+   },
+   {
+    "panel": "reveal_8",
+    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "selection_rule": "single trajectory, frames at 0/4/8/12/16 reveals"
+   },
+   {
+    "panel": "reveal_12",
+    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "selection_rule": "single trajectory, frames at 0/4/8/12/16 reveals"
+   },
+   {
+    "panel": "reveal_16",
+    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "selection_rule": "single trajectory, frames at 0/4/8/12/16 reveals"
+   },
+   {
+    "panel": "reveal_8_shaded_by_terminal_operator_label",
+    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "selection_rule": "same trajectory; Reveal.label on its own terminal sample, P(+1) = lambda_1 / (lambda_0 + lambda_1)"
+   },
+   {
+    "panel": "reveal_8_shaded_by_terminal_one_hot",
+    "checkpoint": "ckpt/demasking_ising4_beta0.5_seed0_20260927-065547",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "selection_rule": "same trajectory; indicator that the terminal symbol at that site is +1"
+   }
+  ],
+  "construction": "demasking_fixed_composition",
+  "params": {
+   "target": "ising",
+   "L": 4,
+   "J": 1.0,
+   "tau": 2.0,
+   "gamma": 1.0,
+   "width": 128,
+   "layers": 3,
+   "arch": "rope",
+   "heads": 4,
+   "observables": []
+  },
+  "notes": "masked = -1 in state_symbol_mask_minus1; symbol 1 = spin +1, symbol 0 = spin -1; urn_remaining are the unrevealed budgets R_a of each spin.  No repo file was written.",
+  "files": [
+   "frames.json",
+   "labels_8reveal.csv",
+   "F2_demasking_filmstrip_t20260928.png",
+   "F2_demasking_filmstrip.pdf"
+  ]
+ },
+ "F7": {
+  "panels": [
+   {
+    "panel": "canonical_ising16_beta0.4407/learned",
+    "checkpoint": "ckpt/demasking_ising16_seed0_20260925-134919",
+    "checkpoint_seed": 0,
+    "weights": "live",
+    "sample_rng_seed": 0,
+    "selection_rule": "first 4 draws of model.sample"
+   },
+   {
+    "panel": "canonical_ising16_beta0.4407/reference",
+    "checkpoint": null,
+    "checkpoint_seed": null,
+    "weights": null,
+    "sample_rng_seed": 0,
+    "reference_file": "data/gt_ising_L16_q2_J1_tau2.269185_fixed.npz",
+    "selection_rule": "numpy default_rng(0).choice, 4 without replacement"
+   },
+   {
+    "panel": "free_ising16_beta0.28/learned",
+    "checkpoint": "ckpt/demasking_unconstrained_ising16_beta0.28_seed0_20260925-171645",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "selection_rule": "first 4 draws of model.sample"
+   },
+   {
+    "panel": "free_ising16_beta0.28/reference",
+    "checkpoint": null,
+    "checkpoint_seed": null,
+    "weights": null,
+    "sample_rng_seed": 0,
+    "reference_file": "data/gt_ising_L16_q2_J1_tau3.571429.npz",
+    "selection_rule": "numpy default_rng(0).choice, 4 without replacement"
+   },
+   {
+    "panel": "free_ising16_beta0.4407/learned",
+    "checkpoint": "ckpt/demasking_unconstrained_ising16_beta_crit_seed0_20260925-023806",
+    "checkpoint_seed": 0,
+    "weights": "live",
+    "sample_rng_seed": 0,
+    "selection_rule": "first 4 draws of model.sample"
+   },
+   {
+    "panel": "free_ising16_beta0.4407/reference",
+    "checkpoint": null,
+    "checkpoint_seed": null,
+    "weights": null,
+    "sample_rng_seed": 0,
+    "reference_file": "data/gt_ising_L16_q2_J1_tau2.268928.npz",
+    "selection_rule": "numpy default_rng(0).choice, 4 without replacement"
+   },
+   {
+    "panel": "free_ising16_beta0.6/learned",
+    "checkpoint": "ckpt/demasking_unconstrained_ising16_beta0.6_seed0_20260926-082742",
+    "checkpoint_seed": 0,
+    "weights": "live",
+    "sample_rng_seed": 0,
+    "selection_rule": "first 4 draws of model.sample"
+   },
+   {
+    "panel": "free_ising16_beta0.6/reference",
+    "checkpoint": null,
+    "checkpoint_seed": null,
+    "weights": null,
+    "sample_rng_seed": 0,
+    "reference_file": "data/gt_ising_L16_q2_J1_tau1.666667.npz",
+    "selection_rule": "numpy default_rng(0).choice, 4 without replacement"
+   },
+   {
+    "panel": "free_potts16_q3_beta0.5/learned",
+    "checkpoint": "ckpt/demasking_unconstrained_potts16_q3_beta0.5_seed0_20260925-171645",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "selection_rule": "first 4 draws of model.sample"
+   },
+   {
+    "panel": "free_potts16_q3_beta0.5/reference",
+    "checkpoint": null,
+    "checkpoint_seed": null,
+    "weights": null,
+    "sample_rng_seed": 0,
+    "reference_file": "data/gt_potts_L16_q3_J1_tau2.000000.npz",
+    "selection_rule": "numpy default_rng(0).choice, 4 without replacement"
+   },
+   {
+    "panel": "free_potts16_q3_beta1.005/learned",
+    "checkpoint": "ckpt/demasking_unconstrained_potts16_q3_beta_crit_seed0_20260925-023806",
+    "checkpoint_seed": 0,
+    "weights": "live",
+    "sample_rng_seed": 0,
+    "selection_rule": "first 4 draws of model.sample"
+   },
+   {
+    "panel": "free_potts16_q3_beta1.005/reference",
+    "checkpoint": null,
+    "checkpoint_seed": null,
+    "weights": null,
+    "sample_rng_seed": 0,
+    "reference_file": "data/gt_potts_L16_q3_J1_tau0.995025.npz",
+    "selection_rule": "numpy default_rng(0).choice, 4 without replacement"
+   },
+   {
+    "panel": "free_potts16_q3_beta1.2/learned",
+    "checkpoint": "ckpt/demasking_unconstrained_potts16_q3_beta1.2_seed0_20260926-082742",
+    "checkpoint_seed": 0,
+    "weights": "live",
+    "sample_rng_seed": 0,
+    "selection_rule": "first 4 draws of model.sample"
+   },
+   {
+    "panel": "free_potts16_q3_beta1.2/reference",
+    "checkpoint": null,
+    "checkpoint_seed": null,
+    "weights": null,
+    "sample_rng_seed": 0,
+    "reference_file": "data/gt_potts_L16_q3_J1_tau0.833333.npz",
+    "selection_rule": "numpy default_rng(0).choice, 4 without replacement"
+   }
+  ],
+  "layout": "one row per model/beta; learned left, Swendsen-Wang reference right",
+  "palette": {
+   "ising": [
+    "#E8E8E8",
+    "#3A3A3A"
+   ],
+   "potts_q3": [
+    "#0072B2",
+    "#E69F00",
+    "#009E73"
+   ]
+  },
+  "files": [
+   "samples.json",
+   "samples.csv",
+   "F7_lattice_snapshots_t20260928.png",
+   "F7_lattice_snapshots.pdf"
+  ]
+ },
+ "F3": {
+  "panels": [
+   {
+    "panel": "reference_T1200",
+    "checkpoint": null,
+    "checkpoint_seed": null,
+    "weights": null,
+    "sample_rng_seed": 0,
+    "reference_file": "data/gt_cuau_4x4x4_T1200_fixed.npz",
+    "selection_rule": "reference block as stored (symmetrised Monte Carlo); 4 of 20000 drawn by numpy default_rng(0)"
+   },
+   {
+    "panel": "learned_T1200",
+    "checkpoint": "ckpt/demasking_cuau_4x4x4_T1200_seed0_20260925-074542",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "reference_file": null,
+    "selection_rule": "no rule given -> checkpoint seed 0; 4 of 2000 drawn by numpy default_rng(0)"
+   },
+   {
+    "panel": "reference_T680",
+    "checkpoint": null,
+    "checkpoint_seed": null,
+    "weights": null,
+    "sample_rng_seed": 0,
+    "reference_file": "data/gt_cuau_4x4x4_T680_fixed.npz",
+    "selection_rule": "reference block as stored (symmetrised Monte Carlo); 4 of 20000 drawn by numpy default_rng(0)"
+   },
+   {
+    "panel": "learned_T680_bestcoverage",
+    "checkpoint": "ckpt/demasking_cuau_4x4x4_T680_seed2_20260925-080004",
+    "checkpoint_seed": 2,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "reference_file": null,
+    "selection_rule": "seed whose 680 K coverage is closest to 0.014 (seed 2, 0.01395); 4 of 2000 drawn by numpy default_rng(0)"
+   },
+   {
+    "panel": "learned_T680_collapsed",
+    "checkpoint": "ckpt/demasking_cuau_4x4x4_T680_seed1_20260925-080004",
+    "checkpoint_seed": 1,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "reference_file": null,
+    "selection_rule": "the collapsed 680 K seed (seed 1, coverage 0.667); 4 of 2000 drawn by numpy default_rng(0)"
+   }
+  ],
+  "atom_colours": {
+   "Au": "#F2CB30",
+   "Cu": "#A65A2E"
+  },
+  "variant_outline_colours": [
+   "#0072B2",
+   "#E69F00",
+   "#009E73",
+   "#CC79A7",
+   "#56B4E9",
+   "#D55E00"
+  ],
+  "variant_code": "2*axis + (sign<0); -1 = disordered, no outline",
+  "files": [
+   "lro_variants.json",
+   "lro_variants.csv",
+   "<panel>/sample{0..3}.extxyz",
+   "F3_cuau_4x4x4_t20260928.png",
+   "F3_cuau_4x4x4.pdf"
+  ]
+ },
+ "F4": {
+  "panels": [
+   {
+    "panel": "haar_reflection",
+    "checkpoint": "ckpt/sphere_haar_I_refl_seed0_20260925-030426",
+    "checkpoint_seed": 0,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "bins": 500,
+    "selection_rule": "reflection-trained Haar run, seed 0 (only seed requested); all 5000 draws of model.sample kept, no filtering"
+   },
+   {
+    "panel": "haar_no_reflection",
+    "checkpoint": "ckpt/sphere_haar_I_seed2_20260925-030353",
+    "checkpoint_seed": 2,
+    "weights": "ema",
+    "sample_rng_seed": 0,
+    "bins": 500,
+    "selection_rule": "seed with the largest |Pr(x3>0)-1/2| in results.json (seed 2); all 5000 draws of model.sample kept, no filtering"
+   }
+  ],
+  "point_colour": "x3, diverging PuOr_r on [-1, 1]",
+  "camera": "elev=0, azim=0 (looking along -e1); both poles visible at the top and bottom of each sphere; only the front hemisphere x1 > 0 is drawn, the CSV holds all 5000 samples",
+  "files": [
+   "samples.json",
+   "haar_reflection.csv",
+   "haar_no_reflection.csv",
+   "F4_sphere_t20260928.png",
+   "F4_sphere.pdf"
+  ]
+ }
+}
