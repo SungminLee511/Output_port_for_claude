@@ -136,7 +136,7 @@
   "files": [
    "samples.json",
    "samples.csv",
-   "F7_lattice_snapshots_t20260928.png",
+   "F7_lattice_snapshots_t202609282035.png",
    "F7_lattice_snapshots.pdf"
   ]
  },
@@ -180,7 +180,7 @@
    "top4.csv",
    "law_<T>.npz",
    "<row>/top{0..3}.extxyz",
-   "F3_cuau_2x2x4_top4_t20260928.png",
+   "F3_cuau_2x2x4_top4_t202609282035.png",
    "F3_cuau_2x2x4_top4.pdf"
   ],
   "atom_colours": {
@@ -222,7 +222,7 @@
    "samples.json",
    "haar_reflection.csv",
    "haar_no_reflection.csv",
-   "F4_sphere_t20260928.png",
+   "F4_sphere_t202609282035.png",
    "F4_sphere.pdf"
   ]
  }
