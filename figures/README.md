@@ -29,6 +29,31 @@ Au gold, Cu copper; cell outline colours the L1₀ variant (6 colours), outline
 centred on the atom set. Raw: `top4.json`, `top4.csv`,
 `<row>/top{0..3}.extxyz` (p_exact, p_learned, LRO, variant in `at.info`).
 
+## F5 — Cu–Au 4×4×4 order statistics (the non-enumerable companion to F3)
+
+![F5](F5_cuau_4x4x4_order/F5_cuau_4x4x4_order_t20260928.png)
+
+64 sites, so no enumeration: the model is judged on the order parameter and on
+how it spreads over the six symmetry-equivalent L1₀ variants. Variant share is
+the one statistic the symmetry cannot hide — E, η and α₁ are all invariant under
+the operations that exchange variants. Reference = every stored symmetrised MC
+sample; learned = 20 000 draws per seed (RNG seed 0, no filtering).
+
+Top: η histogram (log y). Bottom: variant shares among ordered samples
+(η > 0.5), dashed line = 1/6.
+
+| T | source | coverage TV | ordered frac | mean η | α₁ |
+|---|---|---|---|---|---|
+| 1200 K | reference | 0.068 | — | — | — |
+| 1200 K | seeds 0/1/2 | 0.087 / 0.111 / 0.119 | 0.008 / 0.007 / 0.006 | 0.225 | −0.053 |
+| 680 K | reference | 0.009 | — | — | — |
+| 680 K | seeds 0/1/2 | 0.106 / **0.667** / 0.013 | 0.998 / 0.923 / 0.988 | 0.956 / 0.909 / 0.955 | −0.308 / −0.291 / −0.308 |
+
+Seed 1 at 680 K collapses onto two variants (v2, v3 ≈ 0.5 each) while its η and
+α₁ look healthy — exactly the failure the share plot is there to expose. Raw:
+`order_stats.json`, `variant_shares.csv`. This figure keeps its axes because it
+is quantitative.
+
 ## F4 — sphere samples, E = 6(1 − x₃²), τ = 1, Haar source, 500 steps
 
 ![F4](F4_sphere/F4_sphere_t20260928.png)
